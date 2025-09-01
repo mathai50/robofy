@@ -1,0 +1,58 @@
+kage.json{
+  "name": "robofy-website",
+  "version": "0.1.0",
+  "description": "Robofy - AI-powered digital solutions provider for business. Modern web application built with Next.js 14, React 18, TypeScript, and Tailwind CSS. Features AI integration, responsive design, and performance optimizations.",
+  "keywords": [
+    "ai first digital solution provider",
+    "robotic process automation",
+    "Intelligent competition analysis",
+    "Ai lead gathering",
+    "digital-marketing",
+    "ai solution provider",
+    "nextjs",
+    "react",
+    "typescript",
+    "tailwindcss"
+  ],
+  "private": true,
+  "license": "MIT",
+  "author": "Robofy Team <team@robofy.com>",
+  "homepage": "https://robofy.uk",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "next dev",
+    "dev:backend": "cd backend && uvicorn main:app --reload",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
+    "format": "prettier --write .",
+    "type-check": "tsc --noEmit",
+    "generate:content": "cd backend && python autoblogging.py",
+    "dev:content": "cd backend && python autoblogging.py --watch"
+  },
+  "dependencies": {
+    "next": "^14.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "autoprefixer": "^10.4.16",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^14.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "postcss": "^8.4.32",
+    "prettier": "^3.1.0",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}
