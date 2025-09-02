@@ -11,6 +11,12 @@
 
 const nextConfig = {
   /**
+   * Output Export
+   * Enables static HTML export for deployment to Netlify
+   */
+  output: 'export',
+  
+  /**
    * React Strict Mode
    * Enables additional React development warnings and checks
    */

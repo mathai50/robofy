@@ -1,5 +1,5 @@
 [build]
-  publish = ".next"  # Output directory for Next.js build
+  publish = "out"  # Output directory for Next.js static export
   command = "npm install --include=dev && npm run build"  # Install devDependencies and build
 
 [build.environment]
@@ -14,16 +14,13 @@
   # Cache Next.js build artifacts
   build_dependencies = ["node_modules/.cache/next"]
 
-# Ignore backend directories to avoid processing Python files
+# Redirects for SPA (Single Page Application) behavior
 [[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"  # For Netlify Functions (optional)
+  from = "/*"
+  to = "/index.html"
   status = 200
 
-# Additional settings for optimal performance
-[functions]
-  node_bundler = "esbuild"  # Faster bundling for functions
-
+# Security headers
 [[headers]]
   for = "/*"
   [headers.values]
