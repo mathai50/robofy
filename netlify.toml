@@ -1,0 +1,24 @@
+[build]
+  publish = ".next"  # Output directory for Next.js build
+  command = "npm run build"  # Build command for Next.js
+
+[build.environment]
+  NODE_ENV = "production"
+
+# Ignore backend directories to avoid processing Python files
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"  # For Netlify Functions (optional)
+  status = 200
+
+# Additional settings for optimal performance
+[functions]
+  node_bundler = "esbuild"  # Faster bundling for functions
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
