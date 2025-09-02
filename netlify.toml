@@ -1,9 +1,18 @@
 [build]
   publish = ".next"  # Output directory for Next.js build
-  command = "npm run build"  # Build command for Next.js
+  command = "npm install --include=dev && npm run build"  # Install devDependencies and build
 
 [build.environment]
   NODE_ENV = "production"
+  # Force installation of devDependencies for Tailwind CSS
+  NPM_FLAGS = "--include=dev"
+
+# Build caching for faster deployments
+[build.caching]
+  # Cache node_modules to speed up installs
+  package_json = true
+  # Cache Next.js build artifacts
+  build_dependencies = ["node_modules/.cache/next"]
 
 # Ignore backend directories to avoid processing Python files
 [[redirects]]
