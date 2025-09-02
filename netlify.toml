@@ -1,6 +1,6 @@
 [build]
   publish = "out"  # Output directory for Next.js static export
-  command = "npm install --include=dev && npm run build"  # Install devDependencies and build
+  command = "npm install --include=dev && cd backend && pip install -r requirements.txt && cd .. && npm run generate:content && npm run build"  # Install dependencies, generate content, and build
 
 [build.environment]
   NODE_ENV = "production"
@@ -28,3 +28,7 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Python plugin for content generation during build
+[[plugins]]
+  package = "@netlify/plugin-python"
