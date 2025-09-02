@@ -31,7 +31,7 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
       const response: ApiResponse = await createLead(leadData);
 
       if (response.error) {
-        setError(response.error.message || 'Failed to submit form. Please try again.');
+        setError(response.error || 'Failed to submit form. Please try again.');
         return;
       }
 
