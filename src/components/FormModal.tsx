@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
+import { createLead, ApiResponse } from '@/lib/api';
 
 interface FormModalProps {
   isOpen: boolean;
@@ -8,13 +9,41 @@ interface FormModalProps {
 }
 
 export default function FormModal({ isOpen, onClose }: FormModalProps) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    alert('Form submitted! We will contact you soon.');
-    onClose();
+    setIsSubmitting(true);
+    setError(null);
+
+    const formData = new FormData(e.target as HTMLFormElement);
+    const leadData = {
+      name: formData.get('name') as string,
+      email: formData.get('email') as string,
+      industry: formData.get('industry') as string || undefined,
+      source: 'website' as const,
+    };
+
+    try {
+      const response: ApiResponse = await createLead(leadData);
+
+      if (response.error) {
+        setError(response.error.message || 'Failed to submit form. Please try again.');
+        return;
+      }
+
+      // Success
+      alert('Form submitted successfully! We will contact you soon.');
+      onClose();
+    } catch (err) {
+      setError('An unexpected error occurred. Please try again.');
+      console.error('Form submission error:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -26,6 +55,7 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600"
             aria-label="Close"
+            disabled={isSubmitting}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -33,6 +63,11 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
           </button>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm">
+              {error}
+            </div>
+          )}
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
               Full Name
@@ -42,7 +77,8 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
               id="name"
               name="name"
               required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              disabled={isSubmitting}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50"
             />
           </div>
           <div>
@@ -54,37 +90,48 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
               id="email"
               name="email"
               required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              disabled={isSubmitting}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50"
             />
           </div>
           <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-              Phone Number
+            <label htmlFor="industry" className="block text-sm font-medium text-gray-700">
+              Industry
             </label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            />
+            <select
+              id="industry"
+              name="industry"
+              disabled={isSubmitting}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50"
+            >
+              <option value="">Select an industry</option>
+              <option value="beauty">Beauty</option>
+              <option value="dental">Dental</option>
+              <option value="healthcare">Healthcare</option>
+              <option value="retail">Retail</option>
+              <option value="fitness">Fitness</option>
+              <option value="solar">Solar</option>
+            </select>
           </div>
           <div>
             <label htmlFor="message" className="block text-sm font-medium text-gray-700">
-              Message
+              Message (Optional)
             </label>
             <textarea
               id="message"
               name="message"
               rows={3}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              disabled={isSubmitting}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50"
             ></textarea>
           </div>
           <div>
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              disabled={isSubmitting}
+              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Submit
+              {isSubmitting ? 'Submitting...' : 'Submit'}
             </button>
           </div>
         </form>
