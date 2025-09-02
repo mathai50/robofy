@@ -94,7 +94,7 @@ export default function SplineScene({
       )}
 
       {/* Spline 3D Scene using iframe */}
-      <div className="w-full h-full scale-[1.1] md:scale-[3.2] origin-center transition-transform duration-300">
+      <div className="w-full h-full scale-100 md:scale-100 origin-center transition-transform duration-300">
         <iframe
           src={scene}
           className="w-full h-full border-none"
