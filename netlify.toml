@@ -1,6 +1,6 @@
 [build]
   publish = "out"  # Output directory for Next.js static export
-  command = "npm install --include=dev && (npm run generate:content || echo 'Content generation skipped') && npm run build"  # Install dependencies, generate content if possible, and build
+  command = "npm install --include=dev && (npm run generate:content || true) && npm run build"  # Install dependencies, generate content if possible (always continue), and build
 
 [build.environment]
   NODE_ENV = "production"

@@ -1,87 +1,91 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
 
-export default function IndustryDetailPage() {
-  const params = useParams();
-  const slug = params.slug as string;
+// Define industries data for both generateStaticParams and the page component
+const industries = [
+  {
+    name: 'Beauty & Cosmetics',
+    slug: 'beauty',
+    description: 'AI-powered marketing solutions for salons, spas, and beauty product companies',
+    longDescription: 'Our AI-driven platform helps beauty businesses automate their marketing, generate leads, and personalize customer experiences. From social media automation to personalized product recommendations, we transform how beauty brands connect with their audience.',
+    services: [
+      'Social Media Automation',
+      'Personalized Customer Journeys',
+      'Lead Generation & Nurturing',
+      'Content Marketing Automation'
+    ]
+  },
+  {
+    name: 'Dental & Healthcare',
+    slug: 'dental',
+    description: 'Digital transformation for dental practices and healthcare providers',
+    longDescription: 'Transform your dental or healthcare practice with our AI solutions. Automate patient communication, streamline appointment scheduling, and enhance patient engagement with personalized care recommendations.',
+    services: [
+      'Appointment Reminder Systems',
+      'Patient Communication Automation',
+      'Treatment Plan Personalization',
+      'Healthcare Content Generation'
+    ]
+  },
+  {
+    name: 'Healthcare',
+    slug: 'healthcare',
+    description: 'AI-driven patient engagement and medical practice automation',
+    longDescription: 'Leverage AI to improve patient outcomes and operational efficiency. Our solutions include automated patient follow-ups, medical content generation, and intelligent data analysis for better decision-making.',
+    services: [
+      'Patient Engagement Automation',
+      'Medical Content Creation',
+      'Data Analytics & Insights',
+      'Telemedicine Integration'
+    ]
+  },
+  {
+    name: 'Retail & E-commerce',
+    slug: 'retail',
+    description: 'Automated inventory management and customer retention strategies',
+    longDescription: 'Revolutionize your retail business with AI-powered automation. From inventory management to personalized shopping experiences, our platform helps you stay competitive in the digital marketplace.',
+    services: [
+      'Inventory Management Automation',
+      'Personalized Product Recommendations',
+      'Customer Retention Programs',
+      'E-commerce Marketing Automation'
+    ]
+  },
+  {
+    name: 'Fitness & Wellness',
+    slug: 'fitness',
+    description: 'Member acquisition and personalized fitness program automation',
+    longDescription: 'Grow your fitness business with AI-driven member acquisition and retention strategies. Personalize workout plans, automate member communications, and optimize your marketing efforts.',
+    services: [
+      'Member Acquisition Automation',
+      'Personalized Fitness Programs',
+      'Class Scheduling Optimization',
+      'Wellness Content Generation'
+    ]
+  },
+  {
+    name: 'Solar & Renewable Energy',
+    slug: 'solar',
+    description: 'Lead generation and marketing automation for solar energy companies',
+    longDescription: 'Accelerate your solar business growth with our AI-powered lead generation and customer engagement solutions. Generate qualified leads, automate follow-ups, and close more deals efficiently.',
+    services: [
+      'Solar Lead Generation',
+      'Customer Education Automation',
+      'Proposal Generation',
+      'Renewable Energy Marketing'
+    ]
+  }
+];
 
-  const industries = [
-    {
-      name: 'Beauty & Cosmetics',
-      slug: 'beauty',
-      description: 'AI-powered marketing solutions for salons, spas, and beauty product companies',
-      longDescription: 'Our AI-driven platform helps beauty businesses automate their marketing, generate leads, and personalize customer experiences. From social media automation to personalized product recommendations, we transform how beauty brands connect with their audience.',
-      services: [
-        'Social Media Automation',
-        'Personalized Customer Journeys',
-        'Lead Generation & Nurturing',
-        'Content Marketing Automation'
-      ]
-    },
-    {
-      name: 'Dental & Healthcare',
-      slug: 'dental',
-      description: 'Digital transformation for dental practices and healthcare providers',
-      longDescription: 'Transform your dental or healthcare practice with our AI solutions. Automate patient communication, streamline appointment scheduling, and enhance patient engagement with personalized care recommendations.',
-      services: [
-        'Appointment Reminder Systems',
-        'Patient Communication Automation',
-        'Treatment Plan Personalization',
-        'Healthcare Content Generation'
-      ]
-    },
-    {
-      name: 'Healthcare',
-      slug: 'healthcare',
-      description: 'AI-driven patient engagement and medical practice automation',
-      longDescription: 'Leverage AI to improve patient outcomes and operational efficiency. Our solutions include automated patient follow-ups, medical content generation, and intelligent data analysis for better decision-making.',
-      services: [
-        'Patient Engagement Automation',
-        'Medical Content Creation',
-        'Data Analytics & Insights',
-        'Telemedicine Integration'
-      ]
-    },
-    {
-      name: 'Retail & E-commerce',
-      slug: 'retail',
-      description: 'Automated inventory management and customer retention strategies',
-      longDescription: 'Revolutionize your retail business with AI-powered automation. From inventory management to personalized shopping experiences, our platform helps you stay competitive in the digital marketplace.',
-      services: [
-        'Inventory Management Automation',
-        'Personalized Product Recommendations',
-        'Customer Retention Programs',
-        'E-commerce Marketing Automation'
-      ]
-    },
-    {
-      name: 'Fitness & Wellness',
-      slug: 'fitness',
-      description: 'Member acquisition and personalized fitness program automation',
-      longDescription: 'Grow your fitness business with AI-driven member acquisition and retention strategies. Personalize workout plans, automate member communications, and optimize your marketing efforts.',
-      services: [
-        'Member Acquisition Automation',
-        'Personalized Fitness Programs',
-        'Class Scheduling Optimization',
-        'Wellness Content Generation'
-      ]
-    },
-    {
-      name: 'Solar & Renewable Energy',
-      slug: 'solar',
-      description: 'Lead generation and marketing automation for solar energy companies',
-      longDescription: 'Accelerate your solar business growth with our AI-powered lead generation and customer engagement solutions. Generate qualified leads, automate follow-ups, and close more deals efficiently.',
-      services: [
-        'Solar Lead Generation',
-        'Customer Education Automation',
-        'Proposal Generation',
-        'Renewable Energy Marketing'
-      ]
-    }
-  ];
+// Generate static params for static export
+export async function generateStaticParams() {
+  return industries.map((industry) => ({
+    slug: industry.slug,
+  }));
+}
+
+export default function IndustryDetailPage({ params }: { params: { slug: string } }) {
+  const { slug } = params;
 
   const industry = industries.find(ind => ind.slug === slug);
 
