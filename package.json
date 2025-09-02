@@ -28,7 +28,7 @@
     "lint:fix": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
     "format": "prettier --write .",
     "type-check": "tsc --noEmit",
-    "generate:content": "cd backend && python3 autoblogging.py",
+    "generate:content": "python3 backend/autoblogging.py",
     "dev:content": "cd backend && python3 autoblogging.py --watch",
     "test:frontend": "jest",
     "test:backend": "cd backend && python3 -m pytest",

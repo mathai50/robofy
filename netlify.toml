@@ -1,6 +1,6 @@
 [build]
   publish = "out"  # Output directory for Next.js static export
-  command = "npm install --include=dev && cd backend && pip install -r requirements.txt && cd .. && npm run generate:content && npm run build"  # Install dependencies, generate content, and build
+  command = "npm install --include=dev && npm run generate:content && npm run build"  # Install dependencies, generate content, and build
 
 [build.environment]
   NODE_ENV = "production"
