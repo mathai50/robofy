@@ -14,53 +14,105 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {
-      // Custom color palette based on UI/UX specifications
-      colors: {
-        primary: {
-          background: {
-            dark: '#000000',    // Dark mode background color
-            light: '#FFFFFF',   // Light mode background color
-          },
-          accent: {
-            1: '#007BFF',       // Primary accent color for buttons and key elements
-            2: '#00FF00',       // Secondary accent color for highlights and actions
-            3: '#00FFFF',       // Tertiary accent color for notifications and special elements
-          },
-          status: {
-            success: '#00CC00', // Success states and positive feedback
-            warning: '#FF9900', // Warning states and cautions
-            error: '#FF3333',   // Error states and destructive actions
-          },
-          neutral: '#666666',   // Neutral color for text, borders, and secondary elements
-        },
-      },
-      // Custom font families
-      fontFamily: {
-        sans: ['Inter', 'sans-serif'],      // Primary sans-serif font from UI/UX spec
-        mono: ['Monospace', 'monospace'],   // Monospace font for code and technical elements
-        'source-code-pro': ['Source Code Pro', 'monospace'], // Source Code Pro for CTA elements
-      },
-      // Custom spacing scale based on 8px increments
-      spacing: {
-        '1': '8px',   // 8px
-        '2': '16px',  // 16px
-        '3': '24px',  // 24px
-        '4': '32px',  // 32px
-        '5': '40px',  // 40px
-        '6': '48px',  // 48px
-        '7': '56px',  // 56px
-        '8': '64px',  // 64px
-        '9': '72px',  // 72px
-        '10': '80px', // 80px
-      },
-      // Custom box shadows for futuristic glow effects
-      boxShadow: {
-        'glow': '0 0 20px rgba(0, 123, 255, 0.5)',        // Blue glow effect
-        'glow-accent': '0 0 20px rgba(0, 255, 0, 0.5)',   // Green glow effect
-      },
-    },
+  	extend: {
+  		colors: {
+  			primary: {
+  				background: {
+  					dark: '#000000',
+  					light: '#FFFFFF'
+  				},
+  				accent: {
+  					'1': '#007BFF',
+  					'2': '#00FF00',
+  					'3': '#00FFFF'
+  				},
+  				status: {
+  					success: '#00CC00',
+  					warning: '#FF9900',
+  					error: '#FF3333'
+  				},
+  				neutral: '#666666',
+  				DEFAULT: 'hsl(var(--primary))',
+  				foreground: 'hsl(var(--primary-foreground))'
+  			},
+  			background: 'hsl(var(--background))',
+  			foreground: 'hsl(var(--foreground))',
+  			card: {
+  				DEFAULT: 'hsl(var(--card))',
+  				foreground: 'hsl(var(--card-foreground))'
+  			},
+  			popover: {
+  				DEFAULT: 'hsl(var(--popover))',
+  				foreground: 'hsl(var(--popover-foreground))'
+  			},
+  			secondary: {
+  				DEFAULT: 'hsl(var(--secondary))',
+  				foreground: 'hsl(var(--secondary-foreground))'
+  			},
+  			muted: {
+  				DEFAULT: 'hsl(var(--muted))',
+  				foreground: 'hsl(var(--muted-foreground))'
+  			},
+  			accent: {
+  				DEFAULT: 'hsl(var(--accent))',
+  				foreground: 'hsl(var(--accent-foreground))'
+  			},
+  			destructive: {
+  				DEFAULT: 'hsl(var(--destructive))',
+  				foreground: 'hsl(var(--destructive-foreground))'
+  			},
+  			border: 'hsl(var(--border))',
+  			input: 'hsl(var(--input))',
+  			ring: 'hsl(var(--ring))',
+  			chart: {
+  				'1': 'hsl(var(--chart-1))',
+  				'2': 'hsl(var(--chart-2))',
+  				'3': 'hsl(var(--chart-3))',
+  				'4': 'hsl(var(--chart-4))',
+  				'5': 'hsl(var(--chart-5))'
+  			}
+  		},
+  		fontFamily: {
+  			sans: [
+  				'Inter',
+  				'sans-serif'
+  			],
+  			mono: [
+  				'Monospace',
+  				'monospace'
+  			],
+  			'source-code-pro': [
+  				'Source Code Pro',
+  				'monospace'
+  			],
+  			alegreya: [
+  				'Alegreya',
+  				'serif'
+  			]
+  		},
+  		spacing: {
+  			'1': '8px',
+  			'2': '16px',
+  			'3': '24px',
+  			'4': '32px',
+  			'5': '40px',
+  			'6': '48px',
+  			'7': '56px',
+  			'8': '64px',
+  			'9': '72px',
+  			'10': '80px'
+  		},
+  		boxShadow: {
+  			glow: '0 0 20px rgba(0, 123, 255, 0.5)',
+  			'glow-accent': '0 0 20px rgba(0, 255, 0, 0.5)'
+  		},
+  		borderRadius: {
+  			lg: 'var(--radius)',
+  			md: 'calc(var(--radius) - 2px)',
+  			sm: 'calc(var(--radius) - 4px)'
+  		}
+  	}
   },
-  plugins: [], // Add Tailwind plugins here if needed
-  darkMode: 'class', // Enable dark mode based on CSS class
+  plugins: [require("tailwindcss-animate")], // Add Tailwind plugins here if needed
+  darkMode: ['class', 'class'], // Enable dark mode based on CSS class
 }

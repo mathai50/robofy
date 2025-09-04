@@ -7,3 +7,4 @@ export { default as Dialog } from './Dialog';
 export { default as Spinner } from './Spinner';
 export { Tabs, TabsList, TabsTrigger, TabsContent } from './Tabs';
 export { default as Badge } from './Badge';
+export { Marquee } from './Marquee';

@@ -3,8 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 
-export default function IndustriesPage() {
-  const industries = [
+export default function SectorsPage() {
+  const sectors = [
     {
       name: 'Beauty & Cosmetics',
       slug: 'beauty',
@@ -49,38 +49,38 @@ export default function IndustriesPage() {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl sm:text-5xl font-bold mb-6 font-source-code-pro">
-            Industries We Serve
+            Sectors We Serve
           </h1>
           <p className="text-lg text-gray-300 max-w-3xl mx-auto font-source-code-pro">
-            Discover how our AI-powered solutions are transforming businesses across various industries with tailored digital marketing automation.
+            Discover how our AI-powered solutions are transforming businesses across various sectors with tailored digital marketing automation.
           </p>
         </div>
 
-        {/* Industries Grid */}
+        {/* Sectors Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {industries.map((industry) => (
+          {sectors.map((sector) => (
             <div
-              key={industry.slug}
+              key={sector.slug}
               className="bg-white/5 backdrop-blur-sm rounded-lg p-6 hover:bg-white/10 transition-all duration-300 border border-gray-700"
             >
               <div className="mb-4">
                 <div className="w-full h-48 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
                   <span className="text-white text-2xl font-bold">
-                    {industry.name.split(' ')[0]}
+                    {sector.name.split(' ')[0]}
                   </span>
                 </div>
               </div>
               
               <h3 className="text-xl font-semibold mb-3 font-source-code-pro">
-                {industry.name}
+                {sector.name}
               </h3>
               
               <p className="text-gray-300 mb-4 text-sm font-source-code-pro">
-                {industry.description}
+                {sector.description}
               </p>
               
               <Link
-                href={`/industries/${industry.slug}`}
+                href={`/sectors/${sector.slug}`}
                 className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 text-sm font-source-code-pro"
               >
                 Learn More
@@ -92,7 +92,7 @@ export default function IndustriesPage() {
         {/* CTA Section */}
         <div className="text-center mt-16">
           <h2 className="text-2xl sm:text-3xl font-bold mb-6 font-source-code-pro">
-            Ready to Transform Your Industry?
+            Ready to Transform Your Sector?
           </h2>
           <p className="text-gray-300 mb-8 max-w-2xl mx-auto font-source-code-pro">
             Join hundreds of businesses that have already revolutionized their digital marketing with our AI-powered solutions.

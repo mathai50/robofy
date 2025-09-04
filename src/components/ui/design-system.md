@@ -217,6 +217,94 @@ module.exports = {
 }
 ```
 
+## Additional Component Libraries
+
+### ⚠️ Security Notice: Aceternity UI Alternative
+**Aceternity UI has known security vulnerabilities** (lodash.template command injection). Use these secure alternatives instead:
+
+### Framer Motion (Recommended Alternative)
+For animations and interactive components:
+```bash
+npm install framer-motion
+```
+Usage: Create smooth animations safely
+```typescript
+import { motion } from 'framer-motion';
+
+export function AnimatedComponent() {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      Your content
+    </motion.div>
+  );
+}
+```
+
+### Magic UI
+For magical effects and animations (check for security updates):
+```bash
+npm install magic-ui
+```
+Usage: Import magic effects and components
+```typescript
+import { MagicButton, SparkleText } from 'magic-ui';
+```
+
+### ReactBits
+For utility components and hooks:
+```bash
+npm install react-bits
+```
+Usage: Import utilities and components
+```typescript
+import { useDebounce, Tooltip } from 'react-bits';
+```
+
+### Tailark
+For Tailwind-based components:
+```bash
+npm install tailark
+```
+Usage: Import Tailwind components
+```typescript
+import { GradientButton, GlassCard } from 'tailark';
+```
+
+## Secure Integration Example
+
+Combine secure libraries with shadcn/ui:
+
+```typescript
+import { Button } from '@/components/ui/button';
+import { MagicButton } from 'magic-ui';
+import { motion } from 'framer-motion';
+
+export function EnhancedComponent() {
+  return (
+    <motion.div
+      initial={{ scale: 0.9 }}
+      animate={{ scale: 1 }}
+      transition={{ duration: 0.3 }}
+    >
+      <MagicButton>
+        <Button variant="outline">Secure Animation</Button>
+      </MagicButton>
+    </motion.div>
+  );
+}
+```
+
+## Security Best Practices
+
+1. **Regularly audit dependencies**: Run `npm audit` frequently
+2. **Use security-focused alternatives**: Prefer Framer Motion over vulnerable animation libraries
+3. **Keep dependencies updated**: Use `npm update` regularly
+4. **Check for security patches**: Monitor GitHub security advisories
+
 ## Contributing
 
 When adding new components:

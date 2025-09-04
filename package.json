@@ -35,9 +35,18 @@
     "test": "npm run test:frontend && npm run test:backend"
   },
   "dependencies": {
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.23.12",
+    "gsap": "^3.13.0",
+    "lucide-react": "^0.542.0",
+    "motion": "^12.23.12",
     "next": "^14.2.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-bits": "^1.0.5",
+    "react-dom": "^18.0.0",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.8.0",

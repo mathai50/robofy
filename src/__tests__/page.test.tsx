@@ -2,17 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Home from '@/app/page';
 
-// Mock the components to avoid complex 3D rendering in tests
-jest.mock('@/components/SplineScene', () => {
-  return function MockSplineScene({ onFormOpen }: { onFormOpen: () => void }) {
-    return (
-      <div data-testid="spline-scene">
-        <button onClick={onFormOpen}>Open Form</button>
-      </div>
-    );
-  };
-});
-
+// Mock the FormModal to avoid complex modal rendering in tests
 jest.mock('@/components/FormModal', () => {
   return function MockFormModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
     return isOpen ? <div data-testid="form-modal">Modal Content</div> : null;
@@ -20,13 +10,31 @@ jest.mock('@/components/FormModal', () => {
 });
 
 describe('Home Page', () => {
-  it('renders the main heading', () => {
+  it('renders the main hero heading', () => {
+    render(<Home />);
+    const heading = screen.getByText(/Robofy/i);
+    expect(heading).toBeInTheDocument();
+  });
+
+  it('renders the hero subheading', () => {
+    render(<Home />);
+    const subheading = screen.getByText(/AI-Powered Digital Marketing Automation/i);
+    expect(subheading).toBeInTheDocument();
+  });
+
+  it('renders the Get Started button in hero', () => {
+    render(<Home />);
+    const getStartedButton = screen.getByText(/Get Started/i);
+    expect(getStartedButton).toBeInTheDocument();
+  });
+
+  it('renders the content section heading', () => {
     render(<Home />);
     const heading = screen.getByText(/AI-Powered Digital Marketing Automation/i);
     expect(heading).toBeInTheDocument();
   });
 
-  it('renders the subheading', () => {
+  it('renders the content subheading', () => {
     render(<Home />);
     const subheading = screen.getByText(/Transform your business with AI-driven digital marketing solutions/i);
     expect(subheading).toBeInTheDocument();
