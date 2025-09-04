@@ -8,3 +8,4 @@ export { default as Spinner } from './Spinner';
 export { Tabs, TabsList, TabsTrigger, TabsContent } from './Tabs';
 export { default as Badge } from './Badge';
 export { Marquee } from './Marquee';
+export { default as ProcessStepper } from '../ProcessStepper';

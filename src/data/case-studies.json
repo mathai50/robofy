@@ -1,0 +1,116 @@
+[
+  {
+    "id": 1,
+    "title": "Order Processing Overhaul for E-Commerce Retailer",
+    "industry": "E-Commerce",
+    "summary": "Automated the end-to-end order fulfillment workflow for a mid-sized online retailer, reducing manual touches and shipping errors.",
+    "keyMetrics": [
+      "70% reduction in order processing time",
+      "45% fewer fulfillment errors",
+      "30% increase in on-time deliveries"
+    ],
+    "technologies": [
+      "Python RPA scripts",
+      "AWS Lambda",
+      "PostgreSQL",
+      "React dashboard integration"
+    ],
+    "imageUrl": "https://via.placeholder.com/400x250/3b82f6/ffffff?text=E-Commerce+Automation",
+    "slug": "order-processing-ecommerce"
+  },
+  {
+    "id": 2,
+    "title": "24/7 AI Chatbot for Financial Services",
+    "industry": "Finance",
+    "summary": "Deployed a conversational AI assistant for loan application support at a regional bank, handling FAQs, document uploads, and application status checks.",
+    "keyMetrics": [
+      "60% of routine inquiries handled without human intervention",
+      "50% reduction in average response time",
+      "25% increase in customer satisfaction scores"
+    ],
+    "technologies": [
+      "Dialogflow CX",
+      "Node.js backend",
+      "Microsoft Azure Cognitive Services",
+      "Intercom integration"
+    ],
+    "imageUrl": "https://via.placeholder.com/400x250/10b981/ffffff?text=Finance+Chatbot",
+    "slug": "ai-chatbot-finance"
+  },
+  {
+    "id": 3,
+    "title": "Invoice Processing Automation for Manufacturing",
+    "industry": "Manufacturing",
+    "summary": "Implemented an AI-powered OCR and workflow engine to digitize and validate supplier invoices, cutting manual data entry.",
+    "keyMetrics": [
+      "80% decrease in manual invoice entry",
+      "90% accuracy in data extraction",
+      "40% faster invoice approval cycle"
+    ],
+    "technologies": [
+      "Tesseract OCR",
+      "UiPath Orchestrator",
+      "MongoDB",
+      "Custom React reporting portal"
+    ],
+    "imageUrl": "https://via.placeholder.com/400x250/f59e0b/ffffff?text=Manufacturing+Automation",
+    "slug": "invoice-processing-manufacturing"
+  },
+  {
+    "id": 4,
+    "title": "HR Onboarding Streamlined with AI Workflows",
+    "industry": "Human Resources",
+    "summary": "Created an automated onboarding pipeline that provisions accounts, schedules training, and collects new-hire paperwork via intelligent forms.",
+    "keyMetrics": [
+      "75% reduction in HR admin hours",
+      "100% compliance with document collection",
+      "20% faster time-to-productivity for new hires"
+    ],
+    "technologies": [
+      "Form.io dynamic forms",
+      "Python Flask API",
+      "AWS S3 for document storage",
+      "Slack and Microsoft Teams bots"
+    ],
+    "imageUrl": "https://via.placeholder.com/400x250/ec4899/ffffff?text=HR+Automation",
+    "slug": "hr-onboarding-automation"
+  },
+  {
+    "id": 5,
+    "title": "Patient Data Automation for Healthcare Clinic",
+    "industry": "Healthcare",
+    "summary": "Implemented an automated patient data management system that syncs EHR records with billing and scheduling systems.",
+    "keyMetrics": [
+      "65% reduction in data entry errors",
+      "50% faster patient registration",
+      "30% improvement in billing accuracy"
+    ],
+    "technologies": [
+      "HL7 FHIR API",
+      "Python data pipelines",
+      "AWS HealthLake",
+      "React admin dashboard"
+    ],
+    "imageUrl": "https://via.placeholder.com/400x250/06b6d4/ffffff?text=Healthcare+Automation",
+    "slug": "patient-data-healthcare"
+  },
+  {
+    "id": 6,
+    "title": "CI/CD Pipeline Automation for Tech Startup",
+    "industry": "Technology",
+    "summary": "Built a fully automated deployment pipeline with testing, security scanning, and production deployment for a SaaS platform.",
+    "keyMetrics": [
+      "90% reduction in deployment time",
+      "99.9% deployment success rate",
+      "40% faster time-to-market for features"
+    ],
+    "technologies": [
+      "GitHub Actions",
+      "Docker containers",
+      "Kubernetes orchestration",
+      "Terraform infrastructure"
+    ],
+    "imageUrl": "https://via.placeholder.com/400x250/8b5cf6/ffffff?text=Tech+Automation",
+    "slug": "cicd-pipeline-technology"
+  }
+]

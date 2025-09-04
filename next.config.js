@@ -35,6 +35,7 @@ const nextConfig = {
   images: {
     domains: [],
     formats: ['image/webp', 'image/avif'],
+    unoptimized: true,
   },
 
   /**

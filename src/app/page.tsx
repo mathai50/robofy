@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import FormModal from '@/components/FormModal';
 import { Marquee } from '@/components/ui/Marquee';
+import { ClientLogosMarquee } from '@/components/ui/ClientLogosMarquee';
 import MagicBento from '@/components/MagicBento';
 import { Dock } from '@/components/magicui/dock';
 import { DockIcon } from '@/components/magicui/dock-icon';
@@ -14,6 +15,9 @@ import { ColourfulText } from '@/components/ui/colourful-text';
 import { BackgroundLines } from '@/components/magicui/background-lines';
 import { AnimatedList } from '@/components/magicui/animated-list';
 import { Share2, Bot, Mail, Linkedin, Twitter, Instagram } from 'lucide-react';
+import CaseStudyGrid from '@/components/CaseStudyGrid';
+import TestimonialsCarousel from '@/components/TestimonialsCarousel';
+import ProcessStepper from '@/components/ProcessStepper';
 
 export default function Home() {
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -26,29 +30,6 @@ export default function Home() {
     setIsFormOpen(false);
   };
 
-  const testimonials = [
-    {
-      name: "Sarah Johnson",
-      company: "Bliss Beauty Salon",
-      rating: 5,
-      text: "Robofy transformed our social media presence. We've seen a 300% increase in bookings since implementing their AI automation.",
-      image: "https://via.placeholder.com/80x80"
-    },
-    {
-      name: "Dr. Michael Chen",
-      company: "City Dental Care",
-      rating: 5,
-      text: "The appointment reminder system has reduced our no-shows by 85%. Incredible ROI and seamless integration.",
-      image: "https://via.placeholder.com/80x80"
-    },
-    {
-      name: "Lisa Rodriguez",
-      company: "FitLife Studios",
-      rating: 5,
-      text: "Member acquisition has never been easier. The personalized workout programs keep our clients engaged and coming back.",
-      image: "https://via.placeholder.com/80x80"
-    },
-  ]
   const pricingPlans = [
     {
       name: "Starter",
@@ -267,25 +248,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Animated List for Announcements with Dark Gradient */}
-        <div className="w-full bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 py-16">
-          <div className="max-w-4xl mx-auto px-4">
-            <AnimatedList delay={1000} className="mt-8">
-              <div className="p-6 border border-blue-400/50 rounded-xl bg-blue-500/20 backdrop-blur-sm shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 transition-all duration-300">
-                <h3 className="text-xl font-semibold text-white mb-2">New AI Feature Released</h3>
-                <p className="text-blue-100">Enhanced content generation with GPT-4 integration for more natural marketing copy</p>
-              </div>
-              <div className="p-6 border border-green-400/50 rounded-xl bg-green-500/20 backdrop-blur-sm shadow-lg shadow-green-500/20 hover:shadow-green-500/40 transition-all duration-300">
-                <h3 className="text-xl font-semibold text-white mb-2">System Update Complete</h3>
-                <p className="text-green-100">Improved performance and new dashboard analytics for better insights</p>
-              </div>
-              <div className="p-6 border border-purple-400/50 rounded-xl bg-purple-500/20 backdrop-blur-sm shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40 transition-all duration-300">
-                <h3 className="text-xl font-semibold text-white mb-2">Upcoming Webinar</h3>
-                <p className="text-purple-100">Join our live demo on AI automation strategies for retail businesses - Dec 15th</p>
-              </div>
-            </AnimatedList>
-          </div>
-        </div>
 
         {/* Stats preview with Dark Gradient and Neon Accents */}
         <div className="w-full bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 py-16">
@@ -309,7 +271,8 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Sectors Section with MagicBento and Dark Gradient */}
+        {/* Sectors Section with MagicBento and Dark Gradient - Hidden per request */}
+        {/*
         <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
@@ -335,6 +298,22 @@ export default function Home() {
               clickEffect={true}
               enableMagnetism={true}
             />
+          </div>
+        </section>
+        */}
+
+        {/* Case Studies Section */}
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-alegreya font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+                Success Stories
+              </h2>
+              <p className="text-lg text-gray-300 max-w-3xl mx-auto font-alegreya font-normal">
+                Discover how our AI-powered solutions have transformed businesses across various industries
+              </p>
+            </div>
+            <CaseStudyGrid />
           </div>
         </section>
 
@@ -372,32 +351,7 @@ export default function Home() {
             <h5 className="text-xl font-semibold text-center text-white mb-8 font-alegreya font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
               Trusted by Industry Leaders
             </h5>
-            <Marquee speed={40} pauseOnHover={true} className="py-6">
-              <div className="flex items-center justify-center mx-8 p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-blue-400/20">
-                <span className="text-2xl">🏢</span>
-                <span className="ml-2 text-white font-semibold">Enterprise Clients</span>
-              </div>
-              <div className="flex items-center justify-center mx-8 p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-purple-400/20">
-                <span className="text-2xl">💄</span>
-                <span className="ml-2 text-white font-semibold">Beauty Brands</span>
-              </div>
-              <div className="flex items-center justify-center mx-8 p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-green-400/20">
-                <span className="text-2xl">🏥</span>
-                <span className="ml-2 text-white font-semibold">Healthcare Providers</span>
-              </div>
-              <div className="flex items-center justify-center mx-8 p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-pink-400/20">
-                <span className="text-2xl">🛒</span>
-                <span className="ml-2 text-white font-semibold">Retail Stores</span>
-              </div>
-              <div className="flex items-center justify-center mx-8 p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-yellow-400/20">
-                <span className="text-2xl">💪</span>
-                <span className="ml-2 text-white font-semibold">Fitness Studios</span>
-              </div>
-              <div className="flex items-center justify-center mx-8 p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-cyan-400/20">
-                <span className="text-2xl">☀️</span>
-                <span className="ml-2 text-white font-semibold">Solar Companies</span>
-              </div>
-            </Marquee>
+            <ClientLogosMarquee />
           </div>
         </section>
 
@@ -447,23 +401,12 @@ export default function Home() {
               </p>
             </div>
 
-            {/* 3-Step Process */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              <div className="text-center p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-blue-400/30">
-                <div className="text-4xl text-blue-400 mb-4">1</div>
-                <h3 className="text-xl font-semibold text-white mb-2">Analyzes</h3>
-                <p className="text-gray-300">Deep analysis of your current processes and opportunities</p>
-              </div>
-              <div className="text-center p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-purple-400/30">
-                <div className="text-4xl text-purple-400 mb-4">2</div>
-                <h3 className="text-xl font-semibold text-white mb-2">Automates</h3>
-                <p className="text-gray-300">Seamless implementation of AI-driven automation solutions</p>
-              </div>
-              <div className="text-center p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-pink-400/30">
-                <div className="text-4xl text-pink-400 mb-4">3</div>
-                <h3 className="text-xl font-semibold text-white mb-2">Optimizes</h3>
-                <p className="text-gray-300">Continuous optimization for maximum efficiency and ROI</p>
-              </div>
+            {/* Process Stepper - Enhanced 4-Step Visualization */}
+            <div className="mb-16">
+              <ProcessStepper
+                currentStep={2}
+                className="bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-gray-700"
+              />
             </div>
 
             {/* Tabbed Service Interface */}
@@ -552,31 +495,8 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Testimonials Marquee */}
-            <Marquee speed={40} pauseOnHover={true} className="py-8" gap={32}>
-              {testimonials.map((testimonial, index) => (
-                <div
-                  key={index}
-                  className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-gray-700 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300 min-w-[400px] max-w-[400px] mx-4"
-                >
-                  <div className="flex items-center mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold">
-                      {testimonial.name.charAt(0)}
-                    </div>
-                    <div className="ml-4">
-                      <h4 className="font-semibold text-white font-alegreya font-bold">{testimonial.name}</h4>
-                      <p className="text-blue-400 text-sm font-alegreya font-medium">{testimonial.company}</p>
-                    </div>
-                  </div>
-                  <div className="flex mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <span key={i} className="text-yellow-400">⭐</span>
-                    ))}
-                  </div>
-                  <p className="text-gray-300 italic font-alegreya font-normal break-words whitespace-normal leading-relaxed">"{testimonial.text}"</p>
-                </div>
-              ))}
-            </Marquee>
+            {/* Testimonials Carousel */}
+            <TestimonialsCarousel />
 
             {/* Industry Certifications */}
             <div className="text-center mt-16">
