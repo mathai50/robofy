@@ -11,6 +11,12 @@
 
 const nextConfig = {
   /**
+   * Output Mode
+   * Configures Next.js for static export
+   */
+  output: 'export',
+  
+  /**
    * React Strict Mode
    * Enables additional React development warnings and checks
    */

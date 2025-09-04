@@ -32,21 +32,21 @@ export default function Home() {
       company: "Bliss Beauty Salon",
       rating: 5,
       text: "Robofy transformed our social media presence. We've seen a 300% increase in bookings since implementing their AI automation.",
-      image: "/api/placeholder/80/80"
+      image: "https://via.placeholder.com/80x80"
     },
     {
       name: "Dr. Michael Chen",
       company: "City Dental Care",
       rating: 5,
       text: "The appointment reminder system has reduced our no-shows by 85%. Incredible ROI and seamless integration.",
-      image: "/api/placeholder/80/80"
+      image: "https://via.placeholder.com/80x80"
     },
     {
       name: "Lisa Rodriguez",
       company: "FitLife Studios",
       rating: 5,
       text: "Member acquisition has never been easier. The personalized workout programs keep our clients engaged and coming back.",
-      image: "/api/placeholder/80/80"
+      image: "https://via.placeholder.com/80x80"
     },
   ]
   const pricingPlans = [
@@ -168,68 +168,98 @@ export default function Home() {
   return (
     <>
       <div className="relative">
-        {/* MagicUI Orbiting Circles Hero Section with Background Lines */}
-        <section className="min-h-[calc(100vh-64px)] w-full relative overflow-hidden flex items-center justify-center">
+        {/* Enhanced Hero Section with Dark Gradient and Neon Accents */}
+        <section className="min-h-[calc(100vh-64px)] w-full relative overflow-hidden flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+          {/* Animated gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 animate-pulse"></div>
+          
           {/* Background Lines covering the entire hero section */}
           <div className="absolute inset-0 z-0 w-full h-full">
             <BackgroundLines className="h-full w-full">{null}</BackgroundLines>
           </div>
           
-          {/* Main container - sidebar removed, so no margin needed */}
-          <div className="relative z-10 w-full">
-            {/* Grid layout for perfect centering */}
-            <div className="grid grid-cols-[auto,1fr] w-full items-center justify-center">
-              {/* Orbit animation with fixed width */}
-              <div className="flex items-center justify-center">
-                <div className="relative w-[360px] h-[360px] flex items-center justify-center pl-11">
-                  {/* Outer orbiting circle with 4 icons clockwise */}
-                  <div className="absolute" style={{ width: '360px', height: '360px' }}>
-                    <OrbitingCircles
-                      radius={180}
-                      duration={25}
-                      delay={0}
-                      iconSize={30}
-                      reverse={false}
-                    >
-                      <GoogleDriveIcon size={30} />
-                      <NotionIcon size={30} />
-                      <WhatsAppIcon size={30} />
-                      <AIIcon size={30} />
-                    </OrbitingCircles>
+          {/* Main container */}
+          <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Left column - Text content */}
+              <div className="text-center lg:text-left">
+                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold mb-6 text-white font-roboto bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
+                  AI-Powered Business Automation
+                </h1>
+                <p className="text-xl sm:text-2xl lg:text-3xl font-semibold mb-8 text-gray-300">
+                  Transform your operations with intelligent automation that works 24/7
+                </p>
+                
+                {/* Primary CTA */}
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
+                  <ShimmerButton
+                    onClick={handleFormOpen}
+                    className="font-semibold text-lg px-8 py-4"
+                    background="linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899)"
+                    shimmerColor="#ffffff"
+                  >
+                    Start Your Free Automation Audit
+                  </ShimmerButton>
+                  <button className="border border-blue-400 text-blue-400 hover:bg-blue-400/10 font-semibold py-4 px-6 rounded-lg transition-all duration-300 text-lg">
+                    Watch Demo
+                  </button>
+                </div>
+                
+                {/* Trust indicators */}
+                <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 text-sm text-gray-400">
+                  <div className="flex items-center">
+                    <span className="text-green-400 mr-2">✓</span>
+                    <span>80% Time Savings</span>
                   </div>
-                  {/* Inner orbiting circle with 4 icons anticlockwise */}
-                  <div className="absolute" style={{ width: '240px', height: '240px' }}>
-                    <OrbitingCircles
-                      radius={120}
-                      duration={20}
-                      delay={5}
-                      iconSize={30}
-                      reverse={true}
-                    >
-                      <GoogleDriveIcon size={30} />
-                      <NotionIcon size={30} />
-                      <WhatsAppIcon size={30} />
-                      <AIIcon size={30} />
-                    </OrbitingCircles>
+                  <div className="flex items-center">
+                    <span className="text-green-400 mr-2">✓</span>
+                    <span>40% Cost Reduction</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-green-400 mr-2">✓</span>
+                    <span>500+ Happy Clients</span>
                   </div>
                 </div>
               </div>
-              {/* Text content centered in available space */}
-              <div className="flex items-center justify-center justify-self-center">
-                <div className="text-center max-w-lg relative">
-                  <h1 className="text-6xl sm:text-7xl lg:text-8xl font-extrabold mb-6 text-white font-roboto">
-                    Robo<ColourfulText text="fy" />
-                  </h1>
-                  <p className="text-3xl sm:text-4xl lg:text-4xl font-extrabold mb-6 text-white font-roboto">
-                    Transform Your Business with{" "}<ColourfulText text="AI-Automation" />
-                  </p>
-                  <div className="flex justify-center mb-6">
-                    <ShimmerButton
-                      onClick={handleFormOpen}
-                      className="font-semibold"
+              
+              {/* Right column - Orbiting animation */}
+              <div className="flex items-center justify-center">
+                <div className="relative w-[300px] h-[300px] sm:w-[360px] sm:h-[360px]">
+                  {/* Outer orbiting circle with 4 icons clockwise */}
+                  <div className="absolute inset-0">
+                    <OrbitingCircles
+                      radius={150}
+                      duration={20}
+                      delay={0}
+                      iconSize={40}
+                      reverse={false}
                     >
-                      Contact Us
-                    </ShimmerButton>
+                      <div className="text-blue-400"><GoogleDriveIcon size={40} /></div>
+                      <div className="text-purple-400"><NotionIcon size={40} /></div>
+                      <div className="text-green-400"><WhatsAppIcon size={40} /></div>
+                      <div className="text-pink-400"><AIIcon size={40} /></div>
+                    </OrbitingCircles>
+                  </div>
+                  {/* Inner orbiting circle with 4 icons anticlockwise */}
+                  <div className="absolute inset-0" style={{ transform: 'scale(0.7)' }}>
+                    <OrbitingCircles
+                      radius={100}
+                      duration={15}
+                      delay={2.5}
+                      iconSize={30}
+                      reverse={true}
+                    >
+                      <div className="text-blue-300"><GoogleDriveIcon size={30} /></div>
+                      <div className="text-purple-300"><NotionIcon size={30} /></div>
+                      <div className="text-green-300"><WhatsAppIcon size={30} /></div>
+                      <div className="text-pink-300"><AIIcon size={30} /></div>
+                    </OrbitingCircles>
+                  </div>
+                  {/* Central icon */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-2xl shadow-blue-500/50">
+                      <Bot size={32} className="text-white" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -237,53 +267,53 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Animated List for Announcements */}
-        <div className="w-full bg-black py-12">
+        {/* Animated List for Announcements with Dark Gradient */}
+        <div className="w-full bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 py-16">
           <div className="max-w-4xl mx-auto px-4">
             <AnimatedList delay={1000} className="mt-8">
-              <div className="p-6 border border-blue-400/30 rounded-xl bg-blue-500/10 backdrop-blur-sm">
+              <div className="p-6 border border-blue-400/50 rounded-xl bg-blue-500/20 backdrop-blur-sm shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 transition-all duration-300">
                 <h3 className="text-xl font-semibold text-white mb-2">New AI Feature Released</h3>
-                <p className="text-blue-200">Enhanced content generation with GPT-4 integration for more natural marketing copy</p>
+                <p className="text-blue-100">Enhanced content generation with GPT-4 integration for more natural marketing copy</p>
               </div>
-              <div className="p-6 border border-green-400/30 rounded-xl bg-green-500/10 backdrop-blur-sm">
+              <div className="p-6 border border-green-400/50 rounded-xl bg-green-500/20 backdrop-blur-sm shadow-lg shadow-green-500/20 hover:shadow-green-500/40 transition-all duration-300">
                 <h3 className="text-xl font-semibold text-white mb-2">System Update Complete</h3>
-                <p className="text-green-200">Improved performance and new dashboard analytics for better insights</p>
+                <p className="text-green-100">Improved performance and new dashboard analytics for better insights</p>
               </div>
-              <div className="p-6 border border-purple-400/30 rounded-xl bg-purple-500/10 backdrop-blur-sm">
+              <div className="p-6 border border-purple-400/50 rounded-xl bg-purple-500/20 backdrop-blur-sm shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40 transition-all duration-300">
                 <h3 className="text-xl font-semibold text-white mb-2">Upcoming Webinar</h3>
-                <p className="text-purple-200">Join our live demo on AI automation strategies for retail businesses - Dec 15th</p>
+                <p className="text-purple-100">Join our live demo on AI automation strategies for retail businesses - Dec 15th</p>
               </div>
             </AnimatedList>
           </div>
         </div>
 
-        {/* Stats preview - Moved outside hero section */}
-        <div className="w-full bg-black">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto py-12">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-blue-400">500+</div>
-              <div className="text-sm text-gray-400">Happy Clients</div>
+        {/* Stats preview with Dark Gradient and Neon Accents */}
+        <div className="w-full bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 py-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto py-8">
+            <div className="text-center p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-blue-400/30 hover:border-blue-400/60 transition-all duration-300">
+              <div className="text-3xl font-bold text-blue-400 mb-2">500+</div>
+              <div className="text-sm text-gray-300">Happy Clients</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-green-400">99%</div>
-              <div className="text-sm text-gray-400">Success Rate</div>
+            <div className="text-center p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-green-400/30 hover:border-green-400/60 transition-all duration-300">
+              <div className="text-3xl font-bold text-green-400 mb-2">99%</div>
+              <div className="text-sm text-gray-300">Success Rate</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-purple-400">24/7</div>
-              <div className="text-sm text-gray-400">AI Support</div>
+            <div className="text-center p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-purple-400/30 hover:border-purple-400/60 transition-all duration-300">
+              <div className="text-3xl font-bold text-purple-400 mb-2">24/7</div>
+              <div className="text-sm text-gray-300">AI Support</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-yellow-400">3x</div>
-              <div className="text-sm text-gray-400">ROI Average</div>
+            <div className="text-center p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-pink-400/30 hover:border-pink-400/60 transition-all duration-300">
+              <div className="text-3xl font-bold text-pink-400 mb-2">3x</div>
+              <div className="text-sm text-gray-300">ROI Average</div>
             </div>
           </div>
         </div>
 
-        {/* Sectors Section with MagicBento */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black">
+        {/* Sectors Section with MagicBento and Dark Gradient */}
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-l sm:text-1xl lg:text-3xl font-bold mb-6 text-white font-alegreya font-bold">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-alegreya font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
                 Sectors We Transform
               </h2>
               <p className="text-lg text-gray-300 max-w-3xl mx-auto font-alegreya font-normal">
@@ -308,62 +338,62 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Social and Automation Icons Dock */}
-        <section className="py-12 bg-black">
+        {/* Social and Automation Icons Dock with Neon Effects */}
+        <section className="py-16 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-center">
-              <Dock direction="middle" iconSize={50} iconMagnification={80} iconDistance={120}>
+              <Dock direction="middle" iconSize={60} iconMagnification={100} iconDistance={140}>
                 <DockIcon>
-                  <Share2 size={24} className="text-white" /> {/* Social Media */}
+                  <div className="text-blue-400 hover:text-blue-300 transition-all duration-300"><Share2 size={28} /></div>
                 </DockIcon>
                 <DockIcon>
-                  <Bot size={24} className="text-white" /> {/* Automation */}
+                  <div className="text-purple-400 hover:text-purple-300 transition-all duration-300"><Bot size={28} /></div>
                 </DockIcon>
                 <DockIcon>
-                  <Mail size={24} className="text-white" /> {/* Email */}
+                  <div className="text-green-400 hover:text-green-300 transition-all duration-300"><Mail size={28} /></div>
                 </DockIcon>
                 <DockIcon>
-                  <Linkedin size={24} className="text-white" /> {/* LinkedIn */}
+                  <div className="text-pink-400 hover:text-pink-300 transition-all duration-300"><Linkedin size={28} /></div>
                 </DockIcon>
                 <DockIcon>
-                  <Twitter size={24} className="text-white" /> {/* Twitter */}
+                  <div className="text-cyan-400 hover:text-cyan-300 transition-all duration-300"><Twitter size={28} /></div>
                 </DockIcon>
                 <DockIcon>
-                  <Instagram size={24} className="text-white" /> {/* Instagram */}
+                  <div className="text-yellow-400 hover:text-yellow-300 transition-all duration-300"><Instagram size={28} /></div>
                 </DockIcon>
               </Dock>
             </div>
           </div>
         </section>
 
-        {/* Client Logos Marquee Section */}
-        <section className="py-12 bg-black overflow-hidden">
+        {/* Client Logos Marquee Section with Dark Gradient */}
+        <section className="py-16 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h5 className="text-lg font-semibold text-center text-white mb-8 font-alegreya font-bold">
+            <h5 className="text-xl font-semibold text-center text-white mb-8 font-alegreya font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
               Trusted by Industry Leaders
             </h5>
-            <Marquee speed={40} pauseOnHover={true} className="py-4">
-              <div className="flex items-center justify-center mx-8">
+            <Marquee speed={40} pauseOnHover={true} className="py-6">
+              <div className="flex items-center justify-center mx-8 p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-blue-400/20">
                 <span className="text-2xl">🏢</span>
                 <span className="ml-2 text-white font-semibold">Enterprise Clients</span>
               </div>
-              <div className="flex items-center justify-center mx-8">
+              <div className="flex items-center justify-center mx-8 p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-purple-400/20">
                 <span className="text-2xl">💄</span>
                 <span className="ml-2 text-white font-semibold">Beauty Brands</span>
               </div>
-              <div className="flex items-center justify-center mx-8">
+              <div className="flex items-center justify-center mx-8 p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-green-400/20">
                 <span className="text-2xl">🏥</span>
                 <span className="ml-2 text-white font-semibold">Healthcare Providers</span>
               </div>
-              <div className="flex items-center justify-center mx-8">
+              <div className="flex items-center justify-center mx-8 p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-pink-400/20">
                 <span className="text-2xl">🛒</span>
                 <span className="ml-2 text-white font-semibold">Retail Stores</span>
               </div>
-              <div className="flex items-center justify-center mx-8">
+              <div className="flex items-center justify-center mx-8 p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-yellow-400/20">
                 <span className="text-2xl">💪</span>
                 <span className="ml-2 text-white font-semibold">Fitness Studios</span>
               </div>
-              <div className="flex items-center justify-center mx-8">
+              <div className="flex items-center justify-center mx-8 p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-cyan-400/20">
                 <span className="text-2xl">☀️</span>
                 <span className="ml-2 text-white font-semibold">Solar Companies</span>
               </div>
@@ -372,10 +402,10 @@ export default function Home() {
         </section>
 
         {/* Automation Features Section */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black">
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-alegreya font-bold">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-alegreya font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
                 How We Automate Your Success
               </h2>
               <p className="text-lg text-gray-300 max-w-3xl mx-auto font-alegreya font-normal">
@@ -405,20 +435,124 @@ export default function Home() {
           </div>
         </section>
 
-        
-
-        {/* Testimonials Section with Marquee */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black">
+        {/* Service Presentation Strategy with Tabbed Interface */}
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-alegreya font-bold">
-                Trusted by Industry Leaders
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-alegreya font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+                Our AI-Powered Services
               </h2>
               <p className="text-lg text-gray-300 max-w-3xl mx-auto font-alegreya font-normal">
-                See what our clients say about their experience with Robofy
+                Comprehensive automation solutions tailored to your business needs
               </p>
             </div>
 
+            {/* 3-Step Process */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+              <div className="text-center p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-blue-400/30">
+                <div className="text-4xl text-blue-400 mb-4">1</div>
+                <h3 className="text-xl font-semibold text-white mb-2">Analyzes</h3>
+                <p className="text-gray-300">Deep analysis of your current processes and opportunities</p>
+              </div>
+              <div className="text-center p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-purple-400/30">
+                <div className="text-4xl text-purple-400 mb-4">2</div>
+                <h3 className="text-xl font-semibold text-white mb-2">Automates</h3>
+                <p className="text-gray-300">Seamless implementation of AI-driven automation solutions</p>
+              </div>
+              <div className="text-center p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-pink-400/30">
+                <div className="text-4xl text-pink-400 mb-4">3</div>
+                <h3 className="text-xl font-semibold text-white mb-2">Optimizes</h3>
+                <p className="text-gray-300">Continuous optimization for maximum efficiency and ROI</p>
+              </div>
+            </div>
+
+            {/* Tabbed Service Interface */}
+            <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-gray-700 p-6">
+              <div className="flex flex-wrap gap-2 mb-8">
+                <button className="px-6 py-3 bg-blue-500/20 border border-blue-400/50 rounded-lg text-blue-400 font-semibold hover:bg-blue-500/30 transition-all duration-300">
+                  AI Marketing Automation
+                </button>
+                <button className="px-6 py-3 bg-purple-500/20 border border-purple-400/50 rounded-lg text-purple-400 font-semibold hover:bg-purple-500/30 transition-all duration-300">
+                  NextJS/React Development
+                </button>
+                <button className="px-6 py-3 bg-green-500/20 border border-green-400/50 rounded-lg text-green-400 font-semibold hover:bg-green-500/30 transition-all duration-300">
+                  CRM Automation
+                </button>
+                <button className="px-6 py-3 bg-pink-500/20 border border-pink-400/50 rounded-lg text-pink-400 font-semibold hover:bg-pink-500/30 transition-all duration-300">
+                  Content Automation
+                </button>
+                <button className="px-6 py-3 bg-cyan-500/20 border border-cyan-400/50 rounded-lg text-cyan-400 font-semibold hover:bg-cyan-500/30 transition-all duration-300">
+                  Process Workflows
+                </button>
+              </div>
+
+              {/* Tab Content - AI Marketing Automation (default) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <h3 className="text-2xl font-semibold text-white mb-4">AI Marketing Automation</h3>
+                  <p className="text-gray-300 mb-4">
+                    Transform your marketing with intelligent automation that delivers personalized experiences at scale. Our AI-driven solutions increase engagement and conversions while reducing manual effort.
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span className="text-gray-400">Before Automation</span>
+                      <span className="text-red-400">40% Conversion Rate</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-400">After Automation</span>
+                      <span className="text-green-400">85% Conversion Rate</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-xl p-6 border border-blue-400/30">
+                  <h4 className="text-lg font-semibold text-white mb-2">Key Features</h4>
+                  <ul className="text-gray-300 space-y-2">
+                    <li>• Personalized customer journeys</li>
+                    <li>• Multi-channel campaign management</li>
+                    <li>• Real-time analytics and insights</li>
+                    <li>• Predictive lead scoring</li>
+                    <li>• Automated A/B testing</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        
+
+        {/* Enhanced Testimonials Section with Trust Building Elements */}
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-alegreya font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+                Trusted by Industry Leaders
+              </h2>
+              <p className="text-lg text-gray-300 max-w-3xl mx-auto font-alegreya font-normal">
+                Real results from businesses that transformed with Robofy
+              </p>
+            </div>
+
+            {/* Success Metrics */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+              <div className="text-center p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-blue-400/30">
+                <div className="text-4xl font-bold text-blue-400 mb-2">80%</div>
+                <h3 className="text-xl font-semibold text-white mb-2">Time Savings</h3>
+                <p className="text-gray-300">Average reduction in manual tasks</p>
+              </div>
+              <div className="text-center p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-green-400/30">
+                <div className="text-4xl font-bold text-green-400 mb-2">40%</div>
+                <h3 className="text-xl font-semibold text-white mb-2">Cost Reduction</h3>
+                <p className="text-gray-300">Average operational cost savings</p>
+              </div>
+              <div className="text-center p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-purple-400/30">
+                <div className="text-4xl font-bold text-purple-400 mb-2">3x</div>
+                <h3 className="text-xl font-semibold text-white mb-2">ROI Increase</h3>
+                <p className="text-gray-300">Average return on investment</p>
+              </div>
+            </div>
+
+            {/* Testimonials Marquee */}
             <Marquee speed={40} pauseOnHover={true} className="py-8" gap={32}>
               {testimonials.map((testimonial, index) => (
                 <div
@@ -443,41 +577,82 @@ export default function Home() {
                 </div>
               ))}
             </Marquee>
+
+            {/* Industry Certifications */}
+            <div className="text-center mt-16">
+              <h3 className="text-2xl font-semibold text-white mb-6">Industry Recognized & Certified</h3>
+              <div className="flex flex-wrap justify-center gap-6">
+                <div className="p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-green-400/30">
+                  <span className="text-green-400 font-semibold">AI Ethics Certified</span>
+                </div>
+                <div className="p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-blue-400/30">
+                  <span className="text-blue-400 font-semibold">GDPR Compliant</span>
+                </div>
+                <div className="p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-purple-400/30">
+                  <span className="text-purple-400 font-semibold">ISO 27001 Certified</span>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
         {/* Pricing Section - Hidden per request */}
 
-        {/* Final CTA Section */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black">
+        {/* Final CTA Section with Conversion Optimization */}
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-6 text-white font-alegreya font-bold">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-alegreya font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
               Ready to Transform Your Business?
             </h2>
-            <p className="text-xl text-white mb-8 font-alegreya font-normal">
-              Join thousands of businesses already revolutionizing their digital marketing with Robofy
+            <p className="text-xl text-gray-300 mb-8 font-alegreya font-normal">
+              Join thousands of businesses already revolutionizing their operations with Robofy
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            
+            {/* Multiple CTA Options for A/B Testing */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               <ShimmerButton
                 onClick={handleFormOpen}
-                className="font-semibold text-lg"
-                background="rgba(255, 255, 255, 1)"
-                shimmerColor="#3b82f6"
+                className="font-semibold text-lg py-4"
+                background="linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899)"
+                shimmerColor="#ffffff"
               >
-                Start Free Trial
+                Start Free Automation Audit
               </ShimmerButton>
-              <button className="border border-white text-white hover:bg-white/10 font-semibold py-4 px-10 rounded-lg transition-all duration-300 text-lg font-alegreya font-medium">
-                Watch Demo
+              <ShimmerButton
+                onClick={handleFormOpen}
+                className="font-semibold text-lg py-4"
+                background="linear-gradient(45deg, #10b981, #06b6d4, #8b5cf6)"
+                shimmerColor="#ffffff"
+              >
+                Get Personalized Demo
+              </ShimmerButton>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button className="border border-blue-400 text-blue-400 hover:bg-blue-400/10 font-semibold py-4 px-8 rounded-lg transition-all duration-300 text-lg">
+                Watch Case Studies
+              </button>
+              <button className="border border-green-400 text-green-400 hover:bg-green-400/10 font-semibold py-4 px-8 rounded-lg transition-all duration-300 text-lg">
+                Compare Plans
+              </button>
+            </div>
+
+            {/* Live Chat Integration Space */}
+            <div className="mt-12 p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-gray-700">
+              <h4 className="text-lg font-semibold text-white mb-2">Need Immediate Assistance?</h4>
+              <p className="text-gray-300 mb-4">Our AI experts are ready to help you 24/7</p>
+              <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300">
+                Start Live Chat
               </button>
             </div>
           </div>
         </section>
 
         {/* MagicBento Showcase Section */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black">
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-6 text-white font-alegreya font-bold">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-alegreya font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
                 Interactive Platform Features
               </h2>
               <p className="text-lg text-gray-300 max-w-3xl mx-auto font-alegreya font-normal">

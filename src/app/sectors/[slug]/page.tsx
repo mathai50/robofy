@@ -95,8 +95,8 @@ export default function IndustryDetailPage({ params }: { params: { slug: string 
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Industry Not Found</h1>
           <p className="text-gray-300 mb-8">The requested industry page does not exist.</p>
-          <Link href="/industries" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-all">
-            Back to Industries
+          <Link href="/sectors" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-all">
+            Back to Sectors
           </Link>
         </div>
       </div>
@@ -107,11 +107,11 @@ export default function IndustryDetailPage({ params }: { params: { slug: string 
     <div className="min-h-screen bg-black text-white py-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
-        <Link 
-          href="/industries"
+        <Link
+          href="/sectors"
           className="inline-flex items-center text-blue-400 hover:text-blue-300 mb-8 font-source-code-pro"
         >
-          ← Back to Industries
+          ← Back to Sectors
         </Link>
 
         {/* Header */}
