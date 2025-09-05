@@ -17,6 +17,8 @@ module.exports = {
   	extend: {
   		colors: {
   			primary: {
+  				600: '#2563eb',
+  				700: '#1d4ed8',
   				background: {
   					dark: '#000000',
   					light: '#FFFFFF'
@@ -27,13 +29,44 @@ module.exports = {
   					'3': '#00FFFF'
   				},
   				status: {
-  					success: '#00CC00',
-  					warning: '#FF9900',
-  					error: '#FF3333'
+  					success: '#059669',
+  					warning: '#ea580c',
+  					error: '#dc2626'
   				},
   				neutral: '#666666',
   				DEFAULT: 'hsl(var(--primary))',
   				foreground: 'hsl(var(--primary-foreground))'
+  			},
+  			blue: {
+  				600: '#2563eb',
+  				700: '#1d4ed8',
+  			},
+  			purple: {
+  				500: '#8b5cf6',
+  				600: '#7c3aed',
+  			},
+  			green: {
+  				600: '#059669',
+  				700: '#047857',
+  			},
+  			orange: {
+  				600: '#ea580c',
+  				700: '#c2410c',
+  			},
+  			red: {
+  				600: '#dc2626',
+  				700: '#b91c1c',
+  			},
+  			gray: {
+  				100: '#f3f4f6',
+  				200: '#e5e7eb',
+  				300: '#d1d5db',
+  				400: '#9ca3af',
+  				500: '#6b7280',
+  				600: '#4b5563',
+  				700: '#374151',
+  				800: '#1f2937',
+  				900: '#111827',
   			},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -88,6 +121,14 @@ module.exports = {
   			alegreya: [
   				'Alegreya',
   				'serif'
+  			],
+  			playfair: [
+  				'Playfair Display',
+  				'serif'
+  			],
+  			'source-sans': [
+  				'Source Sans Pro',
+  				'sans-serif'
   			]
   		},
   		spacing: {
@@ -107,9 +148,24 @@ module.exports = {
   			'glow-accent': '0 0 20px rgba(0, 255, 0, 0.5)'
   		},
   		borderRadius: {
-  			lg: 'var(--radius)',
-  			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
+  		  lg: 'var(--radius)',
+  		  md: 'calc(var(--radius) - 2px)',
+  		  sm: 'calc(var(--radius) - 4px)'
+  		},
+  		animation: {
+  		  'fade-in-up': 'fadeInUp 0.6s ease-out forwards'
+  		},
+  		keyframes: {
+  		  fadeInUp: {
+  		    '0%': {
+  		      opacity: '0',
+  		      transform: 'translateY(20px)'
+  		    },
+  		    '100%': {
+  		      opacity: '1',
+  		      transform: 'translateY(0)'
+  		    }
+  		  }
   		}
   	}
   },

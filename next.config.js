@@ -50,33 +50,13 @@ const nextConfig = {
   /**
    * Security Headers
    * Configures HTTP headers for security
+   * Note: Headers are disabled for static export (output: 'export')
+   * Headers should be configured on the server hosting the static files
    */
   async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY',
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block',
-          },
-          {
-            key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin',
-          },
-          // Content Security Policy (CSP) can be added here
-          // Note: CSP headers should be carefully configured based on actual needs
-        ],
-      },
-    ];
+    // Headers are not supported with output: 'export'
+    // Configure headers on your hosting platform instead
+    return [];
   },
 
   /**

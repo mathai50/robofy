@@ -1,40 +1,26 @@
-'use client';
+import type { Metadata } from 'next';
+import ContactForm from '@/components/ui/ContactForm';
+import CalendarWidget from '@/components/ui/CalendarWidget';
+import ContactDetails from '@/components/ui/ContactDetails';
 
-import React, { useState } from 'react';
-import FormModal from '@/components/FormModal';
+export const metadata: Metadata = {
+  title: 'Contact Us - Robofy',
+  description: 'Get in touch with Robofy to discuss AI-powered digital marketing solutions. Schedule a demo, send us a message, or reach out directly. We\'re here to help transform your business.',
+  keywords: 'contact Robofy, AI marketing, digital marketing, schedule demo, business inquiry',
+  openGraph: {
+    title: 'Contact Us - Robofy',
+    description: 'Get in touch with Robofy to discuss AI-powered digital marketing solutions.',
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Contact Us - Robofy',
+    description: 'Get in touch with Robofy to discuss AI-powered digital marketing solutions.',
+  },
+};
 
 export default function ContactPage() {
-  const [isFormOpen, setIsFormOpen] = useState(false);
-
-  const handleFormOpen = () => {
-    setIsFormOpen(true);
-  };
-
-  const handleFormClose = () => {
-    setIsFormOpen(false);
-  };
-
-  const contactInfo = [
-    {
-      icon: '📞',
-      title: 'Phone',
-      details: '+1 (555) 123-ROBO',
-      description: 'Mon-Fri from 9am to 5pm'
-    },
-    {
-      icon: '✉️',
-      title: 'Email',
-      details: 'hello@robofy.com',
-      description: 'Send us a message anytime'
-    },
-    {
-      icon: '🏢',
-      title: 'Office',
-      details: '123 AI Street',
-      description: 'Tech City, TC 12345'
-    }
-  ];
-
   return (
     <>
       {/* Enhanced Hero Section */}
@@ -56,44 +42,20 @@ export default function ContactPage() {
 
       <div className="min-h-screen bg-black text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Contact Information */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-            {contactInfo.map((item, index) => (
-              <div
-                key={index}
-                className="bg-white/5 backdrop-blur-sm rounded-xl p-8 text-center border border-gray-700 hover:border-blue-400 transition-all duration-300 hover:scale-105"
-              >
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full mb-6 text-2xl">
-                  {item.icon}
-                </div>
-                <h3 className="text-xl font-semibold mb-3 text-white font-source-code-pro">
-                  {item.title}
-                </h3>
-                <p className="text-blue-400 font-medium mb-3 text-lg font-source-code-pro">
-                  {item.details}
-                </p>
-                <p className="text-gray-300 text-sm font-source-code-pro">
-                  {item.description}
-                </p>
-              </div>
-            ))}
-          </div>
+          {/* Main Content Grid - Contact Form, Calendar, and Details */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
+            {/* Contact Form - Left Column */}
+            <div className="lg:col-span-2">
+              <ContactForm />
+            </div>
 
-          {/* Contact Form CTA */}
-          <div className="bg-white/5 backdrop-blur-sm rounded-xl p-12 border border-gray-700 mb-20">
-            <div className="text-center">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-white font-source-code-pro">
-                Let's Start a Conversation
-              </h2>
-              <p className="text-lg text-gray-300 mb-10 max-w-2xl mx-auto font-source-code-pro">
-                Fill out our quick contact form and one of our AI specialists will get back to you within 24 hours to discuss your specific needs.
-              </p>
-              <button
-                onClick={handleFormOpen}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-12 rounded-lg transition-all duration-300 transform hover:scale-105 text-lg font-source-code-pro"
-              >
-                📩 Get In Touch
-              </button>
+            {/* Right Column - Calendar and Contact Details */}
+            <div className="space-y-8">
+              <CalendarWidget 
+                calendlyUsername="robofy" 
+                eventType="meeting"
+              />
+              <ContactDetails />
             </div>
           </div>
 
@@ -123,9 +85,6 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-
-      {/* Form Modal */}
-      <FormModal isOpen={isFormOpen} onClose={handleFormClose} />
     </>
   );
 }

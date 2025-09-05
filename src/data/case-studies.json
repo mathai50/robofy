@@ -9,13 +9,19 @@
       "45% fewer fulfillment errors",
       "30% increase in on-time deliveries"
     ],
+    "roiMetrics": [
+      { "metric": "Processing Time Reduction", "value": 70, "suffix": "%" },
+      { "metric": "Error Reduction", "value": 45, "suffix": "%" },
+      { "metric": "Delivery Improvement", "value": 30, "suffix": "%" }
+    ],
     "technologies": [
       "Python RPA scripts",
       "AWS Lambda",
       "PostgreSQL",
       "React dashboard integration"
     ],
-    "imageUrl": "https://via.placeholder.com/400x250/3b82f6/ffffff?text=E-Commerce+Automation",
+    "thumbnailUrl": "https://via.placeholder.com/400x250/3b82f6/ffffff?text=E-Commerce+Automation",
+    "detailsUrl": "/case-studies/order-processing-ecommerce",
     "slug": "order-processing-ecommerce"
   },
   {
@@ -28,13 +34,19 @@
       "50% reduction in average response time",
       "25% increase in customer satisfaction scores"
     ],
+    "roiMetrics": [
+      { "metric": "Inquiries Automated", "value": 60, "suffix": "%" },
+      { "metric": "Response Time Reduction", "value": 50, "suffix": "%" },
+      { "metric": "Satisfaction Increase", "value": 25, "suffix": "%" }
+    ],
     "technologies": [
       "Dialogflow CX",
       "Node.js backend",
       "Microsoft Azure Cognitive Services",
       "Intercom integration"
     ],
-    "imageUrl": "https://via.placeholder.com/400x250/10b981/ffffff?text=Finance+Chatbot",
+    "thumbnailUrl": "https://via.placeholder.com/400x250/10b981/ffffff?text=Finance+Chatbot",
+    "detailsUrl": "/case-studies/ai-chatbot-finance",
     "slug": "ai-chatbot-finance"
   },
   {
@@ -47,13 +59,19 @@
       "90% accuracy in data extraction",
       "40% faster invoice approval cycle"
     ],
+    "roiMetrics": [
+      { "metric": "Manual Work Reduction", "value": 80, "suffix": "%" },
+      { "metric": "Data Accuracy", "value": 90, "suffix": "%" },
+      { "metric": "Approval Speed Increase", "value": 40, "suffix": "%" }
+    ],
     "technologies": [
       "Tesseract OCR",
       "UiPath Orchestrator",
       "MongoDB",
       "Custom React reporting portal"
     ],
-    "imageUrl": "https://via.placeholder.com/400x250/f59e0b/ffffff?text=Manufacturing+Automation",
+    "thumbnailUrl": "https://via.placeholder.com/400x250/f59e0b/ffffff?text=Manufacturing+Automation",
+    "detailsUrl": "/case-studies/invoice-processing-manufacturing",
     "slug": "invoice-processing-manufacturing"
   },
   {
@@ -66,13 +84,19 @@
       "100% compliance with document collection",
       "20% faster time-to-productivity for new hires"
     ],
+    "roiMetrics": [
+      { "metric": "Admin Time Reduction", "value": 75, "suffix": "%" },
+      { "metric": "Compliance Rate", "value": 100, "suffix": "%" },
+      { "metric": "Productivity Gain", "value": 20, "suffix": "%" }
+    ],
     "technologies": [
       "Form.io dynamic forms",
       "Python Flask API",
       "AWS S3 for document storage",
       "Slack and Microsoft Teams bots"
     ],
-    "imageUrl": "https://via.placeholder.com/400x250/ec4899/ffffff?text=HR+Automation",
+    "thumbnailUrl": "https://via.placeholder.com/400x250/ec4899/ffffff?text=HR+Automation",
+    "detailsUrl": "/case-studies/hr-onboarding-automation",
     "slug": "hr-onboarding-automation"
   },
   {
@@ -85,13 +109,19 @@
       "50% faster patient registration",
       "30% improvement in billing accuracy"
     ],
+    "roiMetrics": [
+      { "metric": "Error Reduction", "value": 65, "suffix": "%" },
+      { "metric": "Registration Speed", "value": 50, "suffix": "%" },
+      { "metric": "Billing Accuracy", "value": 30, "suffix": "%" }
+    ],
     "technologies": [
       "HL7 FHIR API",
       "Python data pipelines",
       "AWS HealthLake",
       "React admin dashboard"
     ],
-    "imageUrl": "https://via.placeholder.com/400x250/06b6d4/ffffff?text=Healthcare+Automation",
+    "thumbnailUrl": "https://via.placeholder.com/400x250/06b6d4/ffffff?text=Healthcare+Automation",
+    "detailsUrl": "/case-studies/patient-data-healthcare",
     "slug": "patient-data-healthcare"
   },
   {
@@ -104,13 +134,19 @@
       "99.9% deployment success rate",
       "40% faster time-to-market for features"
     ],
+    "roiMetrics": [
+      { "metric": "Deployment Time Reduction", "value": 90, "suffix": "%" },
+      { "metric": "Success Rate", "value": 99.9, "suffix": "%" },
+      { "metric": "Time-to-Market Improvement", "value": 40, "suffix": "%" }
+    ],
     "technologies": [
       "GitHub Actions",
       "Docker containers",
       "Kubernetes orchestration",
       "Terraform infrastructure"
     ],
-    "imageUrl": "https://via.placeholder.com/400x250/8b5cf6/ffffff?text=Tech+Automation",
+    "thumbnailUrl": "https://via.placeholder.com/400x250/8b5cf6/ffffff?text=Tech+Automation",
+    "detailsUrl": "/case-studies/cicd-pipeline-technology",
     "slug": "cicd-pipeline-technology"
   }
 ]

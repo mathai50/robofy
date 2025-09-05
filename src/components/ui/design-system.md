@@ -180,6 +180,104 @@ import { Badge } from '@/components/ui';
 **Props:**
 - `variant`: 'default' | 'secondary' | 'destructive' | 'outline' (default: 'default')
 
+## UI Utilities
+
+### EnhancedLinearProgressBar
+
+An enhanced progress bar with visual cues and percentage positioning.
+
+```typescript
+import { EnhancedLinearProgressBar } from '@/components/ui';
+
+// Usage
+<EnhancedLinearProgressBar
+  value={75}
+  label="Completion"
+  showValue={true}
+  color="blue"
+  size="md"
+/>
+```
+
+**Props:**
+- `value`: number (0-100)
+- `label`: string
+- `showValue`: boolean (default: true)
+- `color`: 'blue' | 'green' | 'orange' | 'red' | 'neutral' (default: 'blue')
+- `size`: 'sm' | 'md' | 'lg' (default: 'md')
+- `description`: string (optional)
+- `tooltip`: string (optional)
+- `trend`: 'up' | 'down' | 'steady' (optional)
+- `isLoading`: boolean (default: false)
+
+### ResponsiveLayout & ResponsiveColumn
+
+Mobile-first responsive layout utilities that stack on mobile and arrange side-by-side on desktop.
+
+```typescript
+import { ResponsiveLayout, ResponsiveColumn } from '@/components/ui';
+
+// Usage
+<ResponsiveLayout gap="md" alignItems="center">
+  <ResponsiveColumn width="1/2">
+    {/* Content */}
+  </ResponsiveColumn>
+  <ResponsiveColumn width="1/2">
+    {/* Visuals */}
+  </ResponsiveColumn>
+</ResponsiveLayout>
+```
+
+**ResponsiveLayout Props:**
+- `gap`: 'sm' | 'md' | 'lg' | 'xl' (default: 'md')
+- `alignItems`: 'start' | 'center' | 'end' | 'stretch' (default: 'center')
+- `reverseOnMobile`: boolean (default: false)
+
+**ResponsiveColumn Props:**
+- `width`: 'full' | '1/2' | '1/3' | '2/3' | '1/4' | '3/4' (default: 'full')
+- `order`: number (optional)
+
+### TouchTarget
+
+Ensures touch-friendly sizing with minimum 44px touch targets.
+
+```typescript
+import { TouchTarget } from '@/components/ui';
+
+// Usage
+<TouchTarget minSize="md" onClick={() => console.log('Tapped')}>
+  Tap me
+</TouchTarget>
+```
+
+**Props:**
+- `minSize`: 'sm' | 'md' | 'lg' | 'xl' (default: 'md')
+- `as`: 'button' | 'div' | 'span' | 'a' (default: 'button')
+- `href`: string (optional, for 'a' tag)
+- `onClick`: () => void (optional)
+- `type`: 'button' | 'submit' | 'reset' (default: 'button')
+- `disabled`: boolean (default: false)
+
+### ResponsiveText
+
+Responsive typography scale with mobile-first breakpoints.
+
+```typescript
+import { ResponsiveText } from '@/components/ui';
+
+// Usage
+<ResponsiveText as="h2" size="3xl" weight="bold" align="center">
+  Responsive heading
+</ResponsiveText>
+```
+
+**Props:**
+- `as`: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'div' (default: 'p')
+- `size`: 'xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' (default: 'base')
+- `weight`: 'light' | 'normal' | 'medium' | 'semibold' | 'bold' | 'extrabold' (default: 'normal')
+- `align`: 'left' | 'center' | 'right' | 'justify' (default: 'left')
+- `color`: 'default' | 'muted' | 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'error' (default: 'default')
+
 ## Styling
 
 All components use Tailwind CSS for styling and follow the Robofy design guidelines:
