@@ -9,6 +9,7 @@ agents:
   - pm
   - architect
   - po
+  - seo-analyst
 workflows:
   - greenfield-service.yaml
   - brownfield-service.yaml

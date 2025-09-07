@@ -1,15 +1,20 @@
 #!/usr/bin/env python3
 """
 Robofy Autoblogging Script
-Generates AI content and saves as static files for Next.js consumption.
+Generates AI content using multiple AI providers and saves as static files for Next.js consumption.
 """
 
 import os
 import json
 import logging
+import asyncio
 from datetime import datetime
 from typing import List, Dict, Optional
 import random
+
+# Import AI service
+from ai_service import ai_service
+from providers.base_provider import AIProviderError
 
 # Set up logging
 logging.basicConfig(
@@ -23,7 +28,7 @@ class AutobloggingGenerator:
         self.content_dir = content_dir
         os.makedirs(content_dir, exist_ok=True)
         
-        # Industry templates for content generation
+        # Industry templates for content generation (fallback if AI services are unavailable)
         self.industry_templates = {
             "beauty": {
                 "topics": [
@@ -81,8 +86,8 @@ class AutobloggingGenerator:
             }
         }
 
-    def generate_content(self, industry: str, content_type: str = "blog") -> Dict:
-        """Generate AI content for a specific industry and content type."""
+    async def generate_content(self, industry: str, content_type: str = "blog") -> Dict:
+        """Generate AI content for a specific industry and content type using AI services."""
         if industry not in self.industry_templates:
             raise ValueError(f"Unknown industry: {industry}")
         
@@ -90,23 +95,40 @@ class AutobloggingGenerator:
         topic = random.choice(template["topics"])
         keywords = template["keywords"]
         
-        # Generate content based on type
-        if content_type == "blog":
-            content = self._generate_blog_post(topic, industry, keywords)
-        elif content_type == "industry_page":
-            content = self._generate_industry_page(industry, keywords)
-        elif content_type == "service":
-            content = self._generate_service_page(industry, keywords)
-        else:
-            content = self._generate_generic_content(topic, industry, keywords)
-        
-        return {
-            "title": topic,
-            "content": content,
-            "industry": industry,
-            "content_type": content_type,
-            "generated_at": datetime.now().isoformat()
-        }
+        # Try to generate content using AI service first
+        try:
+            prompt = self._create_ai_prompt(topic, industry, content_type, keywords)
+            ai_content = await ai_service.generate_text(prompt)
+            
+            return {
+                "title": topic,
+                "content": ai_content,
+                "industry": industry,
+                "content_type": content_type,
+                "generated_at": datetime.now().isoformat(),
+                "ai_generated": True
+            }
+            
+        except AIProviderError as e:
+            logger.warning(f"AI service unavailable, using fallback templates: {str(e)}")
+            # Fall back to static templates if AI service is unavailable
+            if content_type == "blog":
+                content = self._generate_blog_post(topic, industry, keywords)
+            elif content_type == "industry_page":
+                content = self._generate_industry_page(industry, keywords)
+            elif content_type == "service":
+                content = self._generate_service_page(industry, keywords)
+            else:
+                content = self._generate_generic_content(topic, industry, keywords)
+            
+            return {
+                "title": topic,
+                "content": content,
+                "industry": industry,
+                "content_type": content_type,
+                "generated_at": datetime.now().isoformat(),
+                "ai_generated": False
+            }
 
     def _generate_blog_post(self, topic: str, industry: str, keywords: List[str]) -> str:
         """Generate a blog post with AI-style content."""
@@ -227,8 +249,62 @@ Key topics include:
         logger.info(f"Content saved to: {filepath}")
         return filepath
 
-    def generate_batch_content(self, industries: List[str], count_per_industry: int = 3):
-        """Generate multiple content pieces for multiple industries."""
+    def _create_ai_prompt(self, topic: str, industry: str, content_type: str, keywords: List[str]) -> str:
+        """Create a detailed prompt for AI content generation."""
+        prompt_templates = {
+            "blog": f"""
+            Write a comprehensive blog post about {topic} for the {industry} industry.
+            
+            Requirements:
+            - Write in a professional yet engaging tone
+            - Include practical insights and actionable advice
+            - Use markdown formatting with headings, subheadings, and bullet points
+            - Optimize for SEO with relevant keywords: {', '.join(keywords)}
+            - Include a compelling introduction and conclusion
+            - Target length: 800-1200 words
+            
+            Focus on how AI and automation can benefit {industry} businesses specifically.
+            """,
+            
+            "industry_page": f"""
+            Create a detailed industry page for {industry} businesses focusing on {topic}.
+            
+            Requirements:
+            - Write in a persuasive, conversion-focused tone
+            - Structure as a landing page with clear sections
+            - Include benefits, features, and use cases
+            - Add social proof and success metrics
+            - Use markdown formatting with headings and bullet points
+            - Optimize for SEO with keywords: {', '.join(keywords)}
+            - Target length: 1000-1500 words
+            
+            Position Robofy as the leading AI automation solution for {industry} businesses.
+            """,
+            
+            "service": f"""
+            Develop a comprehensive service description page for {topic} in the {industry} industry.
+            
+            Requirements:
+            - Write in a professional, client-focused tone
+            - Detail service offerings, features, and benefits
+            - Include pricing tiers and packages if appropriate
+            - Add call-to-action elements
+            - Use markdown formatting with clear sections
+            - Optimize for SEO with keywords: {', '.join(keywords)}
+            - Target length: 600-1000 words
+            
+            Highlight how our AI services solve specific {industry} business challenges.
+            """
+        }
+        
+        return prompt_templates.get(content_type, f"""
+        Generate high-quality content about {topic} for the {industry} industry.
+        Focus on AI automation benefits and include keywords: {', '.join(keywords)}.
+        Use markdown formatting and professional tone.
+        """)
+    
+    async def generate_batch_content(self, industries: List[str], count_per_industry: int = 3):
+        """Generate multiple content pieces for multiple industries using AI services."""
         generated_files = []
         
         for industry in industries:
@@ -238,16 +314,19 @@ Key topics include:
                     content_types = ["blog", "industry_page", "service"]
                     content_type = content_types[i % len(content_types)]
                     
-                    content = self.generate_content(industry, content_type)
+                    content = await self.generate_content(industry, content_type)
                     filepath = self.save_content(content)
-                    generated_files.append(filepath)
+                    generated_files.append({
+                        "filepath": filepath,
+                        "ai_generated": content.get("ai_generated", False)
+                    })
                     
                 except Exception as e:
                     logger.error(f"Error generating content for {industry}: {str(e)}")
         
         return generated_files
 
-def main():
+async def main():
     """Main function to run autoblogging generation."""
     generator = AutobloggingGenerator()
     
@@ -255,10 +334,22 @@ def main():
     industries = list(generator.industry_templates.keys())
     logger.info(f"Generating content for industries: {industries}")
     
-    generated_files = generator.generate_batch_content(industries, count_per_industry=2)
+    # Check AI service status
+    try:
+        status = await ai_service.get_provider_status()
+        logger.info(f"AI service status: {status}")
+    except Exception as e:
+        logger.warning(f"Could not get AI service status: {e}")
+    
+    generated_files = await generator.generate_batch_content(industries, count_per_industry=2)
+    
+    # Count AI-generated vs fallback content
+    ai_generated = sum(1 for file in generated_files if file.get("ai_generated", False))
+    fallback = len(generated_files) - ai_generated
     
     logger.info(f"Successfully generated {len(generated_files)} content files")
-    print(f"✅ Autoblogging complete! Generated {len(generated_files)} files in src/content/")
+    logger.info(f"AI-generated: {ai_generated}, Fallback templates: {fallback}")
+    print(f"✅ Autoblogging complete! Generated {len(generated_files)} files ({ai_generated} AI-generated, {fallback} fallback) in src/content/")
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

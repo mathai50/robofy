@@ -1,0 +1,253 @@
+# <!-- Powered by BMAD™ Core -->
+template:
+  id: seo-competition-analysis-template-v1
+  name: SEO Competition Analysis Report
+  version: 1.0
+  output:
+    format: markdown
+    filename: docs/seo-competition-analysis.md
+    title: "SEO Competition Analysis Report: {{target_domain}}"
+
+workflow:
+  mode: interactive
+  elicitation: advanced-elicitation
+  custom_elicitation:
+    title: "SEO Competition Analysis Elicitation Actions"
+    options:
+      - "Deep dive on competitor's technical SEO structure"
+      - "Analyze competitor's backlink profile and authority"
+      - "Conduct comprehensive keyword gap analysis"
+      - "Evaluate competitor's content strategy and topical authority"
+      - "Assess competitor's local SEO presence (if applicable)"
+      - "Analyze competitor's mobile and page experience metrics"
+      - "Explore competitor's SERP features and rich results"
+      - "Proceed to next section"
+
+sections:
+  - id: executive-summary
+    title: Executive Summary
+    instruction: Provide high-level SEO insights, main competitive advantages and weaknesses, and recommended SEO actions. Write this section LAST after completing all analysis.
+
+  - id: analysis-scope
+    title: Analysis Scope & Methodology
+    instruction: Define the scope of SEO competitive analysis, including target competitors, analysis timeframe, tools used, and key metrics tracked.
+    sections:
+      - id: target-competitors
+        title: Target Competitors
+        instruction: |
+          List competitors analyzed:
+          - Primary Competitor: {{primary_competitor}}
+          - Secondary Competitors: {{secondary_competitors}}
+          - Tertiary/Indirect Competitors: {{indirect_competitors}}
+      - id: analysis-timeframe
+        title: Analysis Timeframe
+        instruction: Specify the period covered by this analysis
+      - id: tools-methodology
+        title: Tools & Methodology
+        instruction: |
+          Describe SEO tools and methods used:
+          - SEO Analysis Tools: {{seo_tools}}
+          - Data Collection Methods: {{data_methods}}
+          - Confidence Levels: {{confidence_ratings}}
+
+  - id: domain-metrics-comparison
+    title: Domain Metrics Comparison
+    instruction: Compare key domain-level metrics across competitors
+    type: table
+    columns:
+      [
+        "Metric",
+        "Your Domain",
+        "{{competitor_1}}",
+        "{{competitor_2}}",
+        "{{competitor_3}}",
+      ]
+    rows:
+      - category: "Authority Metrics"
+        items:
+          - ["Domain Rating (DR)", "{{dr_score}}", "{{dr_score}}", "{{dr_score}}", "{{dr_score}}"]
+          - ["Domain Authority (DA)", "{{da_score}}", "{{da_score}}", "{{da_score}}", "{{da_score}}"]
+          - ["Referring Domains", "{{ref_domains}}", "{{ref_domains}}", "{{ref_domains}}", "{{ref_domains}}"]
+          - ["Total Backlinks", "{{total_links}}", "{{total_links}}", "{{total_links}}", "{{total_links}}"]
+      - category: "Traffic Metrics"
+        items:
+          - ["Estimated Monthly Traffic", "{{monthly_traffic}}", "{{monthly_traffic}}", "{{monthly_traffic}}", "{{monthly_traffic}}"]
+          - ["Top Traffic Countries", "{{top_countries}}", "{{top_countries}}", "{{top_countries}}", "{{top_countries}}"]
+          - ["Traffic Value", "{{traffic_value}}", "{{traffic_value}}", "{{traffic_value}}", "{{traffic_value}}"]
+
+  - id: keyword-analysis
+    title: Keyword Analysis
+    sections:
+      - id: top-keywords
+        title: Top Performing Keywords
+        instruction: Analyze competitor's top-ranking keywords and search volumes
+        type: table
+        columns:
+          [
+            "Keyword",
+            "Search Volume",
+            "Difficulty",
+            "CPC",
+            "{{competitor_1}} Position",
+            "{{competitor_2}} Position",
+            "Your Position",
+          ]
+      - id: keyword-gaps
+        title: Keyword Gap Analysis
+        instruction: Identify keywords competitors rank for that you don't (missing opportunities)
+        type: bullet-list
+        template: "- {{keyword}} (Volume: {{volume}}, Difficulty: {{difficulty}}, Opportunity Score: {{score}})"
+      - id: content-opportunities
+        title: Content Opportunity Keywords
+        instruction: High-value, lower-competition keywords to target
+        type: bullet-list
+        template: "- {{keyword}} (Volume: {{volume}}, Difficulty: {{difficulty}}, Priority: {{priority}})"
+
+  - id: backlink-analysis
+    title: Backlink Profile Analysis
+    sections:
+      - id: backlink-metrics
+        title: Backlink Metrics Comparison
+        instruction: Compare backlink quality and quantity metrics
+        type: table
+        columns:
+          [
+            "Metric",
+            "Your Domain",
+            "{{competitor_1}}",
+            "{{competitor_2}}",
+            "{{competitor_3}}",
+          ]
+        rows:
+          - category: "Quantity Metrics"
+            items:
+              - ["Total Backlinks", "{{total_links}}", "{{total_links}}", "{{total_links}}", "{{total_links}}"]
+              - ["Referring Domains", "{{ref_domains}}", "{{ref_domains}}", "{{ref_domains}}", "{{ref_domains}}"]
+              - ["New Links (30 days)", "{{new_links}}", "{{new_links}}", "{{new_links}}", "{{new_links}}"]
+          - category: "Quality Metrics"
+            items:
+              - ["Domain Rating", "{{dr_score}}", "{{dr_score}}", "{{dr_score}}", "{{dr_score}}"]
+              - ["Spam Score", "{{spam_score}}", "{{spam_score}}", "{{spam_score}}", "{{spam_score}}"]
+              - ["% Dofollow Links", "{{dofollow_pct}}", "{{dofollow_pct}}", "{{dofollow_pct}}", "{{dofollow_pct}}"]
+      - id: top-linking-domains
+        title: Top Linking Domains
+        instruction: Analyze competitor's most valuable referring domains
+        type: bullet-list
+        template: "- {{domain}} (DR: {{dr}}, Links: {{link_count}}, Type: {{domain_type}})"
+      - id: link-building-opportunities
+        title: Link Building Opportunities
+        instruction: Identify potential link sources based on competitor analysis
+        type: bullet-list
+        template: "- {{opportunity_source}} (Potential Value: {{value}}, Difficulty: {{difficulty}})"
+
+  - id: technical-seo-analysis
+    title: Technical SEO Analysis
+    sections:
+      - id: site-structure
+        title: Site Structure & Architecture
+        instruction: Analyze competitor's technical SEO foundation
+        template: |
+          - **URL Structure:** {{url_pattern}}
+          - **Internal Linking:** {{internal_link_analysis}}
+          - **Sitemap Implementation:** {{sitemap_status}}
+          - **Robots.txt:** {{robots_analysis}}
+          - **Site Speed:** {{speed_metrics}}
+      - id: indexation-issues
+        title: Indexation & Crawlability
+        instruction: Identify technical SEO issues and opportunities
+        type: bullet-list
+        template: "- {{issue_type}} (Impact: {{impact_level}}, Fix Priority: {{priority}})"
+
+  - id: content-analysis
+    title: Content Strategy Analysis
+    sections:
+      - id: content-topics
+        title: Topical Authority Analysis
+        instruction: Analyze competitor's content clusters and topical coverage
+        type: bullet-list
+        template: "- {{topic_cluster}} (Authority Score: {{score}}, Content Depth: {{depth}})"
+      - id: content-formats
+        title: Content Format Analysis
+        instruction: Evaluate competitor's content mix and formats
+        type: table
+        columns:
+          [
+            "Content Type",
+            "{{competitor_1}} %",
+            "{{competitor_2}} %",
+            "Your %",
+            "Opportunity",
+          ]
+        rows:
+          - category: "Content Formats"
+            items:
+              - ["Blog Posts", "{{percentage}}", "{{percentage}}", "{{percentage}}", "{{opportunity}}"]
+              - ["Product Pages", "{{percentage}}", "{{percentage}}", "{{percentage}}", "{{opportunity}}"]
+              - ["Landing Pages", "{{percentage}}", "{{percentage}}", "{{percentage}}", "{{opportunity}}"]
+              - ["Video Content", "{{percentage}}", "{{percentage}}", "{{percentage}}", "{{opportunity}}"]
+      - id: content-gaps
+        title: Content Gap Opportunities
+        instruction: Identify missing content topics and formats
+        type: bullet-list
+        template: "- {{content_gap}} (Search Volume: {{volume}}, Competition: {{competition}}, Priority: {{priority}})"
+
+  - id: serp-features-analysis
+    title: SERP Features Analysis
+    instruction: Analyze competitor's presence in SERP features and rich results
+    type: table
+    columns:
+      [
+        "SERP Feature",
+        "{{competitor_1}} Presence",
+        "{{competitor_2}} Presence",
+        "Your Presence",
+        "Opportunity",
+      ]
+    rows:
+      - category: "Rich Results"
+        items:
+          - ["Featured Snippets", "{{count}}", "{{count}}", "{{count}}", "{{opportunity}}"]
+          - ["People Also Ask", "{{count}}", "{{count}}", "{{count}}", "{{opportunity}}"]
+          - ["Local Pack", "{{count}}", "{{count}}", "{{count}}", "{{opportunity}}"]
+          - ["Image Pack", "{{count}}", "{{count}}", "{{count}}", "{{opportunity}}"]
+
+  - id: strategic-recommendations
+    title: Strategic SEO Recommendations
+    sections:
+      - id: quick-wins
+        title: Quick Wins (0-3 months)
+        instruction: Immediate opportunities with high impact
+        type: bullet-list
+        template: "- {{quick_win}} (Impact: {{impact}}, Effort: {{effort}}, Timeline: {{timeline}})"
+      - id: medium-term
+        title: Medium-Term Initiatives (3-6 months)
+        instruction: Strategic improvements requiring more effort
+        type: bullet-list
+        template: "- {{initiative}} (Impact: {{impact}}, Effort: {{effort}}, Resources: {{resources}})"
+      - id: long-term
+        title: Long-Term Strategy (6-12+ months)
+        instruction: Foundation-building SEO initiatives
+        type: bullet-list
+        template: "- {{strategy}} (ROI: {{roi}}, Timeline: {{timeline}}, Dependencies: {{dependencies}})"
+
+  - id: monitoring-plan
+    title: Ongoing Monitoring Plan
+    sections:
+      - id: key-metrics
+        title: Key Metrics to Track
+        instruction: Establish baseline metrics and tracking frequency
+        type: table
+        columns:
+          ["Metric", "Current Value", "Target Value", "Tracking Frequency", "Owner"]
+      - id: competitive-alerts
+        title: Competitive Intelligence Alerts
+        instruction: Set up monitoring for competitor movements
+        type: bullet-list
+        template: "- {{alert_type}} (Frequency: {{frequency}}, Tools: {{tools}})"
+
+  - id: implementation-roadmap
+    title: SEO Implementation Roadmap
+    instruction: Create phased implementation plan with priorities and timelines
+    type: table
+    columns:
+      ["Phase", "Initiatives", "Timeline", "Resources Needed", "Success Metrics"]

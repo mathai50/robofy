@@ -1,7 +1,7 @@
 """
 Database configuration and models for PostgreSQL integration.
 """
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, Text, Boolean
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, Text, Boolean, JSON, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
@@ -58,6 +58,51 @@ class Content(Base):
     status = Column(String(50), default='draft')
     created_at = Column(DateTime, default=datetime.now)
     published_at = Column(DateTime)
+
+# Chat Session model
+class ChatSession(Base):
+    __tablename__ = "chat_sessions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    session_id = Column(String(36), unique=True, index=True, nullable=False)
+    user_id = Column(String(36), nullable=True)  # Optional for anonymous users
+    created_at = Column(DateTime, default=datetime.now)
+    updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+    status = Column(String(20), default="active")  # active, ended, archived
+    metadata = Column(JSON, default=dict)  # Additional session data
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "session_id": self.session_id,
+            "user_id": self.user_id,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "updated_at": self.updated_at.isoformat() if self.updated_at else None,
+            "status": self.status,
+            "metadata": self.metadata
+        }
+
+# Chat Message model
+class ChatMessage(Base):
+    __tablename__ = "chat_messages"
+
+    id = Column(Integer, primary_key=True, index=True)
+    session_id = Column(Integer, ForeignKey("chat_sessions.id"), nullable=False)
+    message_id = Column(String(36), unique=True, index=True, nullable=False)
+    role = Column(String(20), nullable=False)  # user, assistant, system
+    content = Column(Text, nullable=False)
+    timestamp = Column(DateTime, default=datetime.now)
+    metadata = Column(JSON, default=dict)  # Additional message data
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "message_id": self.message_id,
+            "role": self.role,
+            "content": self.content,
+            "timestamp": self.timestamp.isoformat() if self.timestamp else None,
+            "metadata": self.metadata
+        }
 
 # Create tables
 def create_tables():
