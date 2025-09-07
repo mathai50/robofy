@@ -1,7 +1,7 @@
 'use client';
 
 import { useChat } from 'ai/react';
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { Send, Loader2, MessageSquare, X } from 'lucide-react';
 
 interface ChatInterfaceProps {
