@@ -1014,6 +1014,7 @@ export default function Home() {
       {/* Chat Interface */}
       <ChatInterface
         isOpen={isChatOpen}
+        onOpen={() => setIsChatOpen(true)}
         onClose={() => setIsChatOpen(false)}
       />
     </>

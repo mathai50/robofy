@@ -6,10 +6,11 @@ import { Send, Loader2, MessageSquare, X } from 'lucide-react';
 
 interface ChatInterfaceProps {
   isOpen?: boolean;
+  onOpen?: () => void;
   onClose?: () => void;
 }
 
-export default function ChatInterface({ isOpen = false, onClose }: ChatInterfaceProps) {
+export default function ChatInterface({ isOpen = false, onOpen, onClose }: ChatInterfaceProps) {
   const {
     messages,
     input,
@@ -25,7 +26,6 @@ export default function ChatInterface({ isOpen = false, onClose }: ChatInterface
   });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [isExpanded, setIsExpanded] = useState(false);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -43,7 +43,7 @@ export default function ChatInterface({ isOpen = false, onClose }: ChatInterface
   if (!isOpen) {
     return (
       <button
-        onClick={() => setIsExpanded(true)}
+        onClick={() => onOpen?.()}
         className="fixed bottom-6 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all duration-300 group"
         aria-label="Open chat"
       >
