@@ -24,10 +24,12 @@ import { teamMembers } from '@/data/team';
 import { InteractiveDemoWidget } from '@/components/ui';
 import { LineChart, BarChart, DonutChart, LinearProgressBar, CircularProgressBar, FloatingDemoButton } from '@/components/ui';
 import { lineChartData, barChartData, donutChartData } from '@/data/chart-data';
+import ChatInterface from '@/components/ChatInterface';
 
 export default function Home() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isWalkthroughOpen, setIsWalkthroughOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const handleFormOpen = () => {
     setIsFormOpen(true);
@@ -953,7 +955,10 @@ export default function Home() {
             <div className="mt-12 p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-gray-700">
               <h4 className="text-lg font-semibold text-white mb-2">Need Immediate Assistance?</h4>
               <p className="text-gray-300 mb-4">Our AI experts are ready to help you 24/7</p>
-              <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+              <button
+                onClick={() => setIsChatOpen(true)}
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              >
                 Start Live Chat
               </button>
             </div>
@@ -1005,6 +1010,12 @@ export default function Home() {
       
       {/* Floating Demo Button */}
       <FloatingDemoButton onClick={handleFormOpen} />
+
+      {/* Chat Interface */}
+      <ChatInterface
+        isOpen={isChatOpen}
+        onClose={() => setIsChatOpen(false)}
+      />
     </>
   );
 }
