@@ -140,15 +140,15 @@ export default function ChatInterface({ isOpen = false, onOpen, onClose }: ChatI
                 <button
                   key={action.id}
                   onClick={() => handleQuickAction(action.prompt)}
-                  className="flex flex-col items-center p-3 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg transition-all duration-200 group"
+                  className="flex flex-col items-center p-3 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg transition-all duration-200 group dark:bg-blue-900/20 dark:border-blue-700 dark:hover:bg-blue-900/30"
                 >
-                  <div className="text-blue-600 mb-2 group-hover:text-blue-800">
+                  <div className="text-blue-600 mb-2 group-hover:text-blue-800 dark:text-blue-400 dark:group-hover:text-blue-300">
                     {action.icon}
                   </div>
-                  <span className="text-sm font-medium text-blue-800 group-hover:text-blue-900">
+                  <span className="text-sm font-medium text-blue-800 group-hover:text-blue-900 dark:text-blue-200 dark:group-hover:text-blue-100">
                     {action.label}
                   </span>
-                  <span className="text-xs text-blue-600 mt-1 group-hover:text-blue-700">
+                  <span className="text-xs text-blue-600 mt-1 group-hover:text-blue-700 dark:text-blue-300 dark:group-hover:text-blue-200">
                     {action.description}
                   </span>
                 </button>
@@ -159,6 +159,12 @@ export default function ChatInterface({ isOpen = false, onOpen, onClose }: ChatI
           <div className="text-center text-gray-500 py-8">
             <MessageSquare className="w-12 h-12 mx-auto mb-2 opacity-50" />
             <p>Hello! I'm here to help with digital marketing automation. How can I assist you today?</p>
+            <button
+              onClick={() => setShowQuickActions(true)}
+              className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Show Quick Actions
+            </button>
           </div>
         ) : (
           <div className="space-y-4">
@@ -194,9 +200,19 @@ export default function ChatInterface({ isOpen = false, onOpen, onClose }: ChatI
               </div>
             )}
           </div>
-        )}
-        <div ref={messagesEndRef} />
-      </div>
+       )}
+       {messages.length > 0 && !showQuickActions && (
+         <div className="text-center mt-4">
+           <button
+             onClick={() => setShowQuickActions(true)}
+             className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+           >
+             Show Quick Actions
+           </button>
+         </div>
+       )}
+       <div ref={messagesEndRef} />
+     </div>
 
       {/* Input Form */}
       <form onSubmit={onSubmit} className="p-4 border-t border-gray-200">
