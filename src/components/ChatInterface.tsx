@@ -1,8 +1,8 @@
 'use client';
 
 import { useChat } from 'ai/react';
-import { useRef, useEffect } from 'react';
-import { Send, Loader2, MessageSquare, X } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { Send, Loader2, MessageSquare, X, Sparkles, Search, HelpCircle, Calendar, TrendingUp, Users } from 'lucide-react';
 
 interface ChatInterfaceProps {
   isOpen?: boolean;
@@ -18,6 +18,7 @@ export default function ChatInterface({ isOpen = false, onOpen, onClose }: ChatI
     handleSubmit,
     isLoading,
     error,
+    append,
   } = useChat({
     api: '/api/chat/messages',
     onError: (error) => {
@@ -26,9 +27,60 @@ export default function ChatInterface({ isOpen = false, onOpen, onClose }: ChatI
   });
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [showQuickActions, setShowQuickActions] = useState(true);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const quickActions = [
+    {
+      id: 'seo',
+      label: 'SEO Analysis',
+      description: 'Get SEO recommendations and analysis',
+      icon: <Search className="w-5 h-5" />,
+      prompt: 'Can you analyze my website SEO and provide recommendations?'
+    },
+    {
+      id: 'support',
+      label: 'Customer Support',
+      description: 'Get help with technical issues',
+      icon: <HelpCircle className="w-5 h-5" />,
+      prompt: 'I need help with a technical issue on the platform.'
+    },
+    {
+      id: 'appointment',
+      label: 'Book Appointment',
+      description: 'Schedule a consultation call',
+      icon: <Calendar className="w-5 h-5" />,
+      prompt: 'I would like to schedule a consultation appointment.'
+    },
+    {
+      id: 'competitor',
+      label: 'Competitor Analysis',
+      description: 'Analyze competitor strategies',
+      icon: <TrendingUp className="w-5 h-5" />,
+      prompt: 'Can you help me analyze my competitors?'
+    },
+    {
+      id: 'social',
+      label: 'Social Media',
+      description: 'Create social media content',
+      icon: <Users className="w-5 h-5" />,
+      prompt: 'Help me create social media content for my business.'
+    },
+    {
+      id: 'content',
+      label: 'Content Creation',
+      description: 'Generate marketing content',
+      icon: <Sparkles className="w-5 h-5" />,
+      prompt: 'I need help creating marketing content for my business.'
+    }
+  ];
+
+  const handleQuickAction = async (prompt: string) => {
+    setShowQuickActions(false);
+    await append({ role: 'user', content: prompt });
   };
 
   useEffect(() => {
@@ -74,7 +126,36 @@ export default function ChatInterface({ isOpen = false, onOpen, onClose }: ChatI
 
       {/* Messages Container */}
       <div className="flex-1 p-4 overflow-y-auto max-h-96">
-        {messages.length === 0 ? (
+        {messages.length === 0 && showQuickActions ? (
+          <div className="space-y-4">
+            <div className="text-center text-gray-500 py-4">
+              <MessageSquare className="w-12 h-12 mx-auto mb-2 opacity-50" />
+              <p className="text-lg font-semibold mb-4">Hello! How can I help you today?</p>
+              <p className="text-sm text-gray-400 mb-6">Choose an option below or type your message</p>
+            </div>
+            
+            {/* Quick Actions Grid */}
+            <div className="grid grid-cols-2 gap-3">
+              {quickActions.map((action) => (
+                <button
+                  key={action.id}
+                  onClick={() => handleQuickAction(action.prompt)}
+                  className="flex flex-col items-center p-3 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg transition-all duration-200 group"
+                >
+                  <div className="text-blue-600 mb-2 group-hover:text-blue-800">
+                    {action.icon}
+                  </div>
+                  <span className="text-sm font-medium text-blue-800 group-hover:text-blue-900">
+                    {action.label}
+                  </span>
+                  <span className="text-xs text-blue-600 mt-1 group-hover:text-blue-700">
+                    {action.description}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : messages.length === 0 ? (
           <div className="text-center text-gray-500 py-8">
             <MessageSquare className="w-12 h-12 mx-auto mb-2 opacity-50" />
             <p>Hello! I'm here to help with digital marketing automation. How can I assist you today?</p>
