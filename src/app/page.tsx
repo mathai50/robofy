@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FormModal from '@/components/FormModal';
 import { ModalWalkthrough, WalkthroughStep } from '@/components/ui';
 import { Marquee } from '@/components/ui/Marquee';
@@ -30,6 +30,16 @@ export default function Home() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isWalkthroughOpen, setIsWalkthroughOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  
+  // Debug chat state changes
+  useEffect(() => {
+    console.log('Chat state changed:', isChatOpen);
+  }, [isChatOpen]);
+  
+  // Debug chat state changes
+  useEffect(() => {
+    console.log('Chat state changed:', isChatOpen);
+  }, [isChatOpen]);
 
   const handleFormOpen = () => {
     setIsFormOpen(true);
@@ -1014,8 +1024,14 @@ export default function Home() {
       {/* Chat Interface */}
       <ChatInterface
         isOpen={isChatOpen}
-        onOpen={() => setIsChatOpen(true)}
-        onClose={() => setIsChatOpen(false)}
+        onOpen={() => {
+          console.log('onOpen callback called, setting isChatOpen to true');
+          setIsChatOpen(true);
+        }}
+        onClose={() => {
+          console.log('onClose callback called, setting isChatOpen to false');
+          setIsChatOpen(false);
+        }}
       />
     </>
   );

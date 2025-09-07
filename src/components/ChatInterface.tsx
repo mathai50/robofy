@@ -11,6 +11,7 @@ interface ChatInterfaceProps {
 }
 
 export default function ChatInterface({ isOpen = false, onOpen, onClose }: ChatInterfaceProps) {
+  console.log('ChatInterface rendered, isOpen:', isOpen);
   const {
     messages,
     input,
@@ -28,6 +29,7 @@ export default function ChatInterface({ isOpen = false, onOpen, onClose }: ChatI
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [showQuickActions, setShowQuickActions] = useState(true);
+  console.log('ChatInterface rendered, isOpen:', isOpen, 'showQuickActions:', showQuickActions);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -79,8 +81,23 @@ export default function ChatInterface({ isOpen = false, onOpen, onClose }: ChatI
   ];
 
   const handleQuickAction = async (prompt: string) => {
+    // Store current messages length to detect if append actually adds a message
+    const currentMessagesLength = messages.length;
     setShowQuickActions(false);
-    await append({ role: 'user', content: prompt });
+    
+    try {
+      await append({ role: 'user', content: prompt });
+      
+      // If messages didn't change after append, show quick actions again
+      setTimeout(() => {
+        if (messages.length === currentMessagesLength) {
+          setShowQuickActions(true);
+        }
+      }, 500);
+    } catch (error) {
+      console.error('Failed to append message:', error);
+      setShowQuickActions(true);
+    }
   };
 
   useEffect(() => {
@@ -95,7 +112,11 @@ export default function ChatInterface({ isOpen = false, onOpen, onClose }: ChatI
   if (!isOpen) {
     return (
       <button
-        onClick={() => onOpen?.()}
+        onClick={() => {
+          console.log('Chat open button clicked, onOpen:', onOpen);
+          onOpen?.();
+          console.log('After calling onOpen');
+        }}
         className="fixed bottom-6 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all duration-300 group"
         aria-label="Open chat"
       >
@@ -108,15 +129,18 @@ export default function ChatInterface({ isOpen = false, onOpen, onClose }: ChatI
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 w-96 bg-white rounded-lg shadow-xl border border-gray-200 flex flex-col">
+    <div className="fixed bottom-6 right-6 z-50 w-96 bg-white rounded-lg shadow-xl border border-gray-200 flex flex-col dark:bg-gray-900 dark:border-gray-700 dark:text-white">
       {/* Chat Header */}
-      <div className="bg-blue-600 text-white p-4 rounded-t-lg flex justify-between items-center">
+      <div className="bg-blue-600 text-white p-4 rounded-t-lg flex justify-between items-center dark:bg-blue-700">
         <div className="flex items-center space-x-2">
           <MessageSquare className="w-5 h-5" />
           <h3 className="font-semibold">Robofy AI Assistant</h3>
         </div>
         <button
-          onClick={onClose}
+          onClick={() => {
+            console.log('Chat close button clicked');
+            onClose?.();
+          }}
           className="text-white hover:text-gray-200 transition-colors"
           aria-label="Close chat"
         >
@@ -128,10 +152,10 @@ export default function ChatInterface({ isOpen = false, onOpen, onClose }: ChatI
       <div className="flex-1 p-4 overflow-y-auto max-h-96">
         {messages.length === 0 && showQuickActions ? (
           <div className="space-y-4">
-            <div className="text-center text-gray-500 py-4">
-              <MessageSquare className="w-12 h-12 mx-auto mb-2 opacity-50" />
-              <p className="text-lg font-semibold mb-4">Hello! How can I help you today?</p>
-              <p className="text-sm text-gray-400 mb-6">Choose an option below or type your message</p>
+            <div className="text-center text-gray-500 py-4 dark:text-gray-200">
+              <MessageSquare className="w-12 h-12 mx-auto mb-2 opacity-50 dark:text-gray-300" />
+              <p className="text-lg font-semibold mb-4 dark:text-white">Hello! How can I help you today?</p>
+              <p className="text-sm text-gray-400 mb-6 dark:text-gray-300">Choose an option below or type your message</p>
             </div>
             
             {/* Quick Actions Grid */}
@@ -156,12 +180,12 @@ export default function ChatInterface({ isOpen = false, onOpen, onClose }: ChatI
             </div>
           </div>
         ) : messages.length === 0 ? (
-          <div className="text-center text-gray-500 py-8">
-            <MessageSquare className="w-12 h-12 mx-auto mb-2 opacity-50" />
-            <p>Hello! I'm here to help with digital marketing automation. How can I assist you today?</p>
+          <div className="text-center text-gray-500 py-8 dark:text-gray-200">
+            <MessageSquare className="w-12 h-12 mx-auto mb-2 opacity-50 dark:text-gray-300" />
+            <p className="dark:text-white">Hello! I'm here to help with digital marketing automation. How can I assist you today?</p>
             <button
               onClick={() => setShowQuickActions(true)}
-              className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors dark:bg-blue-600 dark:hover:bg-blue-700"
             >
               Show Quick Actions
             </button>
@@ -176,8 +200,8 @@ export default function ChatInterface({ isOpen = false, onOpen, onClose }: ChatI
                 <div
                   className={`max-w-xs px-4 py-2 rounded-lg ${
                     message.role === 'user'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100 text-gray-800'
+                      ? 'bg-blue-600 text-white dark:bg-blue-700'
+                      : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
                   }`}
                 >
                   <p className="text-sm">{message.content}</p>
@@ -186,7 +210,7 @@ export default function ChatInterface({ isOpen = false, onOpen, onClose }: ChatI
             ))}
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-gray-100 text-gray-800 px-4 py-2 rounded-lg">
+                <div className="bg-gray-100 text-gray-800 px-4 py-2 rounded-lg dark:bg-gray-800 dark:text-gray-200">
                   <Loader2 className="w-4 h-4 animate-spin inline mr-2" />
                   <span className="text-sm">Thinking...</span>
                 </div>
@@ -194,7 +218,7 @@ export default function ChatInterface({ isOpen = false, onOpen, onClose }: ChatI
             )}
             {error && (
               <div className="flex justify-start">
-                <div className="bg-red-100 text-red-800 px-4 py-2 rounded-lg">
+                <div className="bg-red-100 text-red-800 px-4 py-2 rounded-lg dark:bg-red-900/20 dark:text-red-200">
                   <p className="text-sm">Sorry, there was an error. Please try again.</p>
                 </div>
               </div>
@@ -205,7 +229,7 @@ export default function ChatInterface({ isOpen = false, onOpen, onClose }: ChatI
          <div className="text-center mt-4">
            <button
              onClick={() => setShowQuickActions(true)}
-             className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+             className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700"
            >
              Show Quick Actions
            </button>
@@ -215,19 +239,19 @@ export default function ChatInterface({ isOpen = false, onOpen, onClose }: ChatI
      </div>
 
       {/* Input Form */}
-      <form onSubmit={onSubmit} className="p-4 border-t border-gray-200">
+      <form onSubmit={onSubmit} className="p-4 border-t border-gray-200 dark:border-gray-600">
         <div className="flex space-x-2">
           <input
             value={input}
             onChange={handleInputChange}
             placeholder="Type your message..."
-            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-300 dark:focus:ring-blue-400"
             disabled={isLoading}
           />
           <button
             type="submit"
             disabled={isLoading || !input.trim()}
-            className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white p-2 rounded-lg transition-colors"
+            className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white p-2 rounded-lg transition-colors dark:bg-blue-700 dark:hover:bg-blue-800 dark:disabled:bg-gray-600"
           >
             {isLoading ? (
               <Loader2 className="w-5 h-5 animate-spin" />

@@ -1,6 +1,9 @@
 fastapi==0.104.1
 uvicorn==0.24.0
 python-dotenv==1.0.0
+# Pydantic for data validation and settings management
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
 # Use psycopg2 instead of psycopg2-binary for better Python 3.13 compatibility
 psycopg2>=2.9.9
 sqlalchemy==2.0.23

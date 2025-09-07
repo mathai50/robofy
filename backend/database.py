@@ -69,7 +69,7 @@ class ChatSession(Base):
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
     status = Column(String(20), default="active")  # active, ended, archived
-    metadata = Column(JSON, default=dict)  # Additional session data
+    session_metadata = Column(JSON, default=dict)  # Additional session data
 
     def to_dict(self):
         return {
@@ -79,7 +79,7 @@ class ChatSession(Base):
             "created_at": self.created_at.isoformat() if self.created_at else None,
             "updated_at": self.updated_at.isoformat() if self.updated_at else None,
             "status": self.status,
-            "metadata": self.metadata
+            "metadata": self.session_metadata
         }
 
 # Chat Message model
@@ -92,7 +92,7 @@ class ChatMessage(Base):
     role = Column(String(20), nullable=False)  # user, assistant, system
     content = Column(Text, nullable=False)
     timestamp = Column(DateTime, default=datetime.now)
-    metadata = Column(JSON, default=dict)  # Additional message data
+    message_metadata = Column(JSON, default=dict)  # Additional message data
 
     def to_dict(self):
         return {
@@ -101,7 +101,7 @@ class ChatMessage(Base):
             "role": self.role,
             "content": self.content,
             "timestamp": self.timestamp.isoformat() if self.timestamp else None,
-            "metadata": self.metadata
+            "metadata": self.message_metadata
         }
 
 # Create tables
