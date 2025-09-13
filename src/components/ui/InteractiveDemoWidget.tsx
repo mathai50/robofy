@@ -120,9 +120,9 @@ const InteractiveDemoWidget: React.FC = () => {
 
   if (showFallback) {
     return (
-      <div className="w-full max-w-4xl mx-auto p-8 bg-gradient-to-br from-gray-900 to-blue-900 rounded-2xl border border-blue-400/30 shadow-2xl shadow-blue-500/20">
+      <div className="w-full max-w-4xl mx-auto p-8 bg-gray-900 rounded-2xl border border-gray-700 shadow-2xl shadow-gray-500/20">
         <div className="text-center">
-          <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+          <div className="w-20 h-20 mx-auto mb-6 bg-gray-700 rounded-full flex items-center justify-center">
             <Bot className="w-10 h-10 text-white" />
           </div>
           <h3 className="text-2xl font-bold text-white mb-4">Experience Our AI Automation</h3>
@@ -131,7 +131,7 @@ const InteractiveDemoWidget: React.FC = () => {
           </p>
           <button
             onClick={() => window.open('/demo', '_blank')}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 flex items-center justify-center mx-auto"
+            className="bg-white hover:bg-gray-100 text-black font-semibold py-3 px-8 rounded-lg transition-all duration-300 flex items-center justify-center mx-auto"
           >
             Watch Demo Video
           </button>
@@ -143,13 +143,13 @@ const InteractiveDemoWidget: React.FC = () => {
   return (
     <div 
       ref={widgetRef}
-      className="w-full max-w-4xl mx-auto p-6 md:p-8 bg-gradient-to-br from-gray-900 to-blue-900 rounded-2xl border border-blue-400/30 shadow-2xl shadow-blue-500/20"
+      className="w-full max-w-4xl mx-auto p-6 md:p-8 bg-gray-900 rounded-2xl border border-gray-700 shadow-2xl shadow-gray-500/20"
       role="region"
       aria-label="AI Automation Demo"
     >
       {/* Header */}
       <div className="text-center mb-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
           Experience Our AI Automation in Action
         </h2>
         <p className="text-lg text-gray-300 max-w-2xl mx-auto">
@@ -161,11 +161,11 @@ const InteractiveDemoWidget: React.FC = () => {
       <div className="mb-8">
         <div className="flex justify-between items-center mb-2">
           <span className="text-sm text-gray-400">Progress</span>
-          <span className="text-sm text-blue-400 font-semibold">{Math.round(progress)}% Complete</span>
+          <span className="text-sm text-gray-400 font-semibold">{Math.round(progress)}% Complete</span>
         </div>
         <div className="w-full bg-gray-700 rounded-full h-2">
           <motion.div
-            className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full"
+            className="bg-gray-400 h-2 rounded-full"
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.3 }}
@@ -182,9 +182,9 @@ const InteractiveDemoWidget: React.FC = () => {
               key={step.id}
               className={`p-4 rounded-lg border-2 transition-all duration-300 ${
                 status === 'completed'
-                  ? 'border-green-400/50 bg-green-400/10'
+                  ? 'border-gray-400/50 bg-gray-400/10'
                   : status === 'processing'
-                  ? 'border-blue-400/50 bg-blue-400/10 animate-pulse'
+                  ? 'border-gray-500/50 bg-gray-500/10 animate-pulse'
                   : 'border-gray-600 bg-gray-800/50'
               }`}
               initial={{ opacity: 0, y: 20 }}
@@ -209,8 +209,8 @@ const InteractiveDemoWidget: React.FC = () => {
                 {getStatusIcon(status)}
               </div>
               <h4 className={`text-sm font-semibold mb-1 ${
-                status === 'completed' ? 'text-green-300' :
-                status === 'processing' ? 'text-blue-300' :
+                status === 'completed' ? 'text-gray-300' :
+                status === 'processing' ? 'text-gray-300' :
                 'text-gray-300'
               }`}>
                 {step.title}
@@ -226,7 +226,7 @@ const InteractiveDemoWidget: React.FC = () => {
         {!isRunning ? (
           <motion.button
             onClick={startWorkflow}
-            className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-white hover:bg-gray-100 text-black font-semibold py-3 px-8 rounded-lg transition-all duration-300 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             disabled={isRunning}
@@ -249,7 +249,7 @@ const InteractiveDemoWidget: React.FC = () => {
 
         <button
           onClick={() => window.open('/contact', '_blank')}
-          className="border border-blue-400 text-blue-400 hover:bg-blue-400/10 font-semibold py-3 px-8 rounded-lg transition-all duration-300 flex items-center justify-center"
+          className="border border-gray-400 text-gray-400 hover:bg-gray-400/10 font-semibold py-3 px-8 rounded-lg transition-all duration-300 flex items-center justify-center"
           aria-label="Request a custom demo"
         >
           Request Custom Demo
@@ -270,7 +270,7 @@ const InteractiveDemoWidget: React.FC = () => {
           >
             <div className="flex items-center mb-2">
               <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse mr-2" />
-              <span className="text-sm text-green-400 font-semibold">
+              <span className="text-sm text-gray-400 font-semibold">
                 Processing: {workflowSteps[currentStep]?.title}
               </span>
             </div>

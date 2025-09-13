@@ -46,13 +46,13 @@ const FloatingDemoButton = React.memo(
         className={`
           fixed bottom-6 right-6 z-50
           flex items-center justify-center gap-3
-          bg-gradient-to-r from-blue-600 to-purple-600
-          text-white font-bold
+          bg-white
+          text-black font-bold
           rounded-full px-6 py-4
           shadow-2xl hover:shadow-3xl
           transition-all duration-200
           transform hover:scale-110
-          focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-offset-2
+          focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-offset-2
           min-w-[160px] h-14
           animate-bounce
           ${className}

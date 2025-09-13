@@ -4,7 +4,7 @@ All AI providers should inherit from this class.
 """
 import logging
 import asyncio
-from typing import Optional, Dict, Any, List
+from typing import Optional, Dict, Any, List, AsyncGenerator
 import httpx
 from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception_type
 
@@ -76,9 +76,3 @@ class BaseAIProvider:
         """Close the HTTP client."""
         await self.client.aclose()
     
-    def __del__(self):
-        """Ensure client is closed when provider is destroyed."""
-        try:
-            asyncio.create_task(self.close())
-        except:
-            pass

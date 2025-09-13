@@ -28,10 +28,10 @@ export function BlogSection() {
   }, [posts, selectedCategory, searchQuery]);
 
   return (
-    <section aria-label="Blog articles" className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <section aria-label="Blog articles" className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-black">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Resources & Blog</h1>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+        <h1 className="text-4xl font-bold text-white mb-4">Resources & Blog</h1>
+        <p className="text-xl text-gray-300 max-w-3xl mx-auto">
           Discover the latest insights, strategies, and tips for AI-powered marketing automation across various industries.
         </p>
       </div>
@@ -43,7 +43,7 @@ export function BlogSection() {
           placeholder="Search articles by title, content, or category..."
         />
         <div className="lg:text-right">
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-300">
             Showing {filteredPosts.length} of {posts.length} articles
           </p>
         </div>
@@ -56,13 +56,13 @@ export function BlogSection() {
 
       {filteredPosts.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">No articles found matching your criteria.</p>
+          <p className="text-gray-400 text-lg">No articles found matching your criteria.</p>
           <button
             onClick={() => {
               setSelectedCategory('all');
               setSearchQuery('');
             }}
-            className="mt-4 text-primary-accent-1 hover:underline font-medium"
+            className="mt-4 text-white hover:text-gray-300 underline font-medium"
           >
             Clear filters
           </button>

@@ -159,7 +159,7 @@ export default function StickyHeader({
               <a
                 href={ctaHref}
                 onClick={ctaOnClick}
-                className="hidden md:inline-block bg-gradient-to-r from-primary-accent-1 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary-accent-1 focus:ring-offset-2"
+                className="hidden md:inline-block bg-white text-black font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 hover:bg-gray-100 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
               >
                 {ctaText}
               </a>
@@ -265,7 +265,7 @@ export default function StickyHeader({
                     if (ctaOnClick) ctaOnClick();
                     closeMenu();
                   }}
-                  className="block w-full bg-gradient-to-r from-primary-accent-1 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-full text-center transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-primary-accent-1 focus:ring-offset-2"
+                  className="block w-full bg-white text-black font-bold py-4 px-6 rounded-full text-center transition-all duration-300 transform hover:scale-105 hover:bg-gray-100 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
                 >
                   {ctaText}
                 </a>

@@ -131,7 +131,7 @@ export default function CaseStudyGrid({ initialStudies = caseStudies, showHeader
             placeholder="Search case studies by title, industry, or description..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-3 bg-white/5 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent"
             aria-label="Search case studies"
           />
         </div>
@@ -146,8 +146,8 @@ export default function CaseStudyGrid({ initialStudies = caseStudies, showHeader
                 onClick={() => setSelectedIndustry(industry)}
                 className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 text-sm ${
                   selectedIndustry === industry
-                    ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/50'
-                    : 'bg-white/10 text-gray-300 border border-gray-600 hover:bg-white/20 hover:text-white'
+                    ? 'bg-white text-black shadow-lg'
+                    : 'bg-gray-800 text-gray-300 border border-gray-600 hover:bg-gray-700 hover:text-white'
                 }`}
                 aria-label={`Filter by ${industry} industry`}
                 aria-pressed={selectedIndustry === industry}
@@ -163,7 +163,7 @@ export default function CaseStudyGrid({ initialStudies = caseStudies, showHeader
             <select
               value={sortOption}
               onChange={(e) => setSortOption(e.target.value as SortOption)}
-              className="bg-white/5 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent"
               aria-label="Sort case studies"
             >
               <option value="most-recent" className="bg-gray-800">
@@ -189,7 +189,7 @@ export default function CaseStudyGrid({ initialStudies = caseStudies, showHeader
           {[...Array(6)].map((_, index) => (
             <div
               key={index}
-              className="bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700 animate-pulse"
+              className="bg-gray-900 rounded-xl overflow-hidden border border-gray-700 animate-pulse"
             >
               <div className="h-48 w-full bg-gray-700"></div>
               <div className="p-6 space-y-4">
@@ -210,7 +210,7 @@ export default function CaseStudyGrid({ initialStudies = caseStudies, showHeader
             {currentStudies.map((study) => (
               <div
                 key={study.id}
-                className="group bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-700 hover:border-blue-400 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/20 hover:scale-105"
+                className="group bg-gray-900 rounded-xl overflow-hidden border border-gray-700 hover:border-white transition-all duration-300 hover:shadow-2xl hover:shadow-white/10 hover:scale-105"
                 role="gridcell"
               >
                 {/* Image with lazy loading */}
@@ -222,9 +222,9 @@ export default function CaseStudyGrid({ initialStudies = caseStudies, showHeader
                     className="object-cover group-hover:scale-110 transition-transform duration-300"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute inset-0 bg-black/60" />
                   <div className="absolute bottom-4 left-4">
-                    <span className="px-3 py-1 bg-blue-500/80 text-white text-sm font-medium rounded-full backdrop-blur-sm">
+                    <span className="px-3 py-1 bg-white text-black text-sm font-medium rounded-full">
                       {study.industry}
                     </span>
                   </div>
@@ -232,7 +232,7 @@ export default function CaseStudyGrid({ initialStudies = caseStudies, showHeader
 
                 {/* Content */}
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-blue-400 transition-colors duration-300">
+                  <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-gray-300 transition-colors duration-300">
                     {study.title}
                   </h3>
                   
@@ -242,11 +242,11 @@ export default function CaseStudyGrid({ initialStudies = caseStudies, showHeader
 
                   {/* ROI Metrics with Count-up Animation */}
                   <div className="mb-4">
-                    <h4 className="text-sm font-semibold text-blue-400 mb-2">Key Results:</h4>
+                    <h4 className="text-sm font-semibold text-white mb-2">Key Results:</h4>
                     <div className="grid grid-cols-2 gap-3">
                       {study.roiMetrics.slice(0, 4).map((roi, index) => (
-                        <div key={index} className="text-center p-2 bg-blue-500/10 rounded-lg border border-blue-400/20">
-                          <div className="text-lg font-bold text-blue-400">
+                        <div key={index} className="text-center p-2 bg-gray-800 rounded-lg border border-gray-600">
+                          <div className="text-lg font-bold text-white">
                             <CountUpNumber
                               value={roi.value}
                               suffix={roi.suffix}
@@ -268,7 +268,7 @@ export default function CaseStudyGrid({ initialStudies = caseStudies, showHeader
                             </li>
                           ))}
                           {study.keyMetrics.length > 2 && (
-                            <li className="text-blue-400 text-xs">
+                            <li className="text-gray-400 text-xs">
                               +{study.keyMetrics.length - 2} more results
                             </li>
                           )}
@@ -299,7 +299,7 @@ export default function CaseStudyGrid({ initialStudies = caseStudies, showHeader
 
                   {/* View More Button */}
                   <button
-                    className="w-full py-2 bg-blue-500/20 text-blue-400 rounded-lg border border-blue-400/30 hover:bg-blue-500/30 hover:text-white transition-all duration-300 group-hover:shadow-lg group-hover:shadow-blue-500/20"
+                    className="w-full py-2 bg-white text-black rounded-lg border border-gray-300 hover:bg-gray-100 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-white/10"
                     aria-label={`View full case study for ${study.title}`}
                     onClick={() => window.open(study.detailsUrl, '_blank')}
                   >
@@ -322,7 +322,7 @@ export default function CaseStudyGrid({ initialStudies = caseStudies, showHeader
             <div className="col-span-full flex justify-center mt-12">
               <button
                 onClick={() => setCurrentPage(prev => prev + 1)}
-                className="px-8 py-3 bg-blue-500/20 text-blue-400 rounded-lg border border-blue-400/30 hover:bg-blue-500/30 hover:text-white transition-all duration-300 font-semibold"
+                className="px-8 py-3 bg-white text-black rounded-lg border border-gray-300 hover:bg-gray-100 transition-all duration-300 font-semibold"
                 aria-label="Load more case studies"
               >
                 Load More ({currentStudies.length} of {filteredAndSortedStudies.length})

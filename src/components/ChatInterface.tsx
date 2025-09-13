@@ -1,266 +1,244 @@
 'use client';
 
-import { useChat } from 'ai/react';
 import { useState, useRef, useEffect } from 'react';
-import { Send, Loader2, MessageSquare, X, Sparkles, Search, HelpCircle, Calendar, TrendingUp, Users } from 'lucide-react';
+import { Send, Loader2, MessageSquare } from 'lucide-react';
 
-interface ChatInterfaceProps {
-  isOpen?: boolean;
-  onOpen?: () => void;
-  onClose?: () => void;
+interface Message {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: Date;
 }
 
-export default function ChatInterface({ isOpen = false, onOpen, onClose }: ChatInterfaceProps) {
-  console.log('ChatInterface rendered, isOpen:', isOpen);
-  const {
-    messages,
-    input,
-    handleInputChange,
-    handleSubmit,
-    isLoading,
-    error,
-    append,
-  } = useChat({
-    api: '/api/chat/messages',
-    onError: (error) => {
-      console.error('Chat error:', error);
-    },
-  });
+interface ChatInterfaceProps {
+  toolName: string;
+  toolDescription: string;
+  apiEndpoint: string;
+  quickActions?: Array<{
+    id: string;
+    label: string;
+    description: string;
+    icon: React.ReactNode;
+    prompt: string;
+  }>;
+  placeholder?: string;
+  welcomeMessage?: string;
+}
 
+export default function ChatInterface({
+  toolName,
+  toolDescription,
+  apiEndpoint,
+  quickActions = [],
+  placeholder = "Type your message...",
+  welcomeMessage = `Hello! How can I help you with ${toolName.toLowerCase()}?`
+}: ChatInterfaceProps) {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [showQuickActions, setShowQuickActions] = useState(true);
-  console.log('ChatInterface rendered, isOpen:', isOpen, 'showQuickActions:', showQuickActions);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const quickActions = [
-    {
-      id: 'seo',
-      label: 'SEO Analysis',
-      description: 'Get SEO recommendations and analysis',
-      icon: <Search className="w-5 h-5" />,
-      prompt: 'Can you analyze my website SEO and provide recommendations?'
-    },
-    {
-      id: 'support',
-      label: 'Customer Support',
-      description: 'Get help with technical issues',
-      icon: <HelpCircle className="w-5 h-5" />,
-      prompt: 'I need help with a technical issue on the platform.'
-    },
-    {
-      id: 'appointment',
-      label: 'Book Appointment',
-      description: 'Schedule a consultation call',
-      icon: <Calendar className="w-5 h-5" />,
-      prompt: 'I would like to schedule a consultation appointment.'
-    },
-    {
-      id: 'competitor',
-      label: 'Competitor Analysis',
-      description: 'Analyze competitor strategies',
-      icon: <TrendingUp className="w-5 h-5" />,
-      prompt: 'Can you help me analyze my competitors?'
-    },
-    {
-      id: 'social',
-      label: 'Social Media',
-      description: 'Create social media content',
-      icon: <Users className="w-5 h-5" />,
-      prompt: 'Help me create social media content for my business.'
-    },
-    {
-      id: 'content',
-      label: 'Content Creation',
-      description: 'Generate marketing content',
-      icon: <Sparkles className="w-5 h-5" />,
-      prompt: 'I need help creating marketing content for my business.'
-    }
-  ];
-
-  const handleQuickAction = async (prompt: string) => {
-    // Store current messages length to detect if append actually adds a message
-    const currentMessagesLength = messages.length;
-    setShowQuickActions(false);
-    
-    try {
-      await append({ role: 'user', content: prompt });
-      
-      // If messages didn't change after append, show quick actions again
-      setTimeout(() => {
-        if (messages.length === currentMessagesLength) {
-          setShowQuickActions(true);
-        }
-      }, 500);
-    } catch (error) {
-      console.error('Failed to append message:', error);
-      setShowQuickActions(true);
-    }
   };
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    handleSubmit(e);
+  const handleQuickAction = async (prompt: string) => {
+    setInput(prompt);
+    await handleSubmit(prompt);
   };
 
-  if (!isOpen) {
-    return (
-      <button
-        onClick={() => {
-          console.log('Chat open button clicked, onOpen:', onOpen);
-          onOpen?.();
-          console.log('After calling onOpen');
-        }}
-        className="fixed bottom-6 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all duration-300 group"
-        aria-label="Open chat"
-      >
-        <MessageSquare className="w-6 h-6" />
-        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-          AI
-        </span>
-      </button>
-    );
-  }
+  const handleSubmit = async (customPrompt?: string) => {
+    const messageToSend = customPrompt || input;
+    if (!messageToSend.trim()) return;
+
+    setIsLoading(true);
+    setError(null);
+
+    // Add user message to the chat
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      role: 'user',
+      content: messageToSend,
+      timestamp: new Date()
+    };
+    setMessages(prev => [...prev, userMessage]);
+    
+    if (!customPrompt) {
+      setInput('');
+    }
+
+    try {
+      // Send message to backend API - using the exact same structure as the working AI tools page
+      const response = await fetch(apiEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: messageToSend,
+          tool: toolName.toLowerCase() // Include tool context for better responses
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      // Add assistant message to the chat
+      const assistantMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: data.response,
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, assistantMessage]);
+    } catch (err) {
+      console.error('Error sending message:', err);
+      setError('Failed to send message. Please try again.');
+      
+      // Add error message
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: 'Sorry, there was an error processing your request. Please try again.',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleSubmit();
+  };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 w-96 bg-white rounded-lg shadow-xl border border-gray-200 flex flex-col dark:bg-gray-900 dark:border-gray-700 dark:text-white">
-      {/* Chat Header */}
-      <div className="bg-blue-600 text-white p-4 rounded-t-lg flex justify-between items-center dark:bg-blue-700">
-        <div className="flex items-center space-x-2">
-          <MessageSquare className="w-5 h-5" />
-          <h3 className="font-semibold">Robofy AI Assistant</h3>
+    <div className="min-h-screen bg-[#0f1117] py-8">
+      <div className="max-w-4xl mx-auto px-4">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-white mb-4">
+            {toolName}
+          </h1>
+          <p className="text-lg text-gray-300">
+            {toolDescription}
+          </p>
         </div>
-        <button
-          onClick={() => {
-            console.log('Chat close button clicked');
-            onClose?.();
-          }}
-          className="text-white hover:text-gray-200 transition-colors"
-          aria-label="Close chat"
-        >
-          <X className="w-5 h-5" />
-        </button>
-      </div>
 
-      {/* Messages Container */}
-      <div className="flex-1 p-4 overflow-y-auto max-h-96">
-        {messages.length === 0 && showQuickActions ? (
-          <div className="space-y-4">
-            <div className="text-center text-gray-500 py-4 dark:text-gray-200">
-              <MessageSquare className="w-12 h-12 mx-auto mb-2 opacity-50 dark:text-gray-300" />
-              <p className="text-lg font-semibold mb-4 dark:text-white">Hello! How can I help you today?</p>
-              <p className="text-sm text-gray-400 mb-6 dark:text-gray-300">Choose an option below or type your message</p>
+        {/* Chat Container */}
+        <div className="bg-[#1a1c22] rounded-lg border border-[#2e3039]">
+          {/* Chat Header */}
+          <div className="bg-[#2e3039] text-white p-6 rounded-t-lg">
+            <div className="flex items-center space-x-3">
+              <MessageSquare className="w-8 h-8 text-[#f0f0f0]" />
+              <div>
+                <h2 className="text-2xl font-semibold text-[#f0f0f0]">AI Assistant</h2>
+                <p className="text-gray-300">Specialized in {toolName.toLowerCase()}</p>
+              </div>
             </div>
-            
-            {/* Quick Actions Grid */}
-            <div className="grid grid-cols-2 gap-3">
-              {quickActions.map((action) => (
-                <button
-                  key={action.id}
-                  onClick={() => handleQuickAction(action.prompt)}
-                  className="flex flex-col items-center p-3 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg transition-all duration-200 group dark:bg-blue-900/20 dark:border-blue-700 dark:hover:bg-blue-900/30"
-                >
-                  <div className="text-blue-600 mb-2 group-hover:text-blue-800 dark:text-blue-400 dark:group-hover:text-blue-300">
-                    {action.icon}
+          </div>
+
+          {/* Messages Container */}
+          <div className="p-6 overflow-y-auto max-h-96">
+            {messages.length === 0 ? (
+              <div className="space-y-6">
+                <div className="text-center text-gray-300 py-8">
+                  <MessageSquare className="w-16 h-16 mx-auto mb-4 opacity-50 text-[#f0f0f0]" />
+                  <p className="text-xl font-semibold text-[#f0f0f0] mb-2">{welcomeMessage}</p>
+                  <p className="text-gray-400">Choose an option below or type your message</p>
+                </div>
+                
+                {/* Quick Actions Grid */}
+                {quickActions.length > 0 && (
+                  <div className="flex flex-wrap gap-3 justify-center">
+                    {quickActions.map((action) => (
+                      <button
+                        key={action.id}
+                        onClick={() => handleQuickAction(action.prompt)}
+                        className="px-4 py-2 border border-[#444658] text-[#f0f0f0] rounded-full hover:bg-[#2e3039] transition-all duration-200 text-sm font-medium"
+                      >
+                        {action.label}
+                      </button>
+                    ))}
                   </div>
-                  <span className="text-sm font-medium text-blue-800 group-hover:text-blue-900 dark:text-blue-200 dark:group-hover:text-blue-100">
-                    {action.label}
-                  </span>
-                  <span className="text-xs text-blue-600 mt-1 group-hover:text-blue-700 dark:text-blue-300 dark:group-hover:text-blue-200">
-                    {action.description}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
-        ) : messages.length === 0 ? (
-          <div className="text-center text-gray-500 py-8 dark:text-gray-200">
-            <MessageSquare className="w-12 h-12 mx-auto mb-2 opacity-50 dark:text-gray-300" />
-            <p className="dark:text-white">Hello! I'm here to help with digital marketing automation. How can I assist you today?</p>
-            <button
-              onClick={() => setShowQuickActions(true)}
-              className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors dark:bg-blue-600 dark:hover:bg-blue-700"
-            >
-              Show Quick Actions
-            </button>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {messages.map((message) => (
-              <div
-                key={message.id}
-                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
-                <div
-                  className={`max-w-xs px-4 py-2 rounded-lg ${
-                    message.role === 'user'
-                      ? 'bg-blue-600 text-white dark:bg-blue-700'
-                      : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
-                  }`}
-                >
-                  <p className="text-sm">{message.content}</p>
-                </div>
+                )}
               </div>
-            ))}
-            {isLoading && (
-              <div className="flex justify-start">
-                <div className="bg-gray-100 text-gray-800 px-4 py-2 rounded-lg dark:bg-gray-800 dark:text-gray-200">
-                  <Loader2 className="w-4 h-4 animate-spin inline mr-2" />
-                  <span className="text-sm">Thinking...</span>
-                </div>
-              </div>
-            )}
-            {error && (
-              <div className="flex justify-start">
-                <div className="bg-red-100 text-red-800 px-4 py-2 rounded-lg dark:bg-red-900/20 dark:text-red-200">
-                  <p className="text-sm">Sorry, there was an error. Please try again.</p>
-                </div>
-              </div>
-            )}
-          </div>
-       )}
-       {messages.length > 0 && !showQuickActions && (
-         <div className="text-center mt-4">
-           <button
-             onClick={() => setShowQuickActions(true)}
-             className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors dark:bg-blue-600 dark:text-white dark:hover:bg-blue-700"
-           >
-             Show Quick Actions
-           </button>
-         </div>
-       )}
-       <div ref={messagesEndRef} />
-     </div>
-
-      {/* Input Form */}
-      <form onSubmit={onSubmit} className="p-4 border-t border-gray-200 dark:border-gray-600">
-        <div className="flex space-x-2">
-          <input
-            value={input}
-            onChange={handleInputChange}
-            placeholder="Type your message..."
-            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-300 dark:focus:ring-blue-400"
-            disabled={isLoading}
-          />
-          <button
-            type="submit"
-            disabled={isLoading || !input.trim()}
-            className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white p-2 rounded-lg transition-colors dark:bg-blue-700 dark:hover:bg-blue-800 dark:disabled:bg-gray-600"
-          >
-            {isLoading ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
             ) : (
-              <Send className="w-5 h-5" />
+              <div className="space-y-4">
+                {messages.map((message) => (
+                  <div
+                    key={message.id}
+                    className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                  >
+                    <div
+                      className={`px-4 py-3 rounded-lg ${
+                        message.role === 'user'
+                          ? 'bg-[#2e3039] text-[#f0f0f0] max-w-xs'
+                          : 'bg-[#444658] text-white shadow-sm w-full max-w-none'
+                      }`}
+                    >
+                      <p className="text-sm">{message.content}</p>
+                    </div>
+                  </div>
+                ))}
+                {isLoading && (
+                  <div className="flex justify-start">
+                    <div className="bg-[#444658] text-white px-4 py-2 rounded-lg flex items-center space-x-2">
+                      <div className="flex space-x-1">
+                        <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                        <div className="w-2 h-2 bg-white rounded-full animate-pulse delay-150"></div>
+                        <div className="w-2 h-2 bg-white rounded-full animate-pulse delay-300"></div>
+                      </div>
+                      <span className="text-sm">Thinking...</span>
+                    </div>
+                  </div>
+                )}
+                {error && (
+                  <div className="flex justify-start">
+                    <div className="bg-[#444658] text-white px-4 py-2 rounded-lg border border-[#2e3039]">
+                      <p className="text-sm">{error}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
             )}
-          </button>
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Input Form */}
+          <form onSubmit={onSubmit} className="p-6 border-t border-[#2e3039]">
+            <div className="flex space-x-3">
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder={placeholder}
+                className="flex-1 px-4 py-3 border border-[#444658] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#f0f0f0] bg-[#2e3039] text-[#f0f0f0] placeholder-gray-400"
+                disabled={isLoading}
+              />
+              <button
+                type="submit"
+                disabled={isLoading || !input.trim()}
+                className="bg-[#444658] hover:bg-[#2e3039] disabled:bg-[#1a1c22] text-[#f0f0f0] p-3 rounded-lg transition-colors border border-[#444658]"
+              >
+                {isLoading ? (
+                  <Loader2 className="w-6 h-6 animate-spin" />
+                ) : (
+                  <Send className="w-6 h-6" />
+                )}
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
   );
 }

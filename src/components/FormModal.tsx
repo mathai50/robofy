@@ -47,13 +47,13 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+    <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+      <div className="bg-black rounded-lg p-6 w-full max-w-md mx-4 border border-gray-800">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold text-gray-900">Get Started with Robofy</h2>
+          <h2 className="text-xl font-semibold text-white">Get Started with Robofy</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600"
+            className="text-gray-400 hover:text-white transition-colors"
             aria-label="Close"
             disabled={isSubmitting}
           >
@@ -64,12 +64,12 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm">
+            <div className="bg-red-900 border border-red-700 text-red-300 px-4 py-3 rounded-md text-sm">
               {error}
             </div>
           )}
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="name" className="block text-sm font-medium text-gray-300">
               Full Name
             </label>
             <input
@@ -78,11 +78,11 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
               name="name"
               required
               disabled={isSubmitting}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50"
+              className="mt-1 block w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white disabled:opacity-50"
             />
           </div>
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-300">
               Email Address
             </label>
             <input
@@ -91,18 +91,18 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
               name="email"
               required
               disabled={isSubmitting}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50"
+              className="mt-1 block w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white disabled:opacity-50"
             />
           </div>
           <div>
-            <label htmlFor="industry" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="industry" className="block text-sm font-medium text-gray-300">
               Industry
             </label>
             <select
               id="industry"
               name="industry"
               disabled={isSubmitting}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50"
+              className="mt-1 block w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white disabled:opacity-50"
             >
               <option value="">Select an industry</option>
               <option value="beauty">Beauty</option>
@@ -114,7 +114,7 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
             </select>
           </div>
           <div>
-            <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="message" className="block text-sm font-medium text-gray-300">
               Message (Optional)
             </label>
             <textarea
@@ -122,14 +122,14 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
               name="message"
               rows={3}
               disabled={isSubmitting}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50"
+              className="mt-1 block w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-white focus:border-white disabled:opacity-50"
             ></textarea>
           </div>
           <div>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-white text-black py-2 px-4 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {isSubmitting ? 'Submitting...' : 'Submit'}
             </button>

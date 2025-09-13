@@ -1,13 +1,14 @@
 """
 Pydantic schemas for authentication and user management.
 """
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, ConfigDict
 from typing import Optional
 from datetime import datetime
 
 class Token(BaseModel):
     """JWT token response schema."""
     access_token: str
+    refresh_token: str
     token_type: str
 
 class TokenData(BaseModel):
@@ -38,8 +39,7 @@ class UserInDB(UserBase):
     created_at: datetime
     updated_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class UserResponse(UserInDB):
     """User response schema (excludes sensitive data)."""
@@ -49,3 +49,30 @@ class LoginRequest(BaseModel):
     """Schema for login requests."""
     username: str
     password: str
+
+# Notification schemas
+class NotificationBase(BaseModel):
+    """Base notification schema."""
+    recipient: str
+    message: str
+
+class NotificationCreate(NotificationBase):
+    """Schema for creating notifications."""
+    subject: Optional[str] = None
+    from_email: Optional[str] = None
+    html_message: Optional[str] = None
+    cc: Optional[list[str]] = None
+    bcc: Optional[list[str]] = None
+
+class NotificationResponse(BaseModel):
+    """Schema for notification responses."""
+    id: int
+    channel: str
+    status: str
+    recipient: str
+    message: str
+    details: dict
+
+class ProviderStatusResponse(BaseModel):
+    """Schema for provider status responses."""
+    providers: dict[str, bool]

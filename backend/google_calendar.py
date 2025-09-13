@@ -11,7 +11,7 @@ from google.auth.exceptions import RefreshError
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 import logging
-from backend.config import settings
+from config import settings
 
 logger = logging.getLogger(__name__)
 

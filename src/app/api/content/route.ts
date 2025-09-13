@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const PYTHON_BACKEND_URL = process.env.PYTHON_BACKEND_URL || 'http://localhost:8000';
-
 export async function GET(request: NextRequest) {
   try {
     // Forward the GET request to the Python backend
-    const response = await fetch(`${PYTHON_BACKEND_URL}/api/content`, {
+    const response = await fetch('http://127.0.0.1:8000/api/content', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

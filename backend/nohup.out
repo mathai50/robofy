@@ -1,0 +1,8 @@
+INFO:     Will watch for changes in these directories: ['/Users/mathewpm/dev/BMAD-Method/robofy/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [4483] using StatReload
+INFO:     Started server process [4490]
+INFO:     Waiting for application startup.
+INFO:main:Database tables created (if not exists)
+INFO:main:AI service initialized. Available providers: {'deepseek': {'available': True, 'configured': True}, 'google': {'available': True, 'configured': True}, 'openai': {'available': True, 'configured': True}, 'huggingface': {'available': True, 'configured': True}}
+INFO:     Application startup complete.

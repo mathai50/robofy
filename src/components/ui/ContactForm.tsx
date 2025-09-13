@@ -129,7 +129,7 @@ export default function ContactForm() {
 
   return (
     <div className="bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-gray-700">
-      <h2 className="text-2xl font-bold mb-6 text-white font-source-code-pro">
+      <h2 className="text-2xl font-bold mb-6 text-white font-inter">
         Send Us a Message
       </h2>
       
@@ -148,7 +148,7 @@ export default function ContactForm() {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2 font-source-code-pro">
+            <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2 font-inter">
               Full Name *
             </label>
             <input
@@ -158,18 +158,18 @@ export default function ContactForm() {
               value={formData.name}
               onChange={handleInputChange}
               disabled={isSubmitting}
-              className={`w-full px-4 py-3 bg-white/5 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 font-source-code-pro ${
+              className={`w-full px-4 py-3 bg-white/5 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 font-inter ${
                 errors.name ? 'border-red-500' : 'border-gray-600'
               }`}
               placeholder="Enter your full name"
             />
             {errors.name && (
-              <p className="mt-1 text-sm text-red-400 font-source-code-pro">{errors.name}</p>
+              <p className="mt-1 text-sm text-red-400 font-inter">{errors.name}</p>
             )}
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2 font-source-code-pro">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2 font-inter">
               Email Address *
             </label>
             <input
@@ -179,20 +179,20 @@ export default function ContactForm() {
               value={formData.email}
               onChange={handleInputChange}
               disabled={isSubmitting}
-              className={`w-full px-4 py-3 bg-white/5 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 font-source-code-pro ${
+              className={`w-full px-4 py-3 bg-white/5 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 font-inter ${
                 errors.email ? 'border-red-500' : 'border-gray-600'
               }`}
               placeholder="your.email@example.com"
             />
             {errors.email && (
-              <p className="mt-1 text-sm text-red-400 font-source-code-pro">{errors.email}</p>
+              <p className="mt-1 text-sm text-red-400 font-inter">{errors.email}</p>
             )}
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2 font-source-code-pro">
+            <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2 font-inter">
               Phone Number
             </label>
             <input
@@ -202,18 +202,18 @@ export default function ContactForm() {
               value={formData.phone}
               onChange={handleInputChange}
               disabled={isSubmitting}
-              className={`w-full px-4 py-3 bg-white/5 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 font-source-code-pro ${
+              className={`w-full px-4 py-3 bg-white/5 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 font-inter ${
                 errors.phone ? 'border-red-500' : 'border-gray-600'
               }`}
               placeholder="+1 (555) 123-4567"
             />
             {errors.phone && (
-              <p className="mt-1 text-sm text-red-400 font-source-code-pro">{errors.phone}</p>
+              <p className="mt-1 text-sm text-red-400 font-inter">{errors.phone}</p>
             )}
           </div>
 
           <div>
-            <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2 font-source-code-pro">
+            <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2 font-inter">
               Subject *
             </label>
             <select
@@ -222,7 +222,7 @@ export default function ContactForm() {
               value={formData.subject}
               onChange={handleInputChange}
               disabled={isSubmitting}
-              className={`w-full px-4 py-3 bg-white/5 border rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 font-source-code-pro ${
+              className={`w-full px-4 py-3 bg-white/5 border rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 font-inter ${
                 errors.subject ? 'border-red-500' : 'border-gray-600'
               }`}
             >
@@ -235,13 +235,13 @@ export default function ContactForm() {
               <option value="other">Other</option>
             </select>
             {errors.subject && (
-              <p className="mt-1 text-sm text-red-400 font-source-code-pro">{errors.subject}</p>
+              <p className="mt-1 text-sm text-red-400 font-inter">{errors.subject}</p>
             )}
           </div>
         </div>
 
         <div>
-          <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2 font-source-code-pro">
+          <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2 font-inter">
             Message *
           </label>
           <textarea
@@ -251,20 +251,20 @@ export default function ContactForm() {
             value={formData.message}
             onChange={handleInputChange}
             disabled={isSubmitting}
-            className={`w-full px-4 py-3 bg-white/5 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 font-source-code-pro ${
+            className={`w-full px-4 py-3 bg-white/5 border rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 font-inter ${
               errors.message ? 'border-red-500' : 'border-gray-600'
             }`}
             placeholder="Tell us about your project or how we can help you..."
           />
           {errors.message && (
-            <p className="mt-1 text-sm text-red-400 font-source-code-pro">{errors.message}</p>
+            <p className="mt-1 text-sm text-red-400 font-inter">{errors.message}</p>
           )}
         </div>
 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed font-source-code-pro"
+          className="w-full bg-white text-black font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed font-inter"
         >
           {isSubmitting ? (
             <span className="flex items-center justify-center">

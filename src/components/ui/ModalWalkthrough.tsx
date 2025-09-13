@@ -163,9 +163,9 @@ const ModalWalkthrough: React.FC<ModalWalkthroughProps> = ({
       case 'text':
         return (
           <div className="space-y-4">
-            <p className="text-gray-700 leading-relaxed">{data as string}</p>
+            <p className="text-gray-300 leading-relaxed">{data as string}</p>
             {description && (
-              <p className="text-sm text-gray-500 italic">{description}</p>
+              <p className="text-sm text-gray-400 italic">{description}</p>
             )}
           </div>
         );
@@ -177,10 +177,10 @@ const ModalWalkthrough: React.FC<ModalWalkthroughProps> = ({
             <img
               src={imageData.src}
               alt={imageData.alt || 'Step illustration'}
-              className="w-full h-48 object-contain rounded-lg border border-gray-200"
+              className="w-full h-48 object-contain rounded-lg border border-gray-700"
             />
             {description && (
-              <p className="text-sm text-gray-500 italic text-center">{description}</p>
+              <p className="text-sm text-gray-400 italic text-center">{description}</p>
             )}
           </div>
         );
@@ -191,10 +191,10 @@ const ModalWalkthrough: React.FC<ModalWalkthroughProps> = ({
             <video
               src={data as string}
               controls
-              className="w-full h-48 object-contain rounded-lg border border-gray-200"
+              className="w-full h-48 object-contain rounded-lg border border-gray-700"
             />
             {description && (
-              <p className="text-sm text-gray-500 italic text-center">{description}</p>
+              <p className="text-sm text-gray-400 italic text-center">{description}</p>
             )}
           </div>
         );
@@ -202,7 +202,7 @@ const ModalWalkthrough: React.FC<ModalWalkthroughProps> = ({
       case 'chatbot':
         return (
           <div className="space-y-4">
-            <div className="bg-gray-50 rounded-lg p-4 max-h-64 overflow-y-auto">
+            <div className="bg-gray-900 rounded-lg p-4 max-h-64 overflow-y-auto">
               <div className="space-y-3">
                 {chatbotMessages.map((message, index) => (
                   <div
@@ -212,8 +212,8 @@ const ModalWalkthrough: React.FC<ModalWalkthroughProps> = ({
                     <div
                       className={`max-w-xs px-4 py-2 rounded-lg ${
                         message.type === 'user'
-                          ? 'bg-primary-accent-1 text-white'
-                          : 'bg-white border border-gray-200 text-gray-800'
+                          ? 'bg-white text-black'
+                          : 'bg-gray-800 border border-gray-700 text-gray-300'
                       }`}
                     >
                       {message.content}
@@ -222,7 +222,7 @@ const ModalWalkthrough: React.FC<ModalWalkthroughProps> = ({
                 ))}
                 {isTyping && (
                   <div className="flex justify-start">
-                    <div className="bg-white border border-gray-200 text-gray-800 px-4 py-2 rounded-lg">
+                    <div className="bg-gray-800 border border-gray-700 text-gray-300 px-4 py-2 rounded-lg">
                       <div className="flex space-x-1">
                         <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
                         <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
@@ -241,12 +241,12 @@ const ModalWalkthrough: React.FC<ModalWalkthroughProps> = ({
                   value={userInput}
                   onChange={(e) => setUserInput(e.target.value)}
                   placeholder="Type your message..."
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-accent-1"
+                  className="flex-1 px-3 py-2 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-white bg-gray-900 text-white"
                   onKeyPress={(e) => e.key === 'Enter' && handleUserInput(userInput)}
                 />
                 <button
                   onClick={() => handleUserInput(userInput)}
-                  className="px-4 py-2 bg-primary-accent-1 text-white rounded-lg hover:bg-primary-accent-1/90 transition-colors"
+                  className="px-4 py-2 bg-white text-black rounded-lg hover:bg-gray-100 transition-colors"
                 >
                   Send
                 </button>
@@ -264,23 +264,23 @@ const ModalWalkthrough: React.FC<ModalWalkthroughProps> = ({
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+      className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
     >
       <div
         ref={modalRef}
-        className={`bg-white rounded-xl shadow-2xl w-full max-w-2xl mx-auto transform transition-all duration-300 ${className}`}
+        className={`bg-black rounded-xl shadow-2xl w-full max-w-2xl mx-auto transform transition-all duration-300 border border-gray-800 ${className}`}
       >
         {/* Header */}
-        <div className="flex justify-between items-center p-6 border-b border-gray-200">
-          <h2 id="modal-title" className="text-xl font-semibold text-gray-900">
+        <div className="flex justify-between items-center p-6 border-b border-gray-800">
+          <h2 id="modal-title" className="text-xl font-semibold text-white">
             {currentStepData.title}
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-gray-400 hover:text-white transition-colors"
             aria-label="Close modal"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -295,9 +295,9 @@ const ModalWalkthrough: React.FC<ModalWalkthroughProps> = ({
         </div>
 
         {/* Footer Navigation */}
-        <div className="flex items-center justify-between p-6 border-t border-gray-200 bg-gray-50 rounded-b-xl">
+        <div className="flex items-center justify-between p-6 border-t border-gray-800 bg-gray-900 rounded-b-xl">
           <div className="flex items-center space-x-4">
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-gray-400">
               Step {currentStep + 1} of {steps.length}
             </span>
             <div className="flex space-x-1">
@@ -305,7 +305,7 @@ const ModalWalkthrough: React.FC<ModalWalkthroughProps> = ({
                 <div
                   key={index}
                   className={`w-2 h-2 rounded-full ${
-                    index === currentStep ? 'bg-primary-accent-1' : 'bg-gray-300'
+                    index === currentStep ? 'bg-white' : 'bg-gray-600'
                   }`}
                 />
               ))}
@@ -315,7 +315,7 @@ const ModalWalkthrough: React.FC<ModalWalkthroughProps> = ({
           <div className="flex items-center space-x-3">
             <button
               onClick={handleSkip}
-              className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors text-sm"
+              className="px-4 py-2 text-gray-400 hover:text-white transition-colors text-sm"
             >
               {skipButtonText}
             </button>
@@ -323,7 +323,7 @@ const ModalWalkthrough: React.FC<ModalWalkthroughProps> = ({
             {!isFirstStep && (
               <button
                 onClick={handlePrevious}
-                className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                className="px-4 py-2 border border-gray-700 text-gray-300 rounded-lg hover:bg-gray-800 transition-colors"
               >
                 Previous
               </button>
@@ -331,7 +331,7 @@ const ModalWalkthrough: React.FC<ModalWalkthroughProps> = ({
 
             <button
               onClick={isLastStep ? onClose : handleNext}
-              className="px-6 py-2 bg-primary-accent-1 text-white rounded-lg hover:bg-primary-accent-1/90 transition-colors"
+              className="px-6 py-2 bg-white text-black rounded-lg hover:bg-gray-100 transition-colors"
             >
               {isLastStep ? closeButtonText : 'Next'}
             </button>

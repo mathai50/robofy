@@ -109,24 +109,24 @@ export default function IndustryDetailPage({ params }: { params: { slug: string 
         {/* Back Button */}
         <Link
           href="/sectors"
-          className="inline-flex items-center text-blue-400 hover:text-blue-300 mb-8 font-source-code-pro"
+          className="inline-flex items-center text-blue-400 hover:text-blue-300 mb-8 font-inter"
         >
           ← Back to Sectors
         </Link>
 
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl sm:text-5xl font-bold mb-6 font-source-code-pro">
+          <h1 className="text-4xl sm:text-5xl font-bold mb-6 font-inter">
             {industry.name}
           </h1>
-          <p className="text-lg text-gray-300 max-w-3xl mx-auto font-source-code-pro">
+          <p className="text-lg text-gray-300 max-w-3xl mx-auto font-inter">
             {industry.longDescription}
           </p>
         </div>
 
         {/* Services Section */}
         <div className="mb-16">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-center font-source-code-pro">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-center font-inter">
             Our Services for {industry.name}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -135,10 +135,10 @@ export default function IndustryDetailPage({ params }: { params: { slug: string 
                 key={index}
                 className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-gray-700"
               >
-                <h3 className="text-xl font-semibold mb-3 text-blue-400 font-source-code-pro">
+                <h3 className="text-xl font-semibold mb-3 text-blue-400 font-inter">
                   {service}
                 </h3>
-                <p className="text-gray-300 font-source-code-pro">
+                <p className="text-gray-300 font-inter">
                   AI-powered solutions tailored for {industry.name.toLowerCase()} businesses to enhance efficiency and growth.
                 </p>
               </div>
@@ -148,22 +148,22 @@ export default function IndustryDetailPage({ params }: { params: { slug: string 
 
         {/* CTA Section */}
         <div className="text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-6 font-source-code-pro">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-6 font-inter">
             Ready to Transform Your {industry.name} Business?
           </h2>
-          <p className="text-gray-300 mb-8 max-w-2xl mx-auto font-source-code-pro">
+          <p className="text-gray-300 mb-8 max-w-2xl mx-auto font-inter">
             Join industry leaders who have already revolutionized their operations with our AI-powered solutions.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 font-source-code-pro"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 font-inter"
             >
               Get Started Today
             </Link>
             <Link
               href="/"
-              className="border border-white text-white hover:bg-white hover:text-black font-semibold py-3 px-8 rounded-lg transition-all duration-300 font-source-code-pro"
+              className="border border-white text-white hover:bg-white hover:text-black font-semibold py-3 px-8 rounded-lg transition-all duration-300 font-inter"
             >
               View All Services
             </Link>

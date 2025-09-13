@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const PYTHON_BACKEND_URL = process.env.PYTHON_BACKEND_URL || 'http://localhost:8000';
-
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     
-    // Forward the request to the Python backend
-    const response = await fetch(`${PYTHON_BACKEND_URL}/api/ai/content`, {
+    // Forward the request to the Python backend via proxy
+    const response = await fetch('http://127.0.0.1:8000/api/ai/content', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

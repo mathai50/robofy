@@ -48,10 +48,10 @@ export default function SectorsPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl sm:text-5xl font-bold mb-6 font-source-code-pro">
+          <h1 className="text-4xl sm:text-5xl font-bold mb-6 font-inter">
             Sectors We Serve
           </h1>
-          <p className="text-lg text-gray-300 max-w-3xl mx-auto font-source-code-pro">
+          <p className="text-lg text-gray-300 max-w-3xl mx-auto font-inter">
             Discover how our AI-powered solutions are transforming businesses across various sectors with tailored digital marketing automation.
           </p>
         </div>
@@ -61,27 +61,27 @@ export default function SectorsPage() {
           {sectors.map((sector) => (
             <div
               key={sector.slug}
-              className="bg-white/5 backdrop-blur-sm rounded-lg p-6 hover:bg-white/10 transition-all duration-300 border border-gray-700"
+              className="bg-gray-900 rounded-lg p-6 hover:bg-gray-800 transition-all duration-300 border border-gray-700"
             >
               <div className="mb-4">
-                <div className="w-full h-48 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                <div className="w-full h-48 bg-gray-700 rounded-lg flex items-center justify-center">
                   <span className="text-white text-2xl font-bold">
                     {sector.name.split(' ')[0]}
                   </span>
                 </div>
               </div>
               
-              <h3 className="text-xl font-semibold mb-3 font-source-code-pro">
+              <h3 className="text-xl font-semibold mb-3 font-inter">
                 {sector.name}
               </h3>
               
-              <p className="text-gray-300 mb-4 text-sm font-source-code-pro">
+              <p className="text-gray-300 mb-4 text-sm font-inter">
                 {sector.description}
               </p>
               
               <Link
                 href={`/sectors/${sector.slug}`}
-                className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 text-sm font-source-code-pro"
+                className="inline-block bg-white text-black hover:bg-gray-100 font-semibold py-2 px-4 rounded-lg transition-all duration-300 text-sm font-inter"
               >
                 Learn More
               </Link>
@@ -91,22 +91,22 @@ export default function SectorsPage() {
 
         {/* CTA Section */}
         <div className="text-center mt-16">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-6 font-source-code-pro">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-6 font-inter">
             Ready to Transform Your Sector?
           </h2>
-          <p className="text-gray-300 mb-8 max-w-2xl mx-auto font-source-code-pro">
+          <p className="text-gray-300 mb-8 max-w-2xl mx-auto font-inter">
             Join hundreds of businesses that have already revolutionized their digital marketing with our AI-powered solutions.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 font-source-code-pro"
+              className="bg-white text-black hover:bg-gray-100 font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 font-inter"
             >
               Get Started Today
             </Link>
             <Link
               href="/"
-              className="border border-white text-white hover:bg-white hover:text-black font-semibold py-3 px-8 rounded-lg transition-all duration-300 font-source-code-pro"
+              className="border border-gray-300 text-white hover:bg-white hover:text-black font-semibold py-3 px-8 rounded-lg transition-all duration-300 font-inter"
             >
               View Our Services
             </Link>

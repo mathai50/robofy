@@ -78,24 +78,24 @@ const ContactDetails = () => {
 
   return (
     <div className="bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-gray-700">
-      <h2 className="text-2xl font-bold mb-6 text-white font-source-code-pro text-center">
+      <h2 className="text-2xl font-bold mb-6 text-white font-inter text-center">
         Get In Touch
       </h2>
       
       <div className="space-y-6 mb-8">
         {contactInfo.map((item, index) => (
           <div key={index} className="flex items-start space-x-4">
-            <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white">
+            <div className="flex-shrink-0 w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-white">
               {item.icon}
             </div>
             <div className="flex-1">
-              <h3 className="text-lg font-semibold text-white font-source-code-pro mb-1">
+              <h3 className="text-lg font-semibold text-white font-inter mb-1">
                 {item.title}
               </h3>
-              <p className="text-blue-400 font-medium font-source-code-pro mb-1">
+              <p className="text-blue-400 font-medium font-inter mb-1">
                 {item.details}
               </p>
-              <p className="text-gray-300 text-sm font-source-code-pro">
+              <p className="text-gray-300 text-sm font-inter">
                 {item.description}
               </p>
             </div>
@@ -104,7 +104,7 @@ const ContactDetails = () => {
       </div>
 
       <div className="border-t border-gray-700 pt-6">
-        <h3 className="text-lg font-semibold text-white font-source-code-pro mb-4 text-center">
+        <h3 className="text-lg font-semibold text-white font-inter mb-4 text-center">
           Follow Us
         </h3>
         <div className="flex justify-center space-x-4">

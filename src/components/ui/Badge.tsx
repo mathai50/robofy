@@ -10,10 +10,10 @@ interface BadgeProps {
 
 const Badge = ({ variant = 'default', children, className = '' }: BadgeProps) => {
   const variants = {
-    default: 'bg-blue-100 text-blue-800',
-    secondary: 'bg-gray-100 text-gray-800',
-    destructive: 'bg-red-100 text-red-800',
-    outline: 'border border-gray-300 bg-transparent text-gray-700'
+    default: 'bg-gray-800 text-gray-300 border border-gray-600',
+    secondary: 'bg-gray-700 text-gray-300 border border-gray-600',
+    destructive: 'bg-gray-800 text-gray-300 border border-gray-600',
+    outline: 'border border-gray-600 bg-transparent text-gray-300'
   };
 
   return (

@@ -63,3 +63,7 @@ def internal_server_error(detail: str, error_code: str = "INTERNAL_SERVER_ERROR"
 def service_unavailable_error(detail: str, error_code: str = "SERVICE_UNAVAILABLE", additional_info: Dict[str, Any] = None) -> HTTPException:
     """503 Service Unavailable"""
     return http_error(status.HTTP_503_SERVICE_UNAVAILABLE, detail, error_code, additional_info)
+
+def too_many_requests_error(detail: str, error_code: str = "TOO_MANY_REQUESTS", additional_info: Dict[str, Any] = None) -> HTTPException:
+    """429 Too Many Requests"""
+    return http_error(status.HTTP_429_TOO_MANY_REQUESTS, detail, error_code, additional_info)

@@ -13,10 +13,10 @@ logger = logging.getLogger(__name__)
 class GoogleAIProvider(BaseAIProvider):
     """Google AI provider implementation using Gemini API."""
     
-    def __init__(self, api_key: Optional[str] = None, model: str = "gemini-pro", **kwargs):
+    def __init__(self, api_key: Optional[str] = None, model: str = "gemini-1.5-flash", **kwargs):
         super().__init__(**kwargs)
         self.api_key = api_key or os.getenv("GOOGLE_API_KEY")
-        self.model = model or os.getenv("GOOGLE_MODEL", "gemini-pro")
+        self.model = model or os.getenv("GOOGLE_MODEL", "gemini-1.5-flash")
         self._configured = False
         
     def _configure(self):
@@ -36,6 +36,7 @@ class GoogleAIProvider(BaseAIProvider):
         
         try:
             self._configure()
+            logger.info(f"Using Google AI model: {self.model}")
             model = genai.GenerativeModel(self.model)
             
             generation_config = {

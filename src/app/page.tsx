@@ -24,22 +24,10 @@ import { teamMembers } from '@/data/team';
 import { InteractiveDemoWidget } from '@/components/ui';
 import { LineChart, BarChart, DonutChart, LinearProgressBar, CircularProgressBar, FloatingDemoButton } from '@/components/ui';
 import { lineChartData, barChartData, donutChartData } from '@/data/chart-data';
-import ChatInterface from '@/components/ChatInterface';
 
 export default function Home() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isWalkthroughOpen, setIsWalkthroughOpen] = useState(false);
-  const [isChatOpen, setIsChatOpen] = useState(false);
-  
-  // Debug chat state changes
-  useEffect(() => {
-    console.log('Chat state changed:', isChatOpen);
-  }, [isChatOpen]);
-  
-  // Debug chat state changes
-  useEffect(() => {
-    console.log('Chat state changed:', isChatOpen);
-  }, [isChatOpen]);
 
   const handleFormOpen = () => {
     setIsFormOpen(true);
@@ -239,23 +227,22 @@ export default function Home() {
   return (
     <>
       <div className="relative">
-        {/* Elevated Hero Section with Dynamic Gradient and Animated Elements */}
-        <section className="min-h-screen w-full relative overflow-hidden flex items-center justify-center bg-gradient-to-br from-indigo-900 via-purple-900 to-blue-900 py-20">
-          {/* Animated particle overlay */}
+        {/* Minimal Hero Section with Monochrome Design */}
+        <section className="min-h-screen w-full relative overflow-hidden flex items-center justify-center bg-black py-20">
+          {/* Animated particle overlay - Monochrome version */}
           <div className="absolute inset-0 z-0">
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--primary-gradient)_0%,_transparent_70%)] animate-pulse"></div>
-            {/* Floating particles */}
-            <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-primary-accent-1 rounded-full opacity-70 animate-float-1"></div>
-            <div className="absolute top-1/3 right-1/4 w-3 h-3 bg-purple-400 rounded-full opacity-60 animate-float-2"></div>
-            <div className="absolute bottom-1/4 left-1/3 w-4 h-4 bg-blue-300 rounded-full opacity-50 animate-float-3"></div>
-            <div className="absolute bottom-1/3 right-1/3 w-2 h-2 bg-primary-accent-1 rounded-full opacity-80 animate-float-4"></div>
-            <div className="absolute top-2/3 left-2/5 w-3 h-3 bg-purple-300 rounded-full opacity-70 animate-float-5"></div>
+            {/* Floating particles in monochrome */}
+            <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-white rounded-full opacity-70 animate-float-1"></div>
+            <div className="absolute top-1/3 right-1/4 w-3 h-3 bg-gray-400 rounded-full opacity-60 animate-float-2"></div>
+            <div className="absolute bottom-1/4 left-1/3 w-4 h-4 bg-gray-300 rounded-full opacity-50 animate-float-3"></div>
+            <div className="absolute bottom-1/3 right-1/3 w-2 h-2 bg-white rounded-full opacity-80 animate-float-4"></div>
+            <div className="absolute top-2/3 left-2/5 w-3 h-3 bg-gray-400 rounded-full opacity-70 animate-float-5"></div>
           </div>
           
-          {/* Abstract shape overlays */}
+          {/* Abstract shape overlays - Monochrome */}
           <div className="absolute inset-0 z-0 opacity-10">
-            <div className="absolute top-20 left-20 w-72 h-72 bg-primary-accent-1 rounded-full blur-3xl animate-pulse-slow"></div>
-            <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500 rounded-full blur-3xl animate-pulse-slower"></div>
+            <div className="absolute top-20 left-20 w-72 h-72 bg-white rounded-full blur-3xl animate-pulse-slow"></div>
+            <div className="absolute bottom-20 right-20 w-96 h-96 bg-gray-500 rounded-full blur-3xl animate-pulse-slower"></div>
           </div>
           
           {/* Main container */}
@@ -263,10 +250,10 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Left column - Text content */}
               <div className="text-center lg:text-left">
-                <h1 className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-extrabold text-white font-sans leading-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-                  AI-Powered Business <span className="text-primary-accent-1">Automation</span>
+                <h1 className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-extrabold text-white font-inter leading-tight mb-6 mt-6">
+                  AI-Powered Business <span className="text-gray-300">Automation</span>
                 </h1>
-                <p className="text-xl sm:text-2xl lg:text-2xl text-gray-200 font-sans leading-relaxed mb-8 max-w-2xl">
+                <p className="text-xl sm:text-2xl lg:text-2xl text-gray-300 font-inter leading-relaxed mb-8 max-w-2xl">
                   Transform your operations with intelligent automation that works 24/7 to drive growth and efficiency
                 </p>
                 
@@ -274,46 +261,36 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start mb-8">
                   <button
                     onClick={handleFormOpen}
-                    className="bg-gradient-to-r from-primary-accent-1 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-3.5 px-7 rounded-full transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl text-base sm:text-lg"
+                    className="bg-white text-black font-bold py-3.5 px-7 rounded-full transition-all duration-300 transform hover:scale-105 hover:bg-gray-100 text-base sm:text-lg"
                   >
                     Start Your Free Automation Audit
                   </button>
                   <button
                     onClick={handleWalkthroughOpen}
-                    className="border-2 border-primary-accent-1 text-primary-accent-1 hover:bg-primary-accent-1/10 font-semibold py-3.5 px-5.6 rounded-full transition-all duration-300 transform hover:scale-105 text-base sm:text-lg"
+                    className="border-2 border-white text-white hover:bg-white/10 font-semibold py-3.5 px-5.6 rounded-full transition-all duration-300 transform hover:scale-105 text-base sm:text-lg"
                   >
                     Watch Demo
-                  </button>
-                </div>
-                
-                {/* Book a Demo button in prominent corner */}
-                <div className="absolute top-6 right-6 z-20">
-                  <button
-                    onClick={handleFormOpen}
-                    className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-sm"
-                  >
-                    Book a Demo
                   </button>
                 </div>
                 
                 {/* Trust indicators */}
                 <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 text-base text-gray-300 mb-6">
                   <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
-                    <span className="text-green-400 mr-2">✓</span>
+                    <span className="text-white mr-2">✓</span>
                     <span className="font-medium">80% Time Savings</span>
                   </div>
                   <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
-                    <span className="text-green-400 mr-2">✓</span>
+                    <span className="text-white mr-2">✓</span>
                     <span className="font-medium">40% Cost Reduction</span>
                   </div>
                   <div className="flex items-center bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
-                    <span className="text-green-400 mr-2">✓</span>
+                    <span className="text-white mr-2">✓</span>
                     <span className="font-medium">500+ Happy Clients</span>
                   </div>
                 </div>
               </div>
               
-              {/* Right column - Enhanced AI animation with branded avatars */}
+              {/* Right column - Enhanced AI animation with monochrome avatars */}
               <div className="flex items-center justify-center relative">
                 <div className="relative w-[350px] h-[350px] sm:w-[400px] sm:h-[400px]">
                   {/* Enhanced orbiting animation with AI avatars */}
@@ -325,16 +302,16 @@ export default function Home() {
                       iconSize={50}
                       reverse={false}
                     >
-                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-2xl shadow-blue-500/50">
+                      <div className="w-12 h-12 bg-gray-800 border border-gray-600 rounded-full flex items-center justify-center">
                         <Bot size={24} className="text-white" />
                       </div>
-                      <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center shadow-2xl shadow-purple-500/50">
+                      <div className="w-12 h-12 bg-gray-700 border border-gray-500 rounded-full flex items-center justify-center">
                         <Bot size={24} className="text-white" />
                       </div>
-                      <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-blue-600 rounded-full flex items-center justify-center shadow-2xl shadow-green-500/50">
+                      <div className="w-12 h-12 bg-gray-600 border border-gray-400 rounded-full flex items-center justify-center">
                         <Bot size={24} className="text-white" />
                       </div>
-                      <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-red-600 rounded-full flex items-center justify-center shadow-2xl shadow-pink-500/50">
+                      <div className="w-12 h-12 bg-gray-500 border border-gray-300 rounded-full flex items-center justify-center">
                         <Bot size={24} className="text-white" />
                       </div>
                     </OrbitingCircles>
@@ -349,27 +326,27 @@ export default function Home() {
                       iconSize={40}
                       reverse={true}
                     >
-                      <div className="text-blue-300"><GoogleDriveIcon size={32} /></div>
-                      <div className="text-purple-300"><NotionIcon size={32} /></div>
-                      <div className="text-green-300"><WhatsAppIcon size={32} /></div>
-                      <div className="text-pink-300"><AIIcon size={32} /></div>
+                      <div className="text-gray-300"><GoogleDriveIcon size={32} /></div>
+                      <div className="text-gray-400"><NotionIcon size={32} /></div>
+                      <div className="text-gray-300"><WhatsAppIcon size={32} /></div>
+                      <div className="text-gray-400"><AIIcon size={32} /></div>
                     </OrbitingCircles>
                   </div>
                   
                   {/* Central AI core with glow effect */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-24 h-24 bg-gradient-to-br from-primary-accent-1 to-purple-600 rounded-full flex items-center justify-center shadow-2xl shadow-primary-accent-1/50 animate-pulse">
+                    <div className="w-24 h-24 bg-gray-700 rounded-full flex items-center justify-center shadow-2xl shadow-gray-500/50 animate-pulse">
                       <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center">
                         <Bot size={36} className="text-white" />
                       </div>
                     </div>
                   </div>
                   
-                  {/* Floating AI particles around the central core */}
-                  <div className="absolute top-8 left-8 w-6 h-6 bg-blue-400 rounded-full opacity-80 animate-bounce"></div>
-                  <div className="absolute bottom-8 right-8 w-6 h-6 bg-purple-400 rounded-full opacity-80 animate-bounce delay-300"></div>
-                  <div className="absolute top-8 right-8 w-6 h-6 bg-primary-accent-1 rounded-full opacity-80 animate-bounce delay-700"></div>
-                  <div className="absolute bottom-8 left-8 w-6 h-6 bg-pink-400 rounded-full opacity-80 animate-bounce delay-1000"></div>
+                  {/* Floating AI particles around the central core - Monochrome version */}
+                  <div className="absolute top-8 left-8 w-6 h-6 bg-white rounded-full opacity-80 animate-bounce"></div>
+                  <div className="absolute bottom-8 right-8 w-6 h-6 bg-gray-400 rounded-full opacity-80 animate-bounce delay-300"></div>
+                  <div className="absolute top-8 right-8 w-6 h-6 bg-gray-300 rounded-full opacity-80 animate-bounce delay-700"></div>
+                  <div className="absolute bottom-8 left-8 w-6 h-6 bg-white rounded-full opacity-80 animate-bounce delay-1000"></div>
                 </div>
               </div>
             </div>
@@ -377,44 +354,44 @@ export default function Home() {
         </section>
 
 
-        {/* Stats preview with Dark Gradient and Neon Accents */}
-        <div className="w-full bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 py-20">
+        {/* Stats preview with Monochrome Design */}
+        <div className="w-full bg-black py-20">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-            <div className="text-center p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-blue-400/30 hover:border-blue-400/60 transition-all duration-300">
-              <div className="text-3xl font-bold text-blue-400 mb-2">500+</div>
+            <div className="text-center p-6 bg-gray-900 rounded-xl border border-gray-700 hover:border-gray-400 transition-all duration-300">
+              <div className="text-3xl font-bold text-white mb-2">500+</div>
               <div className="text-sm text-gray-300">Happy Clients</div>
             </div>
-            <div className="text-center p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-green-400/30 hover:border-green-400/60 transition-all duration-300">
-              <div className="text-3xl font-bold text-green-400 mb-2">99%</div>
+            <div className="text-center p-6 bg-gray-900 rounded-xl border border-gray-700 hover:border-gray-400 transition-all duration-300">
+              <div className="text-3xl font-bold text-white mb-2">99%</div>
               <div className="text-sm text-gray-300">Success Rate</div>
             </div>
-            <div className="text-center p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-purple-400/30 hover:border-purple-400/60 transition-all duration-300">
-              <div className="text-3xl font-bold text-purple-400 mb-2">24/7</div>
+            <div className="text-center p-6 bg-gray-900 rounded-xl border border-gray-700 hover:border-gray-400 transition-all duration-300">
+              <div className="text-3xl font-bold text-white mb-2">24/7</div>
               <div className="text-sm text-gray-300">AI Support</div>
             </div>
-            <div className="text-center p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-pink-400/30 hover:border-pink-400/60 transition-all duration-300">
-              <div className="text-3xl font-bold text-pink-400 mb-2">3x</div>
+            <div className="text-center p-6 bg-gray-900 rounded-xl border border-gray-700 hover:border-gray-400 transition-all duration-300">
+              <div className="text-3xl font-bold text-white mb-2">3x</div>
               <div className="text-sm text-gray-300">ROI Average</div>
             </div>
           </div>
         </div>
 
         {/* KPI & ROI Charts Section */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white font-alegreya bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400 mb-6">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white font-inter mb-6">
                 Performance Metrics & ROI
               </h2>
-              <p className="text-lg text-gray-300 font-source-sans leading-relaxed max-w-3xl mx-auto">
+              <p className="text-lg text-gray-300 font-inter leading-relaxed max-w-3xl mx-auto">
                 Track your business transformation with real-time KPI improvements and ROI metrics
               </p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
               {/* Line Chart - KPI Trends */}
-              <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-blue-400/30 hover:border-blue-400/60 transition-all duration-300">
-                <h3 className="text-xl font-semibold mb-4 text-white font-alegreya font-bold">
+              <div className="bg-gray-900 rounded-xl p-6 border border-gray-700 hover:border-gray-400 transition-all duration-300">
+                <h3 className="text-xl font-semibold mb-4 text-white font-inter">
                   KPI Trends Over Time
                 </h3>
                 <LineChart
@@ -422,14 +399,14 @@ export default function Home() {
                   title="Monthly Performance Metrics"
                   height={350}
                 />
-                <p className="text-sm text-gray-400 mt-4 font-alegreya font-normal">
+                <p className="text-sm text-gray-400 mt-4 font-inter">
                   Track process efficiency, automation rate, and error reduction progress
                 </p>
               </div>
 
               {/* Bar Chart - ROI Comparison */}
-              <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-green-400/30 hover:border-green-400/60 transition-all duration-300">
-                <h3 className="text-xl sm:text-2xl font-medium text-gray-200 font-source-sans mb-4">
+              <div className="bg-gray-900 rounded-xl p-6 border border-gray-700 hover:border-gray-400 transition-all duration-300">
+                <h3 className="text-xl sm:text-2xl font-medium text-white font-inter mb-4">
                   ROI by Department
                 </h3>
                 <BarChart
@@ -437,15 +414,15 @@ export default function Home() {
                   title="Cost Savings & Revenue Impact"
                   height={350}
                 />
-                <p className="text-sm text-gray-400 mt-4 font-alegreya font-normal">
+                <p className="text-sm text-gray-400 mt-4 font-inter">
                   Compare cost savings, revenue increase, and productivity gains across departments
                 </p>
               </div>
             </div>
 
             {/* Donut Chart - Resource Allocation */}
-            <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-purple-400/30 hover:border-purple-400/60 transition-all duration-300">
-              <h3 className="text-xl sm:text-2xl font-medium text-gray-200 font-source-sans mb-4 text-center">
+            <div className="bg-gray-900 rounded-xl p-6 border border-gray-700 hover:border-gray-400 transition-all duration-300">
+              <h3 className="text-xl sm:text-2xl font-medium text-white font-inter mb-4 text-center">
                 Automated Workflow Distribution
               </h3>
               <DonutChart
@@ -453,20 +430,20 @@ export default function Home() {
                 title="Workflows Automated by Department"
                 height={400}
               />
-              <p className="text-sm text-gray-400 mt-4 text-center font-alegreya font-normal">
+              <p className="text-sm text-gray-400 mt-4 text-center font-inter">
                 Distribution of automated workflows across different business departments
               </p>
             </div>
 
             {/* Enhanced Progress Bars & KPI Visualization Demo Section */}
             <div className="mt-16">
-              <h3 className="text-xl sm:text-2xl font-medium text-gray-200 font-source-sans mb-8 text-center">
+              <h3 className="text-xl sm:text-2xl font-medium text-white font-inter mb-8 text-center">
                 Enhanced Progress Metrics & KPI Visualization
               </h3>
               
               {/* Enhanced Linear Progress Bars with Tooltips */}
-              <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-blue-400/30 mb-8">
-                <h4 className="text-xl sm:text-2xl font-medium text-gray-200 font-source-sans mb-4">Process Completion with Detailed Insights</h4>
+              <div className="bg-gray-900 rounded-xl p-6 border border-gray-700 mb-8">
+                <h4 className="text-xl sm:text-2xl font-medium text-white font-inter mb-4">Process Completion with Detailed Insights</h4>
                 <div className="space-y-6">
                   <LinearProgressBar
                     value={75}
@@ -512,8 +489,8 @@ export default function Home() {
               </div>
 
               {/* Enhanced Circular KPI Charts */}
-              <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-purple-400/30 mb-8">
-                <h4 className="text-xl sm:text-2xl font-medium text-gray-200 font-source-sans mb-4">Performance KPIs with Context</h4>
+              <div className="bg-gray-900 rounded-xl p-6 border border-gray-700 mb-8">
+                <h4 className="text-xl sm:text-2xl font-medium text-white font-inter mb-4">Performance KPIs with Context</h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                   <CircularProgressBar
                     value={82}
@@ -559,8 +536,8 @@ export default function Home() {
               </div>
 
               {/* Metrics Section Demo */}
-              <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-green-400/30">
-                <h4 className="text-xl sm:text-2xl font-medium text-gray-200 font-source-sans mb-4">Comprehensive Metrics Dashboard</h4>
+              <div className="bg-gray-900 rounded-xl p-6 border border-gray-700">
+                <h4 className="text-xl sm:text-2xl font-medium text-white font-inter mb-4">Comprehensive Metrics Dashboard</h4>
                 <p className="text-gray-300 mb-6 text-sm">
                   Track all key performance indicators in one unified view with real-time updates and trend analysis
                 </p>
@@ -679,10 +656,10 @@ export default function Home() {
         <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-alegreya font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-inter">
                 Sectors We Transform
               </h2>
-              <p className="text-lg text-gray-300 max-w-3xl mx-auto font-alegreya font-normal">
+              <p className="text-lg text-gray-300 max-w-3xl mx-auto font-inter font-normal">
                 Discover how our AI-powered solutions are revolutionizing businesses across key sectors
               </p>
             </div>
@@ -706,13 +683,13 @@ export default function Home() {
         */}
 
         {/* Case Studies Section */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-alegreya font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-inter">
                 Success Stories
               </h2>
-              <p className="text-lg text-gray-300 max-w-3xl mx-auto font-alegreya font-normal">
+              <p className="text-lg text-gray-300 max-w-3xl mx-auto font-inter">
                 Discover how our AI-powered solutions have transformed businesses across various industries
               </p>
             </div>
@@ -720,38 +697,38 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Social and Automation Icons Dock with Neon Effects */}
-        <section className="py-20 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+        {/* Social and Automation Icons Dock with Monochrome Effects */}
+        <section className="py-20 bg-black">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-center">
               <Dock direction="middle" iconSize={60} iconMagnification={100} iconDistance={140}>
                 <DockIcon>
-                  <div className="text-blue-400 hover:text-blue-300 transition-all duration-300"><Share2 size={28} /></div>
+                  <div className="text-white hover:text-gray-300 transition-all duration-300"><Share2 size={28} /></div>
                 </DockIcon>
                 <DockIcon>
-                  <div className="text-purple-400 hover:text-purple-300 transition-all duration-300"><Bot size={28} /></div>
+                  <div className="text-white hover:text-gray-300 transition-all duration-300"><Bot size={28} /></div>
                 </DockIcon>
                 <DockIcon>
-                  <div className="text-green-400 hover:text-green-300 transition-all duration-300"><Mail size={28} /></div>
+                  <div className="text-white hover:text-gray-300 transition-all duration-300"><Mail size={28} /></div>
                 </DockIcon>
                 <DockIcon>
-                  <div className="text-pink-400 hover:text-pink-300 transition-all duration-300"><Linkedin size={28} /></div>
+                  <div className="text-white hover:text-gray-300 transition-all duration-300"><Linkedin size={28} /></div>
                 </DockIcon>
                 <DockIcon>
-                  <div className="text-cyan-400 hover:text-cyan-300 transition-all duration-300"><Twitter size={28} /></div>
+                  <div className="text-white hover:text-gray-300 transition-all duration-300"><Twitter size={28} /></div>
                 </DockIcon>
                 <DockIcon>
-                  <div className="text-yellow-400 hover:text-yellow-300 transition-all duration-300"><Instagram size={28} /></div>
+                  <div className="text-white hover:text-gray-300 transition-all duration-300"><Instagram size={28} /></div>
                 </DockIcon>
               </Dock>
             </div>
           </div>
         </section>
 
-        {/* Client Logos Marquee Section with Dark Gradient */}
-        <section className="py-20 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 overflow-hidden">
+        {/* Client Logos Marquee Section with Monochrome Design */}
+        <section className="py-20 bg-black overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h5 className="text-xl font-semibold text-center text-white mb-8 font-alegreya font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+            <h5 className="text-xl font-semibold text-center text-white mb-8 font-inter">
               Trusted by Industry Leaders
             </h5>
             <ClientLogosMarquee />
@@ -759,13 +736,13 @@ export default function Home() {
         </section>
 
         {/* Automation Features Section */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-alegreya font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-inter">
                 How We Automate Your Success
               </h2>
-              <p className="text-lg text-gray-300 max-w-3xl mx-auto font-alegreya font-normal">
+              <p className="text-lg text-gray-300 max-w-3xl mx-auto font-inter">
                 Our AI-powered platform handles the heavy lifting so you can focus on what matters most - growing your business
               </p>
             </div>
@@ -774,16 +751,16 @@ export default function Home() {
               {automationFeatures.map((feature, index) => (
                 <div
                   key={index}
-                  className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-gray-700 hover:border-blue-400 transition-all duration-300 hover:scale-105"
+                  className="bg-gray-900 rounded-xl p-6 border border-gray-700 hover:border-gray-400 transition-all duration-300 hover:scale-105"
                 >
                   <div className="text-3xl mb-4">{feature.icon}</div>
-                  <h3 className="text-xl font-semibold mb-3 text-white font-alegreya font-bold">
+                  <h3 className="text-xl font-semibold mb-3 text-white font-inter">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-300 mb-4 text-sm font-alegreya font-normal">
+                  <p className="text-gray-300 mb-4 text-sm font-inter">
                     {feature.description}
                   </p>
-                  <div className="text-blue-400 text-sm font-medium font-alegreya font-medium">
+                  <div className="text-white text-sm font-medium font-inter">
                     {feature.stats}
                   </div>
                 </div>
@@ -793,13 +770,13 @@ export default function Home() {
         </section>
 
         {/* Service Presentation Strategy with Tabbed Interface */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-alegreya font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-inter">
                 Our AI-Powered Services
               </h2>
-              <p className="text-lg text-gray-300 max-w-3xl mx-auto font-alegreya font-normal">
+              <p className="text-lg text-gray-300 max-w-3xl mx-auto font-inter">
                 Comprehensive automation solutions tailored to your business needs
               </p>
             </div>
@@ -808,26 +785,26 @@ export default function Home() {
             <div className="mb-16">
               <ProcessStepper
                 currentStep={2}
-                className="bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-gray-700"
+                className="bg-gray-900 rounded-xl p-8 border border-gray-700"
               />
             </div>
 
             {/* Tabbed Service Interface */}
-            <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-gray-700 p-6">
+            <div className="bg-gray-900 rounded-xl border border-gray-700 p-6">
               <div className="flex flex-wrap gap-4 mb-8">
-                <button className="px-6 py-3 bg-blue-500/20 border-2 border-blue-400/50 rounded-lg text-blue-400 font-semibold hover:bg-blue-500/30 transition-all duration-300">
+                <button className="px-6 py-3 bg-gray-800 border-2 border-gray-600 rounded-lg text-white font-semibold hover:bg-gray-700 transition-all duration-300">
                   AI Marketing Automation
                 </button>
-                <button className="px-6 py-3 bg-purple-500/20 border-2 border-purple-400/50 rounded-lg text-purple-400 font-semibold hover:bg-purple-500/30 transition-all duration-300">
+                <button className="px-6 py-3 bg-gray-800 border-2 border-gray-600 rounded-lg text-white font-semibold hover:bg-gray-700 transition-all duration-300">
                   NextJS/React Development
                 </button>
-                <button className="px-6 py-3 bg-green-500/20 border-2 border-green-400/50 rounded-lg text-green-400 font-semibold hover:bg-green-500/30 transition-all duration-300">
+                <button className="px-6 py-3 bg-gray-800 border-2 border-gray-600 rounded-lg text-white font-semibold hover:bg-gray-700 transition-all duration-300">
                   CRM Automation
                 </button>
-                <button className="px-6 py-3 bg-pink-500/20 border-2 border-pink-400/50 rounded-lg text-pink-400 font-semibold hover:bg-pink-500/30 transition-all duration-300">
+                <button className="px-6 py-3 bg-gray-800 border-2 border-gray-600 rounded-lg text-white font-semibold hover:bg-gray-700 transition-all duration-300">
                   Content Automation
                 </button>
-                <button className="px-6 py-3 bg-cyan-500/20 border-2 border-cyan-400/50 rounded-lg text-cyan-400 font-semibold hover:bg-cyan-500/30 transition-all duration-300">
+                <button className="px-6 py-3 bg-gray-800 border-2 border-gray-600 rounded-lg text-white font-semibold hover:bg-gray-700 transition-all duration-300">
                   Process Workflows
                 </button>
               </div>
@@ -842,15 +819,15 @@ export default function Home() {
                   <div className="space-y-2">
                     <div className="flex justify-between">
                       <span className="text-gray-400">Before Automation</span>
-                      <span className="text-red-400">40% Conversion Rate</span>
+                      <span className="text-gray-300">40% Conversion Rate</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-400">After Automation</span>
-                      <span className="text-green-400">85% Conversion Rate</span>
+                      <span className="text-white">85% Conversion Rate</span>
                     </div>
                   </div>
                 </div>
-                <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-xl p-6 border border-blue-400/30">
+                <div className="bg-gray-800 rounded-xl p-6 border border-gray-600">
                   <h4 className="text-lg font-semibold text-white mb-2">Key Features</h4>
                   <ul className="text-gray-300 space-y-2">
                     <li>• Personalized customer journeys</li>
@@ -868,31 +845,31 @@ export default function Home() {
         
 
         {/* Enhanced Testimonials Section with Trust Building Elements */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-alegreya font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-inter">
                 Trusted by Industry Leaders
               </h2>
-              <p className="text-lg text-gray-300 max-w-3xl mx-auto font-alegreya font-normal">
+              <p className="text-lg text-gray-300 max-w-3xl mx-auto font-inter font-normal">
                 Real results from businesses that transformed with Robofy
               </p>
             </div>
 
             {/* Success Metrics */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              <div className="text-center p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-blue-400/30">
-                <div className="text-4xl font-bold text-blue-400 mb-2">80%</div>
+              <div className="text-center p-6 bg-gray-900 rounded-xl border border-gray-700 hover:border-gray-400 transition-all duration-300">
+                <div className="text-4xl font-bold text-white mb-2">80%</div>
                 <h3 className="text-xl font-semibold text-white mb-2">Time Savings</h3>
                 <p className="text-gray-300">Average reduction in manual tasks</p>
               </div>
-              <div className="text-center p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-green-400/30">
-                <div className="text-4xl font-bold text-green-400 mb-2">40%</div>
+              <div className="text-center p-6 bg-gray-900 rounded-xl border border-gray-700 hover:border-gray-400 transition-all duration-300">
+                <div className="text-4xl font-bold text-white mb-2">40%</div>
                 <h3 className="text-xl font-semibold text-white mb-2">Cost Reduction</h3>
                 <p className="text-gray-300">Average operational cost savings</p>
               </div>
-              <div className="text-center p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-purple-400/30">
-                <div className="text-4xl font-bold text-purple-400 mb-2">3x</div>
+              <div className="text-center p-6 bg-gray-900 rounded-xl border border-gray-700 hover:border-gray-400 transition-all duration-300">
+                <div className="text-4xl font-bold text-white mb-2">3x</div>
                 <h3 className="text-xl font-semibold text-white mb-2">ROI Increase</h3>
                 <p className="text-gray-300">Average return on investment</p>
               </div>
@@ -905,14 +882,14 @@ export default function Home() {
             <div className="text-center mt-16">
               <h3 className="text-2xl font-semibold text-white mb-6">Industry Recognized & Certified</h3>
               <div className="flex flex-wrap justify-center gap-6">
-                <div className="p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-green-400/30">
-                  <span className="text-green-400 font-semibold">AI Ethics Certified</span>
+                <div className="p-4 bg-gray-900 rounded-lg border border-gray-700">
+                  <span className="text-white font-semibold">AI Ethics Certified</span>
                 </div>
-                <div className="p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-blue-400/30">
-                  <span className="text-blue-400 font-semibold">GDPR Compliant</span>
+                <div className="p-4 bg-gray-900 rounded-lg border border-gray-700">
+                  <span className="text-white font-semibold">GDPR Compliant</span>
                 </div>
-                <div className="p-4 bg-white/5 backdrop-blur-sm rounded-lg border border-purple-400/30">
-                  <span className="text-purple-400 font-semibold">ISO 27001 Certified</span>
+                <div className="p-4 bg-gray-900 rounded-lg border border-gray-700">
+                  <span className="text-white font-semibold">ISO 27001 Certified</span>
                 </div>
               </div>
             </div>
@@ -920,76 +897,65 @@ export default function Home() {
         </section>
 
         {/* Team & Culture Section */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black">
           <TeamSection teamMembers={teamMembers} />
         </section>
 
         {/* Pricing Section - Hidden per request */}
 
         {/* Final CTA Section with Conversion Optimization */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-alegreya font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-inter">
               Ready to Transform Your Business?
             </h2>
-            <p className="text-xl text-gray-300 mb-8 font-alegreya font-normal">
+            <p className="text-xl text-gray-300 mb-8 font-inter font-normal">
               Join thousands of businesses already revolutionizing their operations with Robofy
             </p>
             
             {/* Multiple CTA Options for A/B Testing */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              <button
-                onClick={handleFormOpen}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-lg"
-              >
-                Start Free Automation Audit
-              </button>
-              <button
-                onClick={handleFormOpen}
-                className="bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-lg"
-              >
-                Get Personalized Demo
-              </button>
-            </div>
+               <button
+                 onClick={handleFormOpen}
+                 className="bg-white hover:bg-gray-100 text-black font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 text-lg"
+               >
+                 Start Free Automation Audit
+               </button>
+               <button
+                 onClick={handleFormOpen}
+                 className="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 text-lg"
+               >
+                 Get Personalized Demo
+               </button>
+             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="border-2 border-blue-400 text-blue-400 hover:bg-blue-400/10 font-semibold py-4 px-8 rounded-lg transition-all duration-300 text-lg">
-                Watch Case Studies
-              </button>
-              <button className="border-2 border-green-400 text-green-400 hover:bg-green-400/10 font-semibold py-4 px-8 rounded-lg transition-all duration-300 text-lg">
-                Compare Plans
-              </button>
-            </div>
+               <button className="border-2 border-white text-white hover:bg-white/10 font-semibold py-4 px-8 rounded-lg transition-all duration-300 text-lg">
+                 Watch Case Studies
+               </button>
+               <button className="border-2 border-gray-400 text-gray-400 hover:bg-gray-400/10 font-semibold py-4 px-8 rounded-lg transition-all duration-300 text-lg">
+                 Compare Plans
+               </button>
+             </div>
 
-            {/* Live Chat Integration Space */}
-            <div className="mt-12 p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-gray-700">
-              <h4 className="text-lg font-semibold text-white mb-2">Need Immediate Assistance?</h4>
-              <p className="text-gray-300 mb-4">Our AI experts are ready to help you 24/7</p>
-              <button
-                onClick={() => setIsChatOpen(true)}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
-              >
-                Start Live Chat
-              </button>
-            </div>
           </div>
         </section>
 
         {/* Interactive Demo Section */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black">
           <div className="max-w-7xl mx-auto">
             <InteractiveDemoWidget />
           </div>
         </section>
 
         {/* MagicBento Showcase Section */}
-        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900">
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-alegreya font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white font-inter">
                 Interactive Platform Features
               </h2>
-              <p className="text-lg text-gray-300 max-w-3xl mx-auto font-alegreya font-normal">
+              <p className="text-lg text-gray-300 max-w-3xl mx-auto font-inter font-normal">
                 Experience our AI-powered features through this interactive demonstration
               </p>
             </div>
@@ -1021,18 +987,6 @@ export default function Home() {
       {/* Floating Demo Button */}
       <FloatingDemoButton onClick={handleFormOpen} />
 
-      {/* Chat Interface */}
-      <ChatInterface
-        isOpen={isChatOpen}
-        onOpen={() => {
-          console.log('onOpen callback called, setting isChatOpen to true');
-          setIsChatOpen(true);
-        }}
-        onClose={() => {
-          console.log('onClose callback called, setting isChatOpen to false');
-          setIsChatOpen(false);
-        }}
-      />
     </>
   );
 }

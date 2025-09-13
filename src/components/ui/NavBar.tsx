@@ -27,6 +27,7 @@ export default function NavBar({
     { label: 'Sectors', href: '/sectors' },
     { label: 'Case Studies', href: '/case-studies' },
     { label: 'Blog', href: '/blog' },
+    { label: 'AI Tools', href: '/ai-tools' },
     { label: 'Contact', href: '/contact' }
   ],
   ctaText = 'Get Started',
@@ -98,7 +99,7 @@ export default function NavBar({
   return (
     <>
       <header
-        className={`absolute top-0 left-0 right-0 bg-transparent py-3.5 z-50 ${className}`}
+        className={`absolute top-0 left-0 right-0 bg-black/80 backdrop-blur-sm py-3.5 z-50 ${className}`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="flex justify-between items-center">
@@ -106,7 +107,7 @@ export default function NavBar({
             <div className="flex-shrink-0">
               <a
                 href="/"
-                className="block transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-accent-1 focus:ring-offset-2 rounded-md text-white"
+                className="block transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 rounded-md text-white"
                 aria-label="Homepage"
               >
                 {logo}
@@ -119,7 +120,7 @@ export default function NavBar({
                 <a
                   key={index}
                   href={item.href}
-                  className="font-semibold text-lg transition-all duration-300 relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-primary-accent-1 after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full focus:outline-none focus:ring-2 focus:ring-primary-accent-1 focus:ring-offset-2 rounded-md px-4 py-2 hover:bg-primary-accent-1/5 text-white hover:text-primary-accent-1"
+                  className="font-semibold text-lg transition-all duration-300 relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-white after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 rounded-md px-4 py-2 hover:bg-white/10 text-white hover:text-gray-300"
                 >
                   {item.label}
                 </a>

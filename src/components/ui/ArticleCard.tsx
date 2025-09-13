@@ -12,7 +12,7 @@ interface ArticleCardProps {
 
 export function ArticleCard({ post }: ArticleCardProps) {
   return (
-    <article className="group bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02]">
+    <article className="group bg-gray-900 rounded-xl border border-gray-700 overflow-hidden transition-all duration-300 hover:border-gray-500 hover:scale-[1.02]">
       <Link href={`/blog/${post.slug}`} className="block">
         <div className="relative aspect-video overflow-hidden">
           <Image
@@ -25,7 +25,7 @@ export function ArticleCard({ post }: ArticleCardProps) {
           <div className="absolute top-4 left-4">
             <Badge
               variant="secondary"
-              className="bg-primary-accent-1/10 text-primary-accent-1 font-medium px-3 py-1 text-sm"
+              className="bg-gray-800 text-gray-300 font-medium px-3 py-1 text-sm border border-gray-600"
             >
               {post.category.charAt(0).toUpperCase() + post.category.slice(1)}
             </Badge>
@@ -33,24 +33,24 @@ export function ArticleCard({ post }: ArticleCardProps) {
         </div>
 
         <div className="p-6">
-          <time 
+          <time
             dateTime={post.date}
-            className="text-sm text-gray-600 mb-2 block"
+            className="text-sm text-gray-400 mb-2 block"
           >
             {formatDate(post.date)}
           </time>
           
-          <h2 className="text-xl font-semibold text-gray-900 mb-3 leading-tight group-hover:text-primary-accent-1 transition-colors">
+          <h2 className="text-xl font-semibold text-white mb-3 leading-tight group-hover:text-gray-300 transition-colors">
             {post.title}
           </h2>
           
-          <p className="text-gray-600 mb-4 line-clamp-2 leading-relaxed">
+          <p className="text-gray-300 mb-4 line-clamp-2 leading-relaxed">
             {post.excerpt}
           </p>
           
-          <div className="flex items-center justify-between text-sm text-gray-500">
+          <div className="flex items-center justify-between text-sm text-gray-400">
             <span>{post.readTime} min read</span>
-            <span className="text-primary-accent-1 font-medium group-hover:underline">
+            <span className="text-white font-medium group-hover:text-gray-300 transition-colors">
               Read more →
             </span>
           </div>

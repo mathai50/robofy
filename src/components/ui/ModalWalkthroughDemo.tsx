@@ -101,26 +101,26 @@ const ModalWalkthroughDemo: React.FC = () => {
   };
 
   return (
-    <div className="p-8 bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div className="p-8 bg-black min-h-screen">
       <div className="max-w-4xl mx-auto text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-6">
+        <h1 className="text-4xl font-bold text-white mb-6">
           Modal Walkthrough Component Demo
         </h1>
-        <p className="text-lg text-gray-600 mb-8">
+        <p className="text-lg text-gray-300 mb-8">
           Experience our interactive product tour with AI chatbot simulations and multimedia content
         </p>
 
         <button
           onClick={handleOpenWalkthrough}
-          className="px-8 py-4 bg-primary-accent-1 text-white rounded-xl hover:bg-primary-accent-1/90 transition-all duration-300 transform hover:scale-105 text-lg font-semibold shadow-lg"
+          className="px-8 py-4 bg-white text-black rounded-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 text-lg font-semibold shadow-lg"
         >
           Start Product Tour
         </button>
 
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
-          <div className="bg-white p-6 rounded-xl shadow-md">
-            <h3 className="text-xl font-semibold mb-3">🎯 Features Demonstrated</h3>
-            <ul className="space-y-2 text-gray-700">
+          <div className="bg-gray-900 p-6 rounded-xl border border-gray-700">
+            <h3 className="text-xl font-semibold mb-3 text-white">🎯 Features Demonstrated</h3>
+            <ul className="space-y-2 text-gray-300">
               <li>• Interactive chatbot simulations</li>
               <li>• Mixed media content (text, images, video)</li>
               <li>• Step-by-step navigation</li>
@@ -131,9 +131,9 @@ const ModalWalkthroughDemo: React.FC = () => {
             </ul>
           </div>
 
-          <div className="bg-white p-6 rounded-xl shadow-md">
-            <h3 className="text-xl font-semibold mb-3">🚀 Use Cases</h3>
-            <ul className="space-y-2 text-gray-700">
+          <div className="bg-gray-900 p-6 rounded-xl border border-gray-700">
+            <h3 className="text-xl font-semibold mb-3 text-white">🚀 Use Cases</h3>
+            <ul className="space-y-2 text-gray-300">
               <li>• Product onboarding</li>
               <li>• Feature demonstrations</li>
               <li>• Customer education</li>

@@ -161,11 +161,11 @@ export default function ServicesPage() {
   const currentService = servicesData.find(service => service.id === activeService);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 pt-20">
+    <div className="min-h-screen bg-black pt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header Section */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
             Our Services
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -174,7 +174,7 @@ export default function ServicesPage() {
         </div>
 
         {/* Tab Navigation - Horizontal for desktop, Vertical accordion for mobile */}
-        <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-gray-700 overflow-hidden">
+        <div className="bg-gray-900 rounded-xl border border-gray-700 overflow-hidden">
           {/* Desktop Tab Navigation */}
           <div className="hidden md:block">
             <div 
@@ -188,8 +188,8 @@ export default function ServicesPage() {
                   onClick={() => handleServiceChange(service.id)}
                   className={`flex items-center px-6 py-4 font-semibold text-lg transition-all duration-300 border-b-2 ${
                     activeService === service.id
-                      ? 'border-blue-400 text-blue-400 bg-blue-500/10'
-                      : 'border-transparent text-gray-400 hover:text-gray-200 hover:bg-white/5'
+                      ? 'border-white text-white bg-gray-800'
+                      : 'border-transparent text-gray-400 hover:text-gray-200 hover:bg-gray-800'
                   }`}
                   role="tab"
                   aria-selected={activeService === service.id}
@@ -275,7 +275,7 @@ export default function ServicesPage() {
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
             Let's discuss how our AI-powered services can help you achieve your business goals
           </p>
-          <button className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold px-8 py-4 rounded-lg transition-all duration-300 transform hover:scale-105">
+          <button className="bg-white text-black font-semibold px-8 py-4 rounded-lg transition-all duration-300 transform hover:scale-105 hover:bg-gray-100">
             Get Started Today
           </button>
         </div>
@@ -289,7 +289,7 @@ function ServiceContent({ service }: { service: Service }) {
     <div className="space-y-8">
       {/* Service Header */}
       <div className="flex items-center">
-        <div className="p-3 bg-blue-500/20 rounded-lg mr-4">
+        <div className="p-3 bg-gray-800 rounded-lg mr-4">
           {service.icon}
         </div>
         <h2 className="text-3xl font-bold text-white">{service.title}</h2>
@@ -306,13 +306,13 @@ function ServiceContent({ service }: { service: Service }) {
         {/* Features List */}
         <div>
           <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
-            <CheckCircle className="w-5 h-5 mr-2 text-green-400" />
+            <CheckCircle className="w-5 h-5 mr-2 text-gray-400" />
             Core Features & Benefits
           </h3>
           <ul className="space-y-3">
             {service.features.map((feature, index) => (
               <li key={index} className="flex items-start">
-                <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                <div className="w-2 h-2 bg-gray-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                 <span className="text-gray-300">{feature}</span>
               </li>
             ))}
@@ -321,17 +321,17 @@ function ServiceContent({ service }: { service: Service }) {
 
         {/* Timeline and ROI */}
         <div className="space-y-6">
-          <div className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-xl p-6 border border-blue-400/30">
+          <div className="bg-gray-900 rounded-xl p-6 border border-gray-700">
             <h3 className="text-xl font-semibold text-white mb-3 flex items-center">
-              <Clock className="w-5 h-5 mr-2 text-blue-400" />
+              <Clock className="w-5 h-5 mr-2 text-gray-400" />
               Project Timeline
             </h3>
             <p className="text-gray-300">{service.timeline}</p>
           </div>
 
-          <div className="bg-gradient-to-br from-green-500/20 to-blue-500/20 rounded-xl p-6 border border-green-400/30">
+          <div className="bg-gray-900 rounded-xl p-6 border border-gray-700">
             <h3 className="text-xl font-semibold text-white mb-3 flex items-center">
-              <TrendingUp className="w-5 h-5 mr-2 text-green-400" />
+              <TrendingUp className="w-5 h-5 mr-2 text-gray-400" />
               Expected ROI
             </h3>
             <p className="text-gray-300">{service.roi}</p>
@@ -342,7 +342,7 @@ function ServiceContent({ service }: { service: Service }) {
       {/* Technology Stack */}
       <div>
         <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
-          <Cpu className="w-5 h-5 mr-2 text-purple-400" />
+          <Cpu className="w-5 h-5 mr-2 text-gray-400" />
           Technology Stack
         </h3>
         <div className="flex flex-wrap gap-4">
@@ -351,7 +351,7 @@ function ServiceContent({ service }: { service: Service }) {
               key={index}
               className="flex items-center px-4 py-2 bg-white/5 rounded-lg border border-gray-600"
             >
-              <span className="mr-2 text-blue-400">{tech.icon}</span>
+              <span className="mr-2 text-gray-400">{tech.icon}</span>
               <span className="text-gray-300">{tech.name}</span>
             </div>
           ))}

@@ -88,7 +88,15 @@ async def test_fastmcp_tools_direct():
     
     try:
         # Import the FastMCP instance and tools
-        from seo_mcp_server import mcp, analyze_competitors, conduct_keyword_research, backlink_analysis
+        from seo_mcp_server import (
+            mcp,
+            analyze_competitors,
+            conduct_keyword_research,
+            backlink_analysis,
+            content_gap_analysis,
+            seo_audit,
+            rank_tracking
+        )
         
         # Test competitor analysis
         print("Testing competitor analysis...")
@@ -104,6 +112,21 @@ async def test_fastmcp_tools_direct():
         print("Testing backlink analysis...")
         result = await backlink_analysis("test.com")
         print(f"✓ Backlink analysis: {result.total_backlinks} total backlinks found")
+        
+        # Test content gap analysis
+        print("Testing content gap analysis...")
+        result = await content_gap_analysis("test.com", "competitor.com")
+        print(f"✓ Content gap analysis: {result.domain} vs {result.competitor}")
+        
+        # Test SEO audit
+        print("Testing SEO audit...")
+        result = await seo_audit("https://example.com")
+        print(f"✓ SEO audit: {result.url} - Status {result.status_code}")
+        
+        # Test rank tracking
+        print("Testing rank tracking...")
+        result = await rank_tracking(["digital marketing", "seo services"], "test.com")
+        print(f"✓ Rank tracking: {len(result.rankings)} keywords tracked")
         
         print("All direct tool tests passed! ✓")
         

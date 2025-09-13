@@ -49,10 +49,10 @@ export default function CalendarWidget({
   return (
     <div className={`bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-gray-700 ${className}`}>
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-white font-source-code-pro mb-2">
+        <h2 className="text-2xl font-bold text-white font-inter mb-2">
           Schedule a Demo
         </h2>
-        <p className="text-gray-300 font-source-code-pro">
+        <p className="text-gray-300 font-inter">
           Book a time that works for you. No pressure, just answers.
         </p>
       </div>
@@ -65,7 +65,7 @@ export default function CalendarWidget({
       
       {/* Fallback content in case Calendly doesn't load */}
       <div className="text-center mt-4">
-        <p className="text-sm text-gray-400 font-source-code-pro">
+        <p className="text-sm text-gray-400 font-inter">
           Having trouble with the calendar?{' '}
           <a 
             href={`https://calendly.com/${calendlyUsername}/${eventType}`}

@@ -9,7 +9,7 @@ interface CardProps {
 
 const Card = ({ children, className = '' }: CardProps) => {
   return (
-    <div className={`bg-white rounded-lg shadow-sm border border-gray-200 ${className}`}>
+    <div className={`bg-gray-900 rounded-lg shadow-sm border border-gray-800 ${className}`}>
       {children}
     </div>
   );
@@ -22,7 +22,7 @@ interface CardHeaderProps {
 
 const CardHeader = ({ children, className = '' }: CardHeaderProps) => {
   return (
-    <div className={`px-6 py-4 border-b border-gray-200 ${className}`}>
+    <div className={`px-6 py-4 border-b border-gray-800 ${className}`}>
       {children}
     </div>
   );
@@ -48,7 +48,7 @@ interface CardFooterProps {
 
 const CardFooter = ({ children, className = '' }: CardFooterProps) => {
   return (
-    <div className={`px-6 py-4 border-t border-gray-200 ${className}`}>
+    <div className={`px-6 py-4 border-t border-gray-800 ${className}`}>
       {children}
     </div>
   );
