@@ -14,6 +14,12 @@
 
         pythonPackages = python.pkgs;
 
+        # Override dependency-injector to include Cython as nativeBuildInput and disable tests
+        dependency_injector_with_cython = pythonPackages.dependency-injector.overridePythonAttrs (old: {
+          nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ pythonPackages.cython ];
+          doCheck = false;  # Disable tests to avoid missing module errors
+        });
+
         # Packages that are not available in nixpkgs will be installed via pip
         unavailablePackages = [
           "serpapi"
@@ -51,14 +57,13 @@
           beautifulsoup4
           # assemblyai is not available in nixpkgs, will install via pip
           twilio
-          dependency-injector
+          dependency_injector_with_cython  # Use the overridden version
           aiosqlite
           redis
           dash
           plotly
           pandas
           gunicorn
-          cython  # Add cython for building dependency-injector
         ];
 
       in {
