@@ -152,6 +152,16 @@ class Settings(BaseSettings):
         default="google/flan-t5-xxl",
         description="Hugging Face model to use for content generation"
     )
+
+    # Anthropic API Settings (optional)
+    ANTHROPIC_API_KEY: Optional[str] = Field(
+        default=None,
+        description="Anthropic API key for Claude models"
+    )
+    ANTHROPIC_MODEL: str = Field(
+        default="claude-3-sonnet-20240229",
+        description="Anthropic model to use for content generation"
+    )
     
     # MCP Server Configuration (optional)
     MCP_OPENAI_URL: Optional[str] = Field(
