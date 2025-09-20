@@ -11,16 +11,9 @@ import uuid
 from pydantic import BaseModel, Field
 import httpx
 
-# Import existing SEO analysis functions
-from seo_mcp_server import (
-    analyze_competitors,
-    conduct_keyword_research,
-    seo_audit,
-    content_gap_analysis,
-    rank_tracking,
-    comprehensive_content_gap_analysis,
-    generate_seo_recommendations
-)
+# Import FastMCP client for SEO analysis
+from fastmcp.client import Client
+import os
 
 logger = logging.getLogger(__name__)
 

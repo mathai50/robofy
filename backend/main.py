@@ -25,12 +25,12 @@ from providers.base_provider import AIProviderError
 from security import encrypt_api_key, decrypt_api_key, is_valid_domain, sanitize_input
 from data_transformers import transform_analysis_for_frontend
 from fastmcp.client import Client
-from fastmcp import MCPError
+from fastmcp.exceptions import FastMCPError
 from routers.voice_call import router as voice_router
 from routers.websocket_voice import router as websocket_voice_router
 from routers.notifications import router as notifications_router
 from routers.payments import router as payments_router
-from routers.orchestration import router as orchestration_router
+# from routers.orchestration import router as orchestration_router
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -58,32 +58,32 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.warning(f"Could not initialize services: {e}")
     
-    # Initialize and connect to the FastMCP SEO Server
+    # Initialize FastMCP SEO Server client
     try:
         mcp_server_url = os.getenv("MCP_SERVER_URL", "http://localhost:8001")
         mcp_client = Client(mcp_server_url)
-        await mcp_client.connect()
         app.state.mcp_client = mcp_client
-        logger.info(f"Successfully connected to FastMCP SEO Server at {mcp_server_url}")
+        logger.info(f"FastMCP SEO Server client initialized for {mcp_server_url}")
     except Exception as e:
         app.state.mcp_client = None
-        logger.error(f"Failed to connect to FastMCP SEO Server: {e}. SEO tools will be unavailable.")
+        logger.error(f"Failed to initialize FastMCP SEO Server client: {e}. SEO tools will be unavailable.")
     
     yield
     
     # Shutdown logic
     try:
         if hasattr(app.state, 'mcp_client') and app.state.mcp_client:
-            await app.state.mcp_client.close()
-            logger.info("Disconnected from FastMCP SEO Server")
-        if container.is_provided('ai_service'):
+            # No need to close HTTP client explicitly
+            logger.info("FastMCP SEO Server client cleanup completed")
+        # Check if ai_service exists in container before closing
+        if hasattr(container, 'ai_service'):
             await container.ai_service().close()
             logger.info("AI service connections closed")
     except Exception as e:
         logger.warning(f"Error during shutdown: {e}")
 
 # Import centralized agent prompts
-from prompts import TOOL_CONTEXTS
+from agent_prompts import TOOL_CONTEXTS
 
 app = FastAPI(title="Robofy Backend API", version="1.0.0", lifespan=lifespan)
 
@@ -118,8 +118,8 @@ app.include_router(notifications_router)
 # Include payments router
 app.include_router(payments_router)
 
-# Include orchestration router
-app.include_router(orchestration_router)
+# Include orchestration router (commented out for now)
+# app.include_router(orchestration_router)
 
 # Pydantic models
 class LeadCreate(BaseModel):
@@ -1184,7 +1184,7 @@ async def seo_competitor_analysis(
             analysis=json.dumps(analysis_result),
             timestamp=datetime.now()
         )
-    except MCPError as e:
+    except FastMCPError as e:
         logger.error(f"Error calling FastMCP server for competitor analysis: {str(e)}")
         raise internal_server_error(f"An error occurred during SEO analysis: {e}", "SEO_ANALYSIS_ERROR")
     except Exception as e:
@@ -1226,7 +1226,7 @@ async def seo_keyword_research(
             analysis=json.dumps(research_result),
             timestamp=datetime.now()
         )
-    except MCPError as e:
+    except FastMCPError as e:
         logger.error(f"Error calling FastMCP server for keyword research: {str(e)}")
         raise internal_server_error(f"An error occurred during SEO analysis: {e}", "SEO_ANALYSIS_ERROR")
     except Exception as e:
@@ -1278,7 +1278,7 @@ async def seo_content_gap_analysis(
             analysis=json.dumps(analysis_result),
             timestamp=datetime.now()
         )
-    except MCPError as e:
+    except FastMCPError as e:
         logger.error(f"Error calling FastMCP server for content gap analysis: {str(e)}")
         raise internal_server_error(f"An error occurred during SEO analysis: {e}", "SEO_ANALYSIS_ERROR")
     except Exception as e:
@@ -1313,7 +1313,7 @@ async def perform_seo_audit(
             analysis=json.dumps(audit_result),
             timestamp=datetime.now()
         )
-    except MCPError as e:
+    except FastMCPError as e:
         logger.error(f"Error calling FastMCP server for SEO audit: {str(e)}")
         raise internal_server_error(f"An error occurred during SEO analysis: {e}", "SEO_ANALYSIS_ERROR")
     except Exception as e:
@@ -1383,7 +1383,7 @@ async def seo_comprehensive_analysis(
         )
         return transformed_data
 
-    except MCPError as e:
+    except FastMCPError as e:
         logger.error(f"Error calling FastMCP server for comprehensive analysis: {str(e)}")
         raise internal_server_error(
             f"An error occurred during SEO analysis: {e}",
@@ -1432,7 +1432,7 @@ async def aio_audit(
         
         return audit_result
 
-    except MCPError as e:
+    except FastMCPError as e:
         logger.error(f"Error calling FastMCP server for AIO audit: {str(e)}")
         raise internal_server_error(f"An error occurred during AIO audit: {e}", "AIO_AUDIT_ERROR")
     except Exception as e:
@@ -1471,7 +1471,7 @@ async def prospect_for_leads(
         
         return prospecting_result
 
-    except MCPError as e:
+    except FastMCPError as e:
         logger.error(f"Error calling FastMCP server for lead prospecting: {str(e)}")
         raise internal_server_error(f"An error occurred during lead prospecting: {e}", "LEAD_PROSPECTING_ERROR")
     except Exception as e:
