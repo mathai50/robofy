@@ -24,7 +24,7 @@ from containers import container
 from providers.base_provider import AIProviderError
 from security import encrypt_api_key, decrypt_api_key, is_valid_domain, sanitize_input
 from data_transformers import transform_analysis_for_frontend
-from fastmcp.client import MCPClient, MCPError
+from fastmcp.client import Client, MCPError
 from routers.voice_call import router as voice_router
 from routers.websocket_voice import router as websocket_voice_router
 from routers.notifications import router as notifications_router
