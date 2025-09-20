@@ -70,13 +70,23 @@
         devShells.default = pkgs.mkShell {
           buildInputs = [
             python
+            pythonPackages.pip
+            pythonPackages.virtualenv
           ] ++ backendDependencies;
 
           shellHook = ''
             echo "Robofy Backend Development Environment"
             echo "Python version: $(python --version)"
-            # Install packages not available in nixpkgs via pip
-            pip install pydantic-settings ${builtins.toString unavailablePackages}
+            
+            # Create virtual environment for pip packages
+            if [ ! -d ".venv" ]; then
+              python -m venv .venv
+              source .venv/bin/activate
+              pip install pydantic-settings ${builtins.toString unavailablePackages}
+            else
+              source .venv/bin/activate
+            fi
+            
             echo "Installed packages:"
             pip list
           '';
