@@ -2,7 +2,7 @@
   description = "Robofy Backend Development Environment";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -14,12 +14,18 @@
 
         pythonPackages = python.pkgs;
 
+        # Packages that are not available in nixpkgs will be installed via pip
+        unavailablePackages = [
+          "serpapi"
+          "assemblyai"
+        ];
+
         backendDependencies = with pythonPackages; [
           fastapi
           uvicorn
           python-dotenv
           pydantic
-          pydantic-settings
+          # pydantic-settings is broken in nixpkgs, will install via pip
           psycopg2
           asyncpg
           sqlalchemy
@@ -42,9 +48,8 @@
           passlib
           bcrypt
           cryptography
-          serpapi
           beautifulsoup4
-          assemblyai
+          # assemblyai is not available in nixpkgs, will install via pip
           twilio
           dependency-injector
           aiosqlite
@@ -53,6 +58,7 @@
           plotly
           pandas
           gunicorn
+          cython  # Add cython for building dependency-injector
         ];
 
       in {
@@ -64,6 +70,8 @@
           shellHook = ''
             echo "Robofy Backend Development Environment"
             echo "Python version: $(python --version)"
+            # Install packages not available in nixpkgs via pip
+            pip install pydantic-settings ${builtins.toString unavailablePackages}
             echo "Installed packages:"
             pip list
           '';
