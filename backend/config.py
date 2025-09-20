@@ -162,6 +162,16 @@ class Settings(BaseSettings):
         default="claude-3-sonnet-20240229",
         description="Anthropic model to use for content generation"
     )
+
+    # Perplexity API Settings (optional)
+    PERPLEXITY_API_KEY: Optional[str] = Field(
+        default=None,
+        description="Perplexity API key for AI models"
+    )
+    PERPLEXITY_MODEL: str = Field(
+        default="sonar",
+        description="Perplexity model to use for content generation"
+    )
     
     # MCP Server Configuration (optional)
     MCP_OPENAI_URL: Optional[str] = Field(
