@@ -24,7 +24,8 @@ from containers import container
 from providers.base_provider import AIProviderError
 from security import encrypt_api_key, decrypt_api_key, is_valid_domain, sanitize_input
 from data_transformers import transform_analysis_for_frontend
-from fastmcp.client import Client, MCPError
+from fastmcp.client import Client
+from fastmcp import MCPError
 from routers.voice_call import router as voice_router
 from routers.websocket_voice import router as websocket_voice_router
 from routers.notifications import router as notifications_router
@@ -60,7 +61,7 @@ async def lifespan(app: FastAPI):
     # Initialize and connect to the FastMCP SEO Server
     try:
         mcp_server_url = os.getenv("MCP_SERVER_URL", "http://localhost:8001")
-        mcp_client = MCPClient(mcp_server_url)
+        mcp_client = Client(mcp_server_url)
         await mcp_client.connect()
         app.state.mcp_client = mcp_client
         logger.info(f"Successfully connected to FastMCP SEO Server at {mcp_server_url}")
