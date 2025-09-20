@@ -1,0 +1,1925 @@
+{
+  "version": "6.0",
+  "nxVersion": "21.5.2",
+  "pathMappings": {
+    "@/*": [
+      "./src/*"
+    ],
+    "@/components/*": [
+      "./src/components/*"
+    ],
+    "@/lib/*": [
+      "./src/lib/*"
+    ],
+    "@/styles/*": [
+      "./src/styles/*"
+    ]
+  },
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "nonProjectFiles": [
+      {
+        "file": ".bmad-core/agent-teams/team-all.yaml",
+        "hash": "1003435295130683497"
+      },
+      {
+        "file": ".bmad-core/agent-teams/team-fullstack.yaml",
+        "hash": "11465868854523944331"
+      },
+      {
+        "file": ".bmad-core/agent-teams/team-ide-minimal.yaml",
+        "hash": "6599056621133681767"
+      },
+      {
+        "file": ".bmad-core/agent-teams/team-no-ui.yaml",
+        "hash": "14884734652394662660"
+      },
+      {
+        "file": ".bmad-core/agents/analyst.md",
+        "hash": "13067091749905618769"
+      },
+      {
+        "file": ".bmad-core/agents/architect.md",
+        "hash": "11334416960813961723"
+      },
+      {
+        "file": ".bmad-core/agents/bmad-master.md",
+        "hash": "1071060671394261627"
+      },
+      {
+        "file": ".bmad-core/agents/bmad-orchestrator.md",
+        "hash": "2554700552997457402"
+      },
+      {
+        "file": ".bmad-core/agents/dev.md",
+        "hash": "567543673288519749"
+      },
+      {
+        "file": ".bmad-core/agents/pm.md",
+        "hash": "15877566805277138535"
+      },
+      {
+        "file": ".bmad-core/agents/po.md",
+        "hash": "6711287406034871789"
+      },
+      {
+        "file": ".bmad-core/agents/qa.md",
+        "hash": "1997648974958996496"
+      },
+      {
+        "file": ".bmad-core/agents/seo-analyst.md",
+        "hash": "8384498009305694011"
+      },
+      {
+        "file": ".bmad-core/agents/sm.md",
+        "hash": "15202124121750005004"
+      },
+      {
+        "file": ".bmad-core/agents/ux-expert.md",
+        "hash": "6040311131189047573"
+      },
+      {
+        "file": ".bmad-core/checklists/architect-checklist.md",
+        "hash": "6410438132036462266"
+      },
+      {
+        "file": ".bmad-core/checklists/change-checklist.md",
+        "hash": "16884709078362612966"
+      },
+      {
+        "file": ".bmad-core/checklists/pm-checklist.md",
+        "hash": "3625100732599361377"
+      },
+      {
+        "file": ".bmad-core/checklists/po-master-checklist.md",
+        "hash": "14680430908143577303"
+      },
+      {
+        "file": ".bmad-core/checklists/story-dod-checklist.md",
+        "hash": "10281023474099614987"
+      },
+      {
+        "file": ".bmad-core/checklists/story-draft-checklist.md",
+        "hash": "16165770342319157731"
+      },
+      {
+        "file": ".bmad-core/core-config.yaml",
+        "hash": "5727587627783328078"
+      },
+      {
+        "file": ".bmad-core/data/bmad-kb.md",
+        "hash": "4034212301821525640"
+      },
+      {
+        "file": ".bmad-core/data/brainstorming-techniques.md",
+        "hash": "11613849674078599267"
+      },
+      {
+        "file": ".bmad-core/data/elicitation-methods.md",
+        "hash": "4285596109079784654"
+      },
+      {
+        "file": ".bmad-core/data/technical-preferences.md",
+        "hash": "11761996169301568986"
+      },
+      {
+        "file": ".bmad-core/data/test-levels-framework.md",
+        "hash": "14933665299270137132"
+      },
+      {
+        "file": ".bmad-core/data/test-priorities-matrix.md",
+        "hash": "6721955645753564765"
+      },
+      {
+        "file": ".bmad-core/enhanced-ide-development-workflow.md",
+        "hash": "2266648761935650094"
+      },
+      {
+        "file": ".bmad-core/install-manifest.yaml",
+        "hash": "385324594538534518"
+      },
+      {
+        "file": ".bmad-core/tasks/advanced-elicitation.md",
+        "hash": "17223931487938168306"
+      },
+      {
+        "file": ".bmad-core/tasks/apply-qa-fixes.md",
+        "hash": "15625086892347835958"
+      },
+      {
+        "file": ".bmad-core/tasks/brownfield-create-epic.md",
+        "hash": "8996366329311395420"
+      },
+      {
+        "file": ".bmad-core/tasks/brownfield-create-story.md",
+        "hash": "13141835723255598431"
+      },
+      {
+        "file": ".bmad-core/tasks/correct-course.md",
+        "hash": "6033057698172366538"
+      },
+      {
+        "file": ".bmad-core/tasks/create-brownfield-story.md",
+        "hash": "11759250300492194288"
+      },
+      {
+        "file": ".bmad-core/tasks/create-deep-research-prompt.md",
+        "hash": "14730564240785956076"
+      },
+      {
+        "file": ".bmad-core/tasks/create-doc.md",
+        "hash": "5689248432380683252"
+      },
+      {
+        "file": ".bmad-core/tasks/create-next-story.md",
+        "hash": "18150265903905121680"
+      },
+      {
+        "file": ".bmad-core/tasks/document-project.md",
+        "hash": "17524878674147022168"
+      },
+      {
+        "file": ".bmad-core/tasks/execute-checklist.md",
+        "hash": "8340507629226533137"
+      },
+      {
+        "file": ".bmad-core/tasks/facilitate-brainstorming-session.md",
+        "hash": "7027788617086759443"
+      },
+      {
+        "file": ".bmad-core/tasks/generate-ai-frontend-prompt.md",
+        "hash": "2634466137015865455"
+      },
+      {
+        "file": ".bmad-core/tasks/index-docs.md",
+        "hash": "16537600606131849869"
+      },
+      {
+        "file": ".bmad-core/tasks/kb-mode-interaction.md",
+        "hash": "8752676768631267836"
+      },
+      {
+        "file": ".bmad-core/tasks/nfr-assess.md",
+        "hash": "17925232806973161277"
+      },
+      {
+        "file": ".bmad-core/tasks/qa-gate.md",
+        "hash": "8824162947048565697"
+      },
+      {
+        "file": ".bmad-core/tasks/review-story.md",
+        "hash": "2145204328233286276"
+      },
+      {
+        "file": ".bmad-core/tasks/risk-profile.md",
+        "hash": "3500406260092176284"
+      },
+      {
+        "file": ".bmad-core/tasks/shard-doc.md",
+        "hash": "7177305207687252728"
+      },
+      {
+        "file": ".bmad-core/tasks/test-design.md",
+        "hash": "14422193000721481102"
+      },
+      {
+        "file": ".bmad-core/tasks/trace-requirements.md",
+        "hash": "8158170954591949762"
+      },
+      {
+        "file": ".bmad-core/tasks/validate-next-story.md",
+        "hash": "3301258644096385718"
+      },
+      {
+        "file": ".bmad-core/templates/architecture-tmpl.yaml",
+        "hash": "12323689974685229210"
+      },
+      {
+        "file": ".bmad-core/templates/brainstorming-output-tmpl.yaml",
+        "hash": "3082144360027690181"
+      },
+      {
+        "file": ".bmad-core/templates/brownfield-architecture-tmpl.yaml",
+        "hash": "516735417138537696"
+      },
+      {
+        "file": ".bmad-core/templates/brownfield-prd-tmpl.yaml",
+        "hash": "5452676616549561151"
+      },
+      {
+        "file": ".bmad-core/templates/competitor-analysis-tmpl.yaml",
+        "hash": "14619162470109769399"
+      },
+      {
+        "file": ".bmad-core/templates/front-end-architecture-tmpl.yaml",
+        "hash": "809340533291486468"
+      },
+      {
+        "file": ".bmad-core/templates/front-end-spec-tmpl.yaml",
+        "hash": "8976040021939915782"
+      },
+      {
+        "file": ".bmad-core/templates/fullstack-architecture-tmpl.yaml",
+        "hash": "2524232341216592127"
+      },
+      {
+        "file": ".bmad-core/templates/market-research-tmpl.yaml",
+        "hash": "1200061766089906651"
+      },
+      {
+        "file": ".bmad-core/templates/prd-tmpl.yaml",
+        "hash": "14101624642129260531"
+      },
+      {
+        "file": ".bmad-core/templates/project-brief-tmpl.yaml",
+        "hash": "12070523584429133281"
+      },
+      {
+        "file": ".bmad-core/templates/qa-gate-tmpl.yaml",
+        "hash": "17946443956236349753"
+      },
+      {
+        "file": ".bmad-core/templates/seo-competition-analysis-tmpl.yaml",
+        "hash": "3274157268435340336"
+      },
+      {
+        "file": ".bmad-core/templates/story-tmpl.yaml",
+        "hash": "12495374815725626245"
+      },
+      {
+        "file": ".bmad-core/user-guide.md",
+        "hash": "3755715020760101842"
+      },
+      {
+        "file": ".bmad-core/utils/bmad-doc-template.md",
+        "hash": "14186714928875887587"
+      },
+      {
+        "file": ".bmad-core/utils/workflow-management.md",
+        "hash": "7879321664521989248"
+      },
+      {
+        "file": ".bmad-core/workflows/brownfield-fullstack.yaml",
+        "hash": "18324238111144647404"
+      },
+      {
+        "file": ".bmad-core/workflows/brownfield-service.yaml",
+        "hash": "17386785336041434981"
+      },
+      {
+        "file": ".bmad-core/workflows/brownfield-ui.yaml",
+        "hash": "9320533519393807023"
+      },
+      {
+        "file": ".bmad-core/workflows/greenfield-fullstack.yaml",
+        "hash": "11604552961685591134"
+      },
+      {
+        "file": ".bmad-core/workflows/greenfield-service.yaml",
+        "hash": "1454115953183213186"
+      },
+      {
+        "file": ".bmad-core/workflows/greenfield-ui.yaml",
+        "hash": "16140927489938302776"
+      },
+      {
+        "file": ".bmad-core/working-in-the-brownfield.md",
+        "hash": "5004822830586313054"
+      },
+      {
+        "file": ".bmad-creative-writing/README.md",
+        "hash": "7777736139595263788"
+      },
+      {
+        "file": ".bmad-creative-writing/agent-teams/agent-team.yaml",
+        "hash": "16883770309962217118"
+      },
+      {
+        "file": ".bmad-creative-writing/agents/beta-reader.md",
+        "hash": "6618478307288861817"
+      },
+      {
+        "file": ".bmad-creative-writing/agents/bmad-orchestrator.md",
+        "hash": "4252607747007319267"
+      },
+      {
+        "file": ".bmad-creative-writing/agents/book-critic.md",
+        "hash": "6215101972073677862"
+      },
+      {
+        "file": ".bmad-creative-writing/agents/character-psychologist.md",
+        "hash": "7617408189012952740"
+      },
+      {
+        "file": ".bmad-creative-writing/agents/cover-designer.md",
+        "hash": "12339526315687871319"
+      },
+      {
+        "file": ".bmad-creative-writing/agents/dialog-specialist.md",
+        "hash": "14592242189199470481"
+      },
+      {
+        "file": ".bmad-creative-writing/agents/editor.md",
+        "hash": "12205430730506400891"
+      },
+      {
+        "file": ".bmad-creative-writing/agents/genre-specialist.md",
+        "hash": "17359227317106343297"
+      },
+      {
+        "file": ".bmad-creative-writing/agents/narrative-designer.md",
+        "hash": "17729866643202371826"
+      },
+      {
+        "file": ".bmad-creative-writing/agents/plot-architect.md",
+        "hash": "2965829918477533832"
+      },
+      {
+        "file": ".bmad-creative-writing/agents/world-builder.md",
+        "hash": "7924368056712636716"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/beta-feedback-closure-checklist.md",
+        "hash": "10663225997041029506"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/character-consistency-checklist.md",
+        "hash": "15297380726690648757"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/comedic-timing-checklist.md",
+        "hash": "12701484242215312305"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/cyberpunk-aesthetic-checklist.md",
+        "hash": "414534698999755041"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/ebook-formatting-checklist.md",
+        "hash": "3454824297113725957"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/epic-poetry-meter-checklist.md",
+        "hash": "9097385581083276844"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/fantasy-magic-system-checklist.md",
+        "hash": "16699654403264069823"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/foreshadowing-payoff-checklist.md",
+        "hash": "13185620269963170482"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/genre-tropes-checklist.md",
+        "hash": "5358107335072608915"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/historical-accuracy-checklist.md",
+        "hash": "3182553701354639848"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/horror-suspense-checklist.md",
+        "hash": "17185069190904254876"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/kdp-cover-ready-checklist.md",
+        "hash": "18157482825200646169"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/line-edit-quality-checklist.md",
+        "hash": "9318033219609965556"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/marketing-copy-checklist.md",
+        "hash": "8960295541047018820"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/mystery-clue-trail-checklist.md",
+        "hash": "14763953985194523180"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/orbital-mechanics-checklist.md",
+        "hash": "12168175319483277280"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/plot-structure-checklist.md",
+        "hash": "10523517153865416442"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/publication-readiness-checklist.md",
+        "hash": "9727713258026721963"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/romance-emotional-beats-checklist.md",
+        "hash": "16287644178417387569"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/scene-quality-checklist.md",
+        "hash": "10925894062191545476"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/scifi-technology-plausibility-checklist.md",
+        "hash": "13854954627691813405"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/sensitivity-representation-checklist.md",
+        "hash": "8184752057729751633"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/steampunk-gadget-checklist.md",
+        "hash": "13779080998599364635"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/thriller-pacing-stakes-checklist.md",
+        "hash": "18076209677971771366"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/timeline-continuity-checklist.md",
+        "hash": "4059821293251973454"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/world-building-continuity-checklist.md",
+        "hash": "5609438443661291036"
+      },
+      {
+        "file": ".bmad-creative-writing/checklists/ya-appropriateness-checklist.md",
+        "hash": "10431125175880400678"
+      },
+      {
+        "file": ".bmad-creative-writing/config.yaml",
+        "hash": "17186411301966643575"
+      },
+      {
+        "file": ".bmad-creative-writing/data/bmad-kb.md",
+        "hash": "10186423159156989580"
+      },
+      {
+        "file": ".bmad-creative-writing/data/elicitation-methods.md",
+        "hash": "4285596109079784654"
+      },
+      {
+        "file": ".bmad-creative-writing/data/story-structures.md",
+        "hash": "2122224000605945190"
+      },
+      {
+        "file": ".bmad-creative-writing/install-manifest.yaml",
+        "hash": "5234642816152313837"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/advanced-elicitation.md",
+        "hash": "17223931487938168306"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/analyze-reader-feedback.md",
+        "hash": "13940204209471960762"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/analyze-story-structure.md",
+        "hash": "8600429506584199416"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/assemble-kdp-package.md",
+        "hash": "900627670723262331"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/brainstorm-premise.md",
+        "hash": "6769676599676409102"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/build-world.md",
+        "hash": "11131794684853981689"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/character-depth-pass.md",
+        "hash": "6552743868055115662"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/create-doc.md",
+        "hash": "5689248432380683252"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/create-draft-section.md",
+        "hash": "10079546776304654954"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/critical-review.md",
+        "hash": "6370152975357704205"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/develop-character.md",
+        "hash": "10994683764678344799"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/execute-checklist.md",
+        "hash": "1840498805660928108"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/expand-premise.md",
+        "hash": "900246687125223525"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/expand-synopsis.md",
+        "hash": "7064623859338690917"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/final-polish.md",
+        "hash": "3342211992558004599"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/generate-cover-brief.md",
+        "hash": "15811470451257234097"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/generate-cover-prompts.md",
+        "hash": "13771843122510940077"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/generate-scene-list.md",
+        "hash": "11643756489304367939"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/incorporate-feedback.md",
+        "hash": "8616512707586088348"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/kb-mode-interaction.md",
+        "hash": "8752676768631267836"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/outline-scenes.md",
+        "hash": "4130198763895176954"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/provide-feedback.md",
+        "hash": "15097738479537508977"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/publish-chapter.md",
+        "hash": "16041989901196163698"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/quick-feedback.md",
+        "hash": "4216726382682887663"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/select-next-arc.md",
+        "hash": "11926869396644650484"
+      },
+      {
+        "file": ".bmad-creative-writing/tasks/workshop-dialog.md",
+        "hash": "6761020599157437297"
+      },
+      {
+        "file": ".bmad-creative-writing/templates/beta-feedback-form.yaml",
+        "hash": "6648878585741837721"
+      },
+      {
+        "file": ".bmad-creative-writing/templates/chapter-draft-tmpl.yaml",
+        "hash": "2815209262078433889"
+      },
+      {
+        "file": ".bmad-creative-writing/templates/character-profile-tmpl.yaml",
+        "hash": "999553698428561921"
+      },
+      {
+        "file": ".bmad-creative-writing/templates/cover-design-brief-tmpl.yaml",
+        "hash": "14098959084372990369"
+      },
+      {
+        "file": ".bmad-creative-writing/templates/premise-brief-tmpl.yaml",
+        "hash": "1042944365248946606"
+      },
+      {
+        "file": ".bmad-creative-writing/templates/scene-list-tmpl.yaml",
+        "hash": "9172656342063707052"
+      },
+      {
+        "file": ".bmad-creative-writing/templates/story-outline-tmpl.yaml",
+        "hash": "15682820455102542537"
+      },
+      {
+        "file": ".bmad-creative-writing/templates/world-guide-tmpl.yaml",
+        "hash": "17798374825998897519"
+      },
+      {
+        "file": ".bmad-creative-writing/utils/bmad-doc-template.md",
+        "hash": "14186714928875887587"
+      },
+      {
+        "file": ".bmad-creative-writing/utils/workflow-management.md",
+        "hash": "7879321664521989248"
+      },
+      {
+        "file": ".bmad-creative-writing/workflows/book-cover-design-workflow.md",
+        "hash": "12868529083281357536"
+      },
+      {
+        "file": ".bmad-creative-writing/workflows/novel-greenfield-workflow.yaml",
+        "hash": "42041681530346104"
+      },
+      {
+        "file": ".bmad-creative-writing/workflows/novel-serial-workflow.yaml",
+        "hash": "10704876429954187543"
+      },
+      {
+        "file": ".bmad-creative-writing/workflows/novel-snowflake-workflow.yaml",
+        "hash": "14757810911565060326"
+      },
+      {
+        "file": ".bmad-creative-writing/workflows/novel-writing.yaml",
+        "hash": "632897303016932315"
+      },
+      {
+        "file": ".bmad-creative-writing/workflows/screenplay-development.yaml",
+        "hash": "58913433681550570"
+      },
+      {
+        "file": ".bmad-creative-writing/workflows/series-planning.yaml",
+        "hash": "15084627326262760237"
+      },
+      {
+        "file": ".bmad-creative-writing/workflows/short-story-creation.yaml",
+        "hash": "2353077705277479554"
+      },
+      {
+        "file": ".env.production",
+        "hash": "3010241668433935024"
+      },
+      {
+        "file": ".eslintrc.js",
+        "hash": "2557844172940821862"
+      },
+      {
+        "file": ".eslintrc.json",
+        "hash": "959223103893051247"
+      },
+      {
+        "file": ".github/workflows/ci-cd.yml",
+        "hash": "6912806256484921796"
+      },
+      {
+        "file": ".github/workflows/docker-image.yml",
+        "hash": "5206607132747754828"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "16159917015044592378"
+      },
+      {
+        "file": ".prettierrc",
+        "hash": "12227479675084083607"
+      },
+      {
+        "file": ".prettierrc.js",
+        "hash": "8517984407302265260"
+      },
+      {
+        "file": ".roomodes",
+        "hash": "16554418104491146793"
+      },
+      {
+        "file": "Dockerfile",
+        "hash": "6869501814448775586"
+      },
+      {
+        "file": "backend/.env.example",
+        "hash": "14283353796242417691"
+      },
+      {
+        "file": "backend/=0.5.0",
+        "hash": "10376129942582975718"
+      },
+      {
+        "file": "backend/AI_INTEGRATION.md",
+        "hash": "10073496116496014692"
+      },
+      {
+        "file": "backend/GOOGLE_API_SETUP.md",
+        "hash": "3004263566278642418"
+      },
+      {
+        "file": "backend/README-server-management.md",
+        "hash": "14589739329358682018"
+      },
+      {
+        "file": "backend/agent_prompts.py",
+        "hash": "17840713609982043187"
+      },
+      {
+        "file": "backend/ai_service.py",
+        "hash": "10036163068697650536"
+      },
+      {
+        "file": "backend/aio_monitoring_agent.py",
+        "hash": "18251899946979907941"
+      },
+      {
+        "file": "backend/alembic.ini",
+        "hash": "11656110200073302216"
+      },
+      {
+        "file": "backend/auth.py",
+        "hash": "9295841416912127433"
+      },
+      {
+        "file": "backend/autoblogging.py",
+        "hash": "4917868871345686974"
+      },
+      {
+        "file": "backend/circuit_breaker.py",
+        "hash": "10030803429003540808"
+      },
+      {
+        "file": "backend/competitive_analysis_cgi.com.json",
+        "hash": "12784148925052055350"
+      },
+      {
+        "file": "backend/config.py",
+        "hash": "7476315381651379424"
+      },
+      {
+        "file": "backend/containers.py",
+        "hash": "12576565536690247574"
+      },
+      {
+        "file": "backend/data_transformers.py",
+        "hash": "2168334993028929474"
+      },
+      {
+        "file": "backend/database.py",
+        "hash": "13597686939787917765"
+      },
+      {
+        "file": "backend/ecosystem.config.js",
+        "hash": "10264708419782741135"
+      },
+      {
+        "file": "backend/errors.py",
+        "hash": "11362831153177686227"
+      },
+      {
+        "file": "backend/fastmcp-seo-server.plist",
+        "hash": "16944756905191688532"
+      },
+      {
+        "file": "backend/google_calendar.py",
+        "hash": "5374658082155618964"
+      },
+      {
+        "file": "backend/main.py",
+        "hash": "6121718860598198163"
+      },
+      {
+        "file": "backend/manage-fastmcp-server.sh",
+        "hash": "10627380949509543322"
+      },
+      {
+        "file": "backend/mcp_client.py",
+        "hash": "3103078151429551001"
+      },
+      {
+        "file": "backend/migrations/README",
+        "hash": "542617494982568418"
+      },
+      {
+        "file": "backend/migrations/env.py",
+        "hash": "17582196482849558831"
+      },
+      {
+        "file": "backend/migrations/script.py.mako",
+        "hash": "3360943558379116972"
+      },
+      {
+        "file": "backend/migrations/versions/001_initial_migration.py",
+        "hash": "12724493792949547318"
+      },
+      {
+        "file": "backend/migrations/versions/002_add_api_keys_table.py",
+        "hash": "16575773067479223242"
+      },
+      {
+        "file": "backend/migrations/versions/003_add_abuse_prevention_tables.py",
+        "hash": "7937813831732741836"
+      },
+      {
+        "file": "backend/migrations/versions/574f1a0b2b4e_add_notifications_table.py",
+        "hash": "8152218861747989292"
+      },
+      {
+        "file": "backend/migrations/versions/99047bd3b612_add_notifications_table.py",
+        "hash": "12533890085842609976"
+      },
+      {
+        "file": "backend/nohup.out",
+        "hash": "9953783155250827391"
+      },
+      {
+        "file": "backend/orchestration_service.py",
+        "hash": "16595247231672083618"
+      },
+      {
+        "file": "backend/providers/anthropic_provider.py",
+        "hash": "109441026765024669"
+      },
+      {
+        "file": "backend/providers/assemblyai_provider.py",
+        "hash": "14463153142109386783"
+      },
+      {
+        "file": "backend/providers/base_provider.py",
+        "hash": "5166588464153312152"
+      },
+      {
+        "file": "backend/providers/deepseek_provider.py",
+        "hash": "5845814159504504136"
+      },
+      {
+        "file": "backend/providers/email_provider.py",
+        "hash": "6123497136863411892"
+      },
+      {
+        "file": "backend/providers/google_provider.py",
+        "hash": "3410245641768011141"
+      },
+      {
+        "file": "backend/providers/huggingface_provider.py",
+        "hash": "10055255150705058025"
+      },
+      {
+        "file": "backend/providers/openai_provider.py",
+        "hash": "7847879262715234506"
+      },
+      {
+        "file": "backend/providers/perplexity_provider.py",
+        "hash": "15244237676235211266"
+      },
+      {
+        "file": "backend/providers/twilio_provider.py",
+        "hash": "13557788083990793497"
+      },
+      {
+        "file": "backend/pyproject.toml",
+        "hash": "17113982362876896056"
+      },
+      {
+        "file": "backend/rate_limiting.py",
+        "hash": "13044073404897048631"
+      },
+      {
+        "file": "backend/redis_client.py",
+        "hash": "18396348276614795797"
+      },
+      {
+        "file": "backend/requirements.txt",
+        "hash": "1329102789746077398"
+      },
+      {
+        "file": "backend/routers/notifications.py",
+        "hash": "9514234575535285362"
+      },
+      {
+        "file": "backend/routers/orchestration.py",
+        "hash": "15191048585685485554"
+      },
+      {
+        "file": "backend/routers/payments.py",
+        "hash": "13029259360687987800"
+      },
+      {
+        "file": "backend/routers/voice_call.py",
+        "hash": "16085203632362691856"
+      },
+      {
+        "file": "backend/routers/voice_tools.py",
+        "hash": "6351148453727897596"
+      },
+      {
+        "file": "backend/routers/websocket_voice.py",
+        "hash": "6889248004724840412"
+      },
+      {
+        "file": "backend/schemas.py",
+        "hash": "2991125137234243830"
+      },
+      {
+        "file": "backend/security.py",
+        "hash": "8200467501842333717"
+      },
+      {
+        "file": "backend/seo_agents/__init__.py",
+        "hash": "13367602473566505073"
+      },
+      {
+        "file": "backend/seo_agents/agents/__init__.py",
+        "hash": "3064522733781674192"
+      },
+      {
+        "file": "backend/seo_agents/agents/aio_monitoring_agent.py",
+        "hash": "7655199942735241748"
+      },
+      {
+        "file": "backend/seo_agents/agents/appointment_booking_agent.py",
+        "hash": "9476102182033127107"
+      },
+      {
+        "file": "backend/seo_agents/agents/competition_analysis_agent.py",
+        "hash": "8769283375268100777"
+      },
+      {
+        "file": "backend/seo_agents/agents/content_gap_agent.py",
+        "hash": "12814530366246791557"
+      },
+      {
+        "file": "backend/seo_agents/agents/content_summarizer_agent.py",
+        "hash": "396260588216820102"
+      },
+      {
+        "file": "backend/seo_agents/agents/keyword_research_agent.py",
+        "hash": "17365530108341076899"
+      },
+      {
+        "file": "backend/seo_agents/agents/lead_prospecting_agent.py",
+        "hash": "10993953392299225474"
+      },
+      {
+        "file": "backend/seo_agents/agents/seo_audit_agent.py",
+        "hash": "10159606120313535317"
+      },
+      {
+        "file": "backend/seo_mcp_server_fastmcp.py",
+        "hash": "7339962540830991865"
+      },
+      {
+        "file": "backend/services/notification_service.py",
+        "hash": "3374455775091875776"
+      },
+      {
+        "file": "backend/services/payment_service.py",
+        "hash": "2769500585399950960"
+      },
+      {
+        "file": "backend/start_server.sh",
+        "hash": "894239133714542906"
+      },
+      {
+        "file": "backend/test_ai.py",
+        "hash": "2288274937952731600"
+      },
+      {
+        "file": "backend/test_async_db.py",
+        "hash": "13717278345557938591"
+      },
+      {
+        "file": "backend/test_competitor_analysis.py",
+        "hash": "2786994206540709487"
+      },
+      {
+        "file": "backend/test_comprehensive_http.py",
+        "hash": "1836333562412069474"
+      },
+      {
+        "file": "backend/test_comprehensive_seo.py",
+        "hash": "16445206013943853955"
+      },
+      {
+        "file": "backend/test_db.py",
+        "hash": "10878516776177767963"
+      },
+      {
+        "file": "backend/test_db_connection.py",
+        "hash": "16179312726207266703"
+      },
+      {
+        "file": "backend/test_error_handling.py",
+        "hash": "12889639598321599841"
+      },
+      {
+        "file": "backend/test_fallback_mechanisms.py",
+        "hash": "12595239750053792823"
+      },
+      {
+        "file": "backend/test_plan.md",
+        "hash": "17680521216836028487"
+      },
+      {
+        "file": "backend/test_rate_limiting.py",
+        "hash": "17002677928847515410"
+      },
+      {
+        "file": "backend/test_recommendations.py",
+        "hash": "3646454461541497764"
+      },
+      {
+        "file": "backend/test_security.py",
+        "hash": "9600642259366778801"
+      },
+      {
+        "file": "backend/test_seo_integration.py",
+        "hash": "7783955623872447657"
+      },
+      {
+        "file": "backend/test_serpapi.py",
+        "hash": "15395887024525621550"
+      },
+      {
+        "file": "backend/test_server.py",
+        "hash": "687497166428313163"
+      },
+      {
+        "file": "backend/test_voice_conversation.py",
+        "hash": "6996007060425005364"
+      },
+      {
+        "file": "backend/tests/test_auth_refresh.py",
+        "hash": "14923239704519581389"
+      },
+      {
+        "file": "backend/tests/test_main.py",
+        "hash": "12702266185120168370"
+      },
+      {
+        "file": "backend/tests/test_notifications.py",
+        "hash": "4756025123645380336"
+      },
+      {
+        "file": "backend/tests/test_payments.py",
+        "hash": "9263465817589722560"
+      },
+      {
+        "file": "backend/uv.lock",
+        "hash": "13526676775315829680"
+      },
+      {
+        "file": "competitive_analysis.py",
+        "hash": "2212698859598352292"
+      },
+      {
+        "file": "competitive_analysis_cgi.com.json",
+        "hash": "9239775893714592339"
+      },
+      {
+        "file": "competitive_analysis_report.txt",
+        "hash": "7133272623806229518"
+      },
+      {
+        "file": "components.json",
+        "hash": "3891637143716409402"
+      },
+      {
+        "file": "docker-compose.yml",
+        "hash": "8867336422103704961"
+      },
+      {
+        "file": "docs/ai-api-integration.md",
+        "hash": "17617889358991691293"
+      },
+      {
+        "file": "docs/api-key-management.md",
+        "hash": "16641122419083874711"
+      },
+      {
+        "file": "docs/architect-handover.md",
+        "hash": "564426676524187488"
+      },
+      {
+        "file": "docs/brainstorming-session-results.md",
+        "hash": "11557304845328768946"
+      },
+      {
+        "file": "docs/deployment-guide.md",
+        "hash": "4988951201317758908"
+      },
+      {
+        "file": "docs/front-end-spec.md",
+        "hash": "16800896333678615513"
+      },
+      {
+        "file": "docs/jamstack-website-prd.md",
+        "hash": "9905883308160892478"
+      },
+      {
+        "file": "docs/robofy-ux-style-guide.md",
+        "hash": "11341268693095451304"
+      },
+      {
+        "file": "docs/robofy-website-project-brief.md",
+        "hash": "17305520442813440886"
+      },
+      {
+        "file": "docs/sprint-change-proposal.md",
+        "hash": "7614461024470906559"
+      },
+      {
+        "file": "docs/stories/1.1.initialize-nextjs-project.story.md",
+        "hash": "42669621223062171"
+      },
+      {
+        "file": "docs/stories/1.2.setup-vps-environment.story.md",
+        "hash": "17496134919092925915"
+      },
+      {
+        "file": "docs/stories/1.3.setup-strapi-cms.story.md",
+        "hash": "4649702261714999632"
+      },
+      {
+        "file": "docs/stories/1.4.create-component-library.story.md",
+        "hash": "4470250548412729315"
+      },
+      {
+        "file": "docs/stories/2.1.implement-homepage.story.md",
+        "hash": "2067737076238403635"
+      },
+      {
+        "file": "docs/stories/2.2.implement-industry-pages.story.md",
+        "hash": "17687712491973499780"
+      },
+      {
+        "file": "docs/stories/2.3.implement-service-pages.story.md",
+        "hash": "14369089820492059894"
+      },
+      {
+        "file": "docs/stories/2.4.implement-form-handling.story.md",
+        "hash": "17767283977607103348"
+      },
+      {
+        "file": "docs/stories/3.1.implement-ai-integration.story.md",
+        "hash": "13072778185911156521"
+      },
+      {
+        "file": "docs/stories/3.2.setup-crm-database.story.md",
+        "hash": "2063532707045114640"
+      },
+      {
+        "file": "docs/stories/3.3.implement-email-crm.story.md",
+        "hash": "13520019873378665743"
+      },
+      {
+        "file": "docs/stories/3.4.implement-backup-procedures.story.md",
+        "hash": "15166963924918943918"
+      },
+      {
+        "file": "docs/strapi-removal-guide.md",
+        "hash": "13763404777726820041"
+      },
+      {
+        "file": "docs/updated-validation-report.md",
+        "hash": "10850315898648841308"
+      },
+      {
+        "file": "docs/visual-hierarchy-optimization-plan.md",
+        "hash": "16612410453874427770"
+      },
+      {
+        "file": "docs/wordpress-website-prd.md",
+        "hash": "10783768855911727179"
+      },
+      {
+        "file": "ecosystem.config.js",
+        "hash": "11005980196929906671"
+      },
+      {
+        "file": "extract_analysis_to_text.py",
+        "hash": "10190659204979882181"
+      },
+      {
+        "file": "fastmcp_seo_server_implementation_plan.md",
+        "hash": "15095689424517810279"
+      },
+      {
+        "file": "jest.config.js",
+        "hash": "7477917476157593006"
+      },
+      {
+        "file": "netlify.toml",
+        "hash": "4217570775604463928"
+      },
+      {
+        "file": "next-env.d.ts",
+        "hash": "13904763933831424769"
+      },
+      {
+        "file": "next.config.js",
+        "hash": "13345265374606980335"
+      },
+      {
+        "file": "nginx.conf",
+        "hash": "14388311020228279686"
+      },
+      {
+        "file": "nx.json",
+        "hash": "15839647279466991876"
+      },
+      {
+        "file": "package-lock.json",
+        "hash": "18362725842982808204"
+      },
+      {
+        "file": "package.json",
+        "hash": "2077555640211648680"
+      },
+      {
+        "file": "postcss.config.js",
+        "hash": "15614539360543925076"
+      },
+      {
+        "file": "scripts/generate-content.sh",
+        "hash": "11609216687530283378"
+      },
+      {
+        "file": "scripts/kill-port.sh",
+        "hash": "424406040000142303"
+      },
+      {
+        "file": "scripts/setup-vps.sh",
+        "hash": "988300794945984660"
+      },
+      {
+        "file": "scripts/test-api.sh",
+        "hash": "5576408123959971910"
+      },
+      {
+        "file": "scripts/test-deployment.sh",
+        "hash": "11141835363591248105"
+      },
+      {
+        "file": "serp_api_fix_plan.md",
+        "hash": "15504450130772208826"
+      },
+      {
+        "file": "set-dns.mjs",
+        "hash": "10931498111098159554"
+      },
+      {
+        "file": "src/__tests__/FormModal.test.tsx",
+        "hash": "13744945640330184672"
+      },
+      {
+        "file": "src/__tests__/Layout.test.tsx",
+        "hash": "5806329590245117971"
+      },
+      {
+        "file": "src/__tests__/Placeholder.test.tsx",
+        "hash": "6021895716661270416"
+      },
+      {
+        "file": "src/__tests__/page.test.tsx",
+        "hash": "5500569303509368303"
+      },
+      {
+        "file": "src/app/ai-tools/appointment-booking/page.tsx",
+        "hash": "17522373937928355742"
+      },
+      {
+        "file": "src/app/ai-tools/competitor-analysis/page.tsx",
+        "hash": "4167646960241192662"
+      },
+      {
+        "file": "src/app/ai-tools/content-creation/page.tsx",
+        "hash": "12162334152022941954"
+      },
+      {
+        "file": "src/app/ai-tools/customer-support/page.tsx",
+        "hash": "1605472706246402516"
+      },
+      {
+        "file": "src/app/ai-tools/page.tsx",
+        "hash": "11717541632723363448"
+      },
+      {
+        "file": "src/app/ai-tools/seo-analysis/page.tsx",
+        "hash": "13452526124978462904"
+      },
+      {
+        "file": "src/app/ai-tools/social-media/page.tsx",
+        "hash": "8358961041864338881"
+      },
+      {
+        "file": "src/app/api/ai/message/route.ts",
+        "hash": "406962950803655518"
+      },
+      {
+        "file": "src/app/api/ai/route.ts",
+        "hash": "16935723630812507832"
+      },
+      {
+        "file": "src/app/api/content/route.ts",
+        "hash": "10233520659804372158"
+      },
+      {
+        "file": "src/app/api/leads/route.ts",
+        "hash": "10822784996609771519"
+      },
+      {
+        "file": "src/app/api/seo/audit/route.ts",
+        "hash": "2765918733374893828"
+      },
+      {
+        "file": "src/app/api/seo/backlink-analysis/route.ts",
+        "hash": "12924547166118716235"
+      },
+      {
+        "file": "src/app/api/seo/competitor-analysis/route.ts",
+        "hash": "1383470874757584243"
+      },
+      {
+        "file": "src/app/api/seo/content-gap-analysis/route.ts",
+        "hash": "14478951289177990952"
+      },
+      {
+        "file": "src/app/api/seo/keyword-research/route.ts",
+        "hash": "16873521445114703637"
+      },
+      {
+        "file": "src/app/api/seo/rank-tracking/route.ts",
+        "hash": "10795617871515099066"
+      },
+      {
+        "file": "src/app/auth/login/page.tsx",
+        "hash": "3563445455953706240"
+      },
+      {
+        "file": "src/app/auth/register/page.tsx",
+        "hash": "12877937893437217132"
+      },
+      {
+        "file": "src/app/blog/page.tsx",
+        "hash": "8122597929650863660"
+      },
+      {
+        "file": "src/app/case-studies/page.tsx",
+        "hash": "18057933184909661926"
+      },
+      {
+        "file": "src/app/contact/page.tsx",
+        "hash": "1536169997451741616"
+      },
+      {
+        "file": "src/app/demo/dental/page.tsx",
+        "hash": "10629799034522582580"
+      },
+      {
+        "file": "src/app/demo/pet-care/page.tsx",
+        "hash": "3021502784210265072"
+      },
+      {
+        "file": "src/app/demo/real-estate/page.tsx",
+        "hash": "2895417759917357325"
+      },
+      {
+        "file": "src/app/demo/salon/page.tsx",
+        "hash": "6252428160133239207"
+      },
+      {
+        "file": "src/app/demo/spa/page.tsx",
+        "hash": "6275038425365057162"
+      },
+      {
+        "file": "src/app/layout.tsx",
+        "hash": "8884702352170431032"
+      },
+      {
+        "file": "src/app/page.tsx",
+        "hash": "7173323073732842917"
+      },
+      {
+        "file": "src/app/sectors/[slug]/page.tsx",
+        "hash": "12928335718777434426"
+      },
+      {
+        "file": "src/app/sectors/page.tsx",
+        "hash": "991921409822994527"
+      },
+      {
+        "file": "src/app/services/page.tsx",
+        "hash": "12068399614369270349"
+      },
+      {
+        "file": "src/components/AIChat.tsx",
+        "hash": "11240489132688320839"
+      },
+      {
+        "file": "src/components/APIKeyForm.tsx",
+        "hash": "17989898411644339290"
+      },
+      {
+        "file": "src/components/BlogSection.tsx",
+        "hash": "16369801794710774895"
+      },
+      {
+        "file": "src/components/CaseStudyGrid.tsx",
+        "hash": "18030091692085841223"
+      },
+      {
+        "file": "src/components/ChatInterface.tsx",
+        "hash": "6473575770061582936"
+      },
+      {
+        "file": "src/components/CountUpNumber.tsx",
+        "hash": "18009323338793994948"
+      },
+      {
+        "file": "src/components/ErrorBoundary.tsx",
+        "hash": "12480844602578922024"
+      },
+      {
+        "file": "src/components/FormModal.tsx",
+        "hash": "13577502780676691781"
+      },
+      {
+        "file": "src/components/Layout.tsx",
+        "hash": "7415905745468600422"
+      },
+      {
+        "file": "src/components/MagicBento.css",
+        "hash": "1986451035138151939"
+      },
+      {
+        "file": "src/components/MagicBento.tsx",
+        "hash": "4880649494141562334"
+      },
+      {
+        "file": "src/components/ModernChatDashboard.tsx",
+        "hash": "14511984727737120820"
+      },
+      {
+        "file": "src/components/Placeholder.tsx",
+        "hash": "11580995709554173842"
+      },
+      {
+        "file": "src/components/ProcessStepper.tsx",
+        "hash": "214956004378127219"
+      },
+      {
+        "file": "src/components/TestimonialsCarousel.tsx",
+        "hash": "2992933989948942538"
+      },
+      {
+        "file": "src/components/magicui/animated-grid-pattern.tsx",
+        "hash": "2857593478330564032"
+      },
+      {
+        "file": "src/components/magicui/animated-list.tsx",
+        "hash": "1903114909174978391"
+      },
+      {
+        "file": "src/components/magicui/background-lines.tsx",
+        "hash": "8473851688184639328"
+      },
+      {
+        "file": "src/components/magicui/dock-icon.tsx",
+        "hash": "9382756043366430239"
+      },
+      {
+        "file": "src/components/magicui/dock.tsx",
+        "hash": "13684435344688300270"
+      },
+      {
+        "file": "src/components/magicui/flickering-grid.tsx",
+        "hash": "2337042306007958213"
+      },
+      {
+        "file": "src/components/magicui/orbiting-circles.tsx",
+        "hash": "1345402090804519010"
+      },
+      {
+        "file": "src/components/magicui/orbiting-icons.tsx",
+        "hash": "1196143101352137468"
+      },
+      {
+        "file": "src/components/magicui/shimmer-button.tsx",
+        "hash": "15277581879669857862"
+      },
+      {
+        "file": "src/components/magicui/static-grid-pattern.tsx",
+        "hash": "7699139506280885571"
+      },
+      {
+        "file": "src/components/ui/Alert.tsx",
+        "hash": "16690519155520278986"
+      },
+      {
+        "file": "src/components/ui/ArticleCard.tsx",
+        "hash": "13157518136067110510"
+      },
+      {
+        "file": "src/components/ui/Badge.tsx",
+        "hash": "15265600297544166741"
+      },
+      {
+        "file": "src/components/ui/BarChart.tsx",
+        "hash": "2216274768274487083"
+      },
+      {
+        "file": "src/components/ui/Button.tsx",
+        "hash": "9267699881977892517"
+      },
+      {
+        "file": "src/components/ui/CalendarWidget.tsx",
+        "hash": "3154874637625960469"
+      },
+      {
+        "file": "src/components/ui/Card.tsx",
+        "hash": "2954567311853663543"
+      },
+      {
+        "file": "src/components/ui/CircularProgressBar.tsx",
+        "hash": "1641592312597545692"
+      },
+      {
+        "file": "src/components/ui/ClientLogosMarquee.tsx",
+        "hash": "10019946719585039518"
+      },
+      {
+        "file": "src/components/ui/ContactDetails.tsx",
+        "hash": "7505475595409501776"
+      },
+      {
+        "file": "src/components/ui/ContactForm.tsx",
+        "hash": "13907676938371911885"
+      },
+      {
+        "file": "src/components/ui/Dialog.tsx",
+        "hash": "18326947095406037707"
+      },
+      {
+        "file": "src/components/ui/DonutChart.tsx",
+        "hash": "5883538715720704870"
+      },
+      {
+        "file": "src/components/ui/EnhancedCircularProgressBar.tsx",
+        "hash": "13289469301082273476"
+      },
+      {
+        "file": "src/components/ui/EnhancedLinearProgressBar.tsx",
+        "hash": "4643770515703554590"
+      },
+      {
+        "file": "src/components/ui/FilterBar.tsx",
+        "hash": "6644025304385959546"
+      },
+      {
+        "file": "src/components/ui/FloatingDemoButton.tsx",
+        "hash": "5867332122115533058"
+      },
+      {
+        "file": "src/components/ui/Input.tsx",
+        "hash": "10270228290145902228"
+      },
+      {
+        "file": "src/components/ui/InteractiveDemoWidget.tsx",
+        "hash": "18142470247714900094"
+      },
+      {
+        "file": "src/components/ui/LineChart.tsx",
+        "hash": "5803007191826897640"
+      },
+      {
+        "file": "src/components/ui/LinearProgressBar.tsx",
+        "hash": "1006937743109582641"
+      },
+      {
+        "file": "src/components/ui/Marquee.tsx",
+        "hash": "10821991282416385455"
+      },
+      {
+        "file": "src/components/ui/MetricsSection.tsx",
+        "hash": "1614641096081766473"
+      },
+      {
+        "file": "src/components/ui/ModalWalkthrough.tsx",
+        "hash": "5939007622468673286"
+      },
+      {
+        "file": "src/components/ui/ModalWalkthroughDemo.tsx",
+        "hash": "1147304621550385288"
+      },
+      {
+        "file": "src/components/ui/NavBar.tsx",
+        "hash": "5696429919809060359"
+      },
+      {
+        "file": "src/components/ui/ProfileCard.tsx",
+        "hash": "1663657852212567074"
+      },
+      {
+        "file": "src/components/ui/ResponsiveLayout.tsx",
+        "hash": "3698307303589489520"
+      },
+      {
+        "file": "src/components/ui/ResponsiveText.tsx",
+        "hash": "12189750077960378062"
+      },
+      {
+        "file": "src/components/ui/SearchInput.tsx",
+        "hash": "15917118682000578836"
+      },
+      {
+        "file": "src/components/ui/Select.tsx",
+        "hash": "2199467845347892556"
+      },
+      {
+        "file": "src/components/ui/Spinner.tsx",
+        "hash": "18305110234165319027"
+      },
+      {
+        "file": "src/components/ui/StickyHeader.tsx",
+        "hash": "1255638197993342144"
+      },
+      {
+        "file": "src/components/ui/Tabs.tsx",
+        "hash": "8799368090205780475"
+      },
+      {
+        "file": "src/components/ui/TeamSection.tsx",
+        "hash": "4775245222979761322"
+      },
+      {
+        "file": "src/components/ui/TouchTarget.tsx",
+        "hash": "9059511276538925359"
+      },
+      {
+        "file": "src/components/ui/carousel.tsx",
+        "hash": "9545737688467308489"
+      },
+      {
+        "file": "src/components/ui/colourful-text.tsx",
+        "hash": "14323688162053760285"
+      },
+      {
+        "file": "src/components/ui/design-system.md",
+        "hash": "17070283011673195481"
+      },
+      {
+        "file": "src/components/ui/index.ts",
+        "hash": "4201804075242335138"
+      },
+      {
+        "file": "src/components/ui/label.tsx",
+        "hash": "17461498100996495370"
+      },
+      {
+        "file": "src/components/ui/textarea.tsx",
+        "hash": "8546314463615081444"
+      },
+      {
+        "file": "src/config/demo-businesses.ts",
+        "hash": "4609489114173291201"
+      },
+      {
+        "file": "src/content/blog_beauty_personalized-customer-experiences.md",
+        "hash": "7637848194689243677"
+      },
+      {
+        "file": "src/content/blog_beauty_social-media-automation-for-salons.md",
+        "hash": "16508418930847131826"
+      },
+      {
+        "file": "src/content/blog_dental_appointment-reminder-systems.md",
+        "hash": "13809897492805186777"
+      },
+      {
+        "file": "src/content/blog_dental_dental-seo-content-generation.md",
+        "hash": "8412300722352408938"
+      },
+      {
+        "file": "src/content/blog_dental_patient-acquisition-automation.md",
+        "hash": "11981854631614393507"
+      },
+      {
+        "file": "src/content/blog_fitness_fitness-content-marketing.md",
+        "hash": "17411292803623174431"
+      },
+      {
+        "file": "src/content/blog_fitness_fitness-studio-member-acquisition.md",
+        "hash": "2398996106302354928"
+      },
+      {
+        "file": "src/content/blog_fitness_workout-program-personalization.md",
+        "hash": "794548023170473855"
+      },
+      {
+        "file": "src/content/blog_healthcare_1.md",
+        "hash": "15122950659906218301"
+      },
+      {
+        "file": "src/content/blog_healthcare_2.md",
+        "hash": "15122950659906218301"
+      },
+      {
+        "file": "src/content/blog_healthcare_healthcare-content-marketing.md",
+        "hash": "15788825244016711909"
+      },
+      {
+        "file": "src/content/blog_healthcare_healthcare-digital-marketing-automation.md",
+        "hash": "15482582916382547263"
+      },
+      {
+        "file": "src/content/blog_healthcare_medical-practice-lead-generation.md",
+        "hash": "18041421180832555223"
+      },
+      {
+        "file": "src/content/blog_retail_inventory-management-automation.md",
+        "hash": "11826999508952641041"
+      },
+      {
+        "file": "src/content/blog_retail_retail-e-commerce-automation.md",
+        "hash": "10438179169560966262"
+      },
+      {
+        "file": "src/content/blog_solar_renewable-energy-marketing.md",
+        "hash": "4879915829509502609"
+      },
+      {
+        "file": "src/content/blog_solar_solar-energy-lead-generation.md",
+        "hash": "10958634808238833314"
+      },
+      {
+        "file": "src/content/blog_solar_solar-installation-automation.md",
+        "hash": "4349655298647277354"
+      },
+      {
+        "file": "src/content/blog_technology_1.md",
+        "hash": "13187359703204887693"
+      },
+      {
+        "file": "src/content/industry_page_beauty_ai-powered-beauty-marketing-strategies.md",
+        "hash": "8492704467092459812"
+      },
+      {
+        "file": "src/content/industry_page_beauty_roi-driven-beauty-campaigns.md",
+        "hash": "8492704467092459812"
+      },
+      {
+        "file": "src/content/industry_page_beauty_social-media-automation-for-salons.md",
+        "hash": "8492704467092459812"
+      },
+      {
+        "file": "src/content/industry_page_dental_appointment-reminder-systems.md",
+        "hash": "16079026437460584102"
+      },
+      {
+        "file": "src/content/industry_page_dental_dental-seo-content-generation.md",
+        "hash": "16079026437460584102"
+      },
+      {
+        "file": "src/content/industry_page_fitness_fitness-content-marketing.md",
+        "hash": "6302335876684045356"
+      },
+      {
+        "file": "src/content/industry_page_fitness_fitness-studio-member-acquisition.md",
+        "hash": "6302335876684045356"
+      },
+      {
+        "file": "src/content/industry_page_healthcare_healthcare-content-marketing.md",
+        "hash": "873444820012998947"
+      },
+      {
+        "file": "src/content/industry_page_healthcare_patient-engagement-ai-solutions.md",
+        "hash": "873444820012998947"
+      },
+      {
+        "file": "src/content/industry_page_retail_ai-driven-product-recommendations.md",
+        "hash": "2147777229375092260"
+      },
+      {
+        "file": "src/content/industry_page_retail_customer-retention-strategies.md",
+        "hash": "2147777229375092260"
+      },
+      {
+        "file": "src/content/industry_page_retail_inventory-management-automation.md",
+        "hash": "2147777229375092260"
+      },
+      {
+        "file": "src/content/industry_page_solar_green-energy-content-strategy.md",
+        "hash": "9427590854080264092"
+      },
+      {
+        "file": "src/content/industry_page_solar_solar-energy-lead-generation.md",
+        "hash": "9427590854080264092"
+      },
+      {
+        "file": "src/data/case-studies.json",
+        "hash": "6758274341592776499"
+      },
+      {
+        "file": "src/data/chart-data.ts",
+        "hash": "15131586208750380806"
+      },
+      {
+        "file": "src/data/clients.ts",
+        "hash": "8789061924948688103"
+      },
+      {
+        "file": "src/data/team.ts",
+        "hash": "5722431615737076677"
+      },
+      {
+        "file": "src/data/testimonials.ts",
+        "hash": "4294642896903380337"
+      },
+      {
+        "file": "src/lib/api.ts",
+        "hash": "13256713131149642364"
+      },
+      {
+        "file": "src/lib/auth.ts",
+        "hash": "3322937270489924545"
+      },
+      {
+        "file": "src/lib/blog-utils.ts",
+        "hash": "288405160416107725"
+      },
+      {
+        "file": "src/lib/media.ts",
+        "hash": "11273708549667459830"
+      },
+      {
+        "file": "src/lib/utils.ts",
+        "hash": "6483145186850064023"
+      },
+      {
+        "file": "src/setupTests.ts",
+        "hash": "12267762808435644953"
+      },
+      {
+        "file": "src/styles/globals.css",
+        "hash": "14462331594582004071"
+      },
+      {
+        "file": "src/types/blog.ts",
+        "hash": "7093236892610068810"
+      },
+      {
+        "file": "supervisor/conf.d/fastmcp-seo-server.conf",
+        "hash": "4874578082868150321"
+      },
+      {
+        "file": "supervisor/test-supervisor.sh",
+        "hash": "13336268883655056478"
+      },
+      {
+        "file": "tailwind.config.js",
+        "hash": "14491910561896358834"
+      },
+      {
+        "file": "test_recommendations.py",
+        "hash": "2893046621529572946"
+      },
+      {
+        "file": "test_seo_tools.py",
+        "hash": "2086919117085107532"
+      },
+      {
+        "file": "test_serpapi.py",
+        "hash": "9109373191269310937"
+      },
+      {
+        "file": "tsconfig.json",
+        "hash": "10464176729749977792"
+      }
+    ],
+    "projectFileMap": {}
+  },
+  "externalNodesHash": "14208659610298543822"
+}

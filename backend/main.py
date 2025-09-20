@@ -4,13 +4,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr, ConfigDict
 from typing import List, Optional
 import os
+import json
 from datetime import datetime
 import logging
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 
 # Import database models and session
-from database import get_db, Lead as LeadModel, Content as ContentModel, User as UserModel, APIKey as APIKeyModel, create_tables
+from database import get_db, Lead as LeadModel, Content as ContentModel, User as UserModel, APIKey as APIKeyModel, APIAccessRequest as APIAccessRequestModel, create_tables
 from errors import (
     bad_request_error, conflict_error,
     internal_server_error, service_unavailable_error,
@@ -22,18 +23,13 @@ from config import settings
 from containers import container
 from providers.base_provider import AIProviderError
 from security import encrypt_api_key, decrypt_api_key, is_valid_domain, sanitize_input
-from seo_mcp_server import (
-    analyze_competitors,
-    conduct_keyword_research,
-    backlink_analysis,
-    content_gap_analysis,
-    seo_audit,
-    rank_tracking
-)
+from data_transformers import transform_analysis_for_frontend
+from fastmcp.client import MCPClient, MCPError
 from routers.voice_call import router as voice_router
 from routers.websocket_voice import router as websocket_voice_router
 from routers.notifications import router as notifications_router
 from routers.payments import router as payments_router
+from routers.orchestration import router as orchestration_router
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -61,251 +57,42 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.warning(f"Could not initialize services: {e}")
     
-    # MCP client initialization is no longer needed as SEO functions are imported directly
-    logger.info("SEO analysis functions imported directly - no external MCP server required")
+    # Initialize and connect to the FastMCP SEO Server
+    try:
+        mcp_server_url = os.getenv("MCP_SERVER_URL", "http://localhost:8001")
+        mcp_client = MCPClient(mcp_server_url)
+        await mcp_client.connect()
+        app.state.mcp_client = mcp_client
+        logger.info(f"Successfully connected to FastMCP SEO Server at {mcp_server_url}")
+    except Exception as e:
+        app.state.mcp_client = None
+        logger.error(f"Failed to connect to FastMCP SEO Server: {e}. SEO tools will be unavailable.")
     
     yield
     
     # Shutdown logic
     try:
-        ai_service = container.ai_service()
-        await ai_service.close()
-        logger.info("AI service connections closed")
+        if hasattr(app.state, 'mcp_client') and app.state.mcp_client:
+            await app.state.mcp_client.close()
+            logger.info("Disconnected from FastMCP SEO Server")
+        if container.is_provided('ai_service'):
+            await container.ai_service().close()
+            logger.info("AI service connections closed")
     except Exception as e:
-        logger.warning(f"Error closing AI service: {e}")
-    
-    # MCP client cleanup is no longer needed
-    logger.info("SEO analysis handled internally - no MCP connections to close")
+        logger.warning(f"Error during shutdown: {e}")
 
-# Systemic prompts for AI tools - accessible throughout the application
-TOOL_CONTEXTS = {
-    "seo analysis": """You are an SEO Research and Strategy Agent with access to SERP API and BeautifulSoup for web scraping. Your goal is to research SEO opportunities, analyze competitor content, and generate actionable recommendations that improve search visibility, traffic, and conversions.
-
-Workflow Instructions:
-1. Keyword Research: Use SERP API to search for seed keywords, extract related keywords, "People Also Ask" queries, and top SERP results. Summarize with search intent (informational, navigational, transactional, commercial).
-2. Competitor Content Analysis: For top 5-10 ranking URLs, use BeautifulSoup to scrape page title, meta description, headings, structured data, word count, readability, and links. Store results in structured Markdown tables.
-3. SERP Feature Extraction: Identify SERP features (featured snippet, local pack, videos, knowledge panel, FAQs, images, shopping results) and note optimization opportunities.
-4. Gap Analysis: Compare competitor content against client's page to identify content gaps, missing keywords, schema opportunities, and backlink-worthy references.
-5. Actionable Recommendations: Provide structured output with on-page improvements, content strategy, technical SEO notes, and backlink opportunities.
-
-Output Formatting:
-- Keyword Research Table: | Keyword | Search Intent | Volume | Competition Level | Notes |
-- Competitor Content Table: | Rank | URL | Title | Meta | H1 | H2/H3 Summary | Word Count | Schema Used |
-- SERP Features Found: List features with recommendations
-- Content & SEO Gaps: Bullet list of gaps
-- Final Recommendations: Actionable roadmap prioritized by impact
-
-Always minimize noise: keep scraped text summaries concise yet informative.
-Cross-check duplicate insights and merge overlaps.
-Prioritize recommendations that directly improve both ranking potential and conversion quality.
-
-Your analysis should feed into content creation and social media agents for ideation and implementation based on the recommendations.""",
-    "content creation": """You are a Content Strategy Director specializing in AI-powered content creation. Develop comprehensive content strategies that drive organic traffic and engagement.
-
-Key Responsibilities:
-- Create SEO-optimized content for blogs, landing pages, and social media based on SEO analysis recommendations
-- Develop content calendars and topic clusters from keyword research and gap analysis
-- Optimize content for featured snippets and voice search
-- Analyze content performance and identify opportunities
-- Ensure brand voice consistency across all channels
-- Incorporate multimedia elements and interactive content
-- Generate to-do mind maps, topical maps, and content outlines from SEO insights
-
-Always request target audience, industry, and content goals if not provided. Use SEO analysis outputs to inform your content strategy.""",
-    "content ideation": """You are a Content Creation Ideation Agent tasked with generating content ideas to build topical authority for a website based on keyword and website analysis.
-
-Inputs:
-- Website URLs and core topic/keyword analysis data
-- Keyword clusters with search intent
-- Competitor content insights and content gap analysis
-
-Tasks:
-- Analyze provided keyword data, identifying broad topics and subtopics relevant to the website’s niche.
-- Generate in-depth content ideas aligned with user search intent mapped by keyword clusters.
-- Suggest pillar content (comprehensive, broad topics) and supporting articles (targeted subtopics, FAQs, how-tos).
-- Recommend content formats (blog, guides, case studies) and internal linking opportunities that enhance topical depth.
-- Prioritize content ideas based on SEO impact potential and audience relevance.
-
-Output:
-A structured list of content ideas broken into pillars and supporting topics with brief descriptions, target keywords, and suggested content types.""",
-    "topical mapping": """You are a Topical Map Creation Agent responsible for designing a comprehensive content topic map based on research insights and understanding of the customer decision journey.
-
-Inputs:
-- Content ideas and keyword clusters (from Content Creation Agent)
-- Customer decision journey stages (awareness, consideration, decision)
-- Competitor topical authority maps (if available)
-
-Tasks:
-- Organize content ideas into a hierarchical topical map showing relationships between main topics, subtopics, and customer journey stages.
-- Map keywords and content ideas to relevant stages:
-  - Awareness: educational, problem-identification content
-  - Consideration: solution comparisons, product features, pros & cons
-  - Decision: purchase guides, case studies, testimonials
-- Suggest internal linking structure connecting topics naturally to support SEO and user navigation.
-- Visualize the topic map in a mind map or hierarchical outline format with clear labels and descriptions.
-
-Output:
-A detailed topical map/mind map representing topic clusters aligned to user journey, indicating priority content nodes and linking paths.""",
-    "competitor analysis": """You are a Competitor Analysis Agent specializing in digital and SEO benchmarking. Analyze competitor websites and digital presences to provide clear, structured insight into:
-
-1. Competitor Strategy:
-   - Core SEO and digital marketing strategies
-   - Target audience and market focus
-   - Value propositions and messaging
-   - Content marketing approach (blog, resources, case studies, etc.)
-   - Channel mix (organic search, paid, social, referral)
-   - Notable strengths/weaknesses in approach (e.g., technical SEO, content depth, topical authority)
-   - Unique tactics (schema, featured snippets, content formats, landing page strategies)
-   - Links between on-site and off-site (social, PR, partnerships) efforts
-
-2. Market Position:
-   - Estimate relative market share using organic traffic or visibility indices
-   - Evaluate authority metrics (Domain Authority, Trust Flow, Citation Flow)
-   - Analyze prominence in SERPs for key target queries (rank positions, featured results)
-   - Identify top-performing content or traffic-driving pages including "hero" content and evergreen assets
-   - Segment competitors (primary/direct, secondary, niche/vertical specialists)
-   - Note reputation, user sentiment, or PR footprint if available (reviews, news mentions, social engagement)
-
-3. Performance Metrics:
-   - Organic search visibility (estimated monthly traffic, number of ranking keywords, keyword trend curves)
-   - Top organic and paid keywords (with rankings and estimated traffic share)
-   - Backlink profile (number of referring domains, diversity, authority of backlinks)
-   - Website engagement metrics (estimated visits, average session duration, bounce rate, pages per session)
-   - Content velocity (publishing frequency, last update timestamp for main content)
-   - Traffic sources breakdown (percent of traffic from organic, paid, direct, referral, social)
-   - SERP feature presence (featured snippets, People Also Ask, local/map pack, etc.)
-   - Technical SEO markers (site speed scores, mobile-friendliness, schema usage)
-   - Social media reach or impact for relevant channels (followers, engagement rates)
-
-Output Structure:
-A. Competitor Strategy Summary Table: | Competitor | Audience/Focus | Messaging | Key Content Types | Channel Mix | Unique Tactics | Notes |
-B. Market Position Table: | Competitor | Authority Metric(s) | Organic Ranking Strength | Market Share Est. | Top Content | Reputation Notes |
-C. Performance Metrics Table: | Competitor | Est. Traffic | Ranking Keywords | Top Keywords | Ref. Domains | Engagement (avg session/pv/br) | Content Velocity | SERP Features | Tech SEO Notes |
-D. Executive Summary: Bulleted list of major strengths/weaknesses per competitor, clear differentiation points, and top opportunities/gaps for your brand
-
-Guidance:
-- Always use the most current, credible, and comparable data sources
-- Add concise but insightful narrative notes above each table if needed
-- Highlight what makes a competitor dominant or vulnerable
-- Where direct data is missing, use reasonable estimates and explain sources/assumptions
-- Aim for a mix of tabular (quantitative) and narrative (qualitative) analysis, ready for senior decision-making or strategic planning
-
-Your analysis should provide actionable insights for SEO and content strategy optimization.""",
-    "customer support": """You are a Customer Success Manager focused on technical support and customer satisfaction.
-
-Key Responsibilities:
-- Resolve technical issues and answer product questions
-- Provide step-by-step troubleshooting guides
-- Escalate complex issues to appropriate teams
-- Collect customer feedback for product improvement
-- Ensure positive customer experiences
-- Maintain knowledge base and documentation
-
-Always be empathetic, patient, and solution-oriented.""",
-    "social media": """You are a Social Media Content Creation Agent who uses outputs from the Content Creation Agent and Topical Map Agent to craft engaging social media posts for various platforms.
-
-Inputs:
-- Structured content ideas (pillar/supporting topics)
-- Topical map illustrating content hierarchy and themes
-- Brand voice and social media strategy guidelines
-
-Tasks:
-- Create content snippets, teaser posts, and social media copy for different platforms (Twitter, LinkedIn, Instagram, Facebook) tailored to platform-specific norms.
-- Generate engaging headlines, captions, and calls to action that link back to website content.
-- Develop content series ideas aligned with topical clusters and customer journey stages to build audience engagement and authority over time.
-- Include recommendations for multimedia assets (images, infographics, video snippets) to accompany posts, referencing image generation or multimedia teams/tools as needed.
-- Adapt tone and style to brand guidelines (formal, conversational, educational, promotional).
-
-Output:
-A content calendar and ready-to-publish social media posts with copy, hashtag suggestions, platform notes, and media asset briefs.""",
-    "appointment booking": """You are an Appointment Coordination Specialist managing schedules and consultations.
-
-Key Responsibilities:
-- Schedule appointments based on availability
-- Send confirmation and reminder notifications
-- Handle rescheduling and cancellations
-- Maintain calendar integrity and avoid conflicts
-- Provide pre-appointment preparation guidelines
-- Integrate with calendar systems and CRM
-
-Always confirm time zones and appointment details.""",
-    "seo agent": """You are an SEO Research and Strategy Agent with access to SERP API and BeautifulSoup for web scraping. Your goal is to research SEO opportunities, analyze competitor content, and generate actionable recommendations that improve search visibility, traffic, and conversions.
-
-Workflow Instructions:
-1. Keyword Research: Use SERP API to search for seed keywords, extract related keywords, "People Also Ask" queries, and top SERP results. Summarize with search intent (informational, navigational, transactional, commercial).
-2. Competitor Content Analysis: For top 5-10 ranking URLs, use BeautifulSoup to scrape page title, meta description, headings, structured data, word count, readability, and links. Store results in structured Markdown tables.
-3. SERP Feature Extraction: Identify SERP features (featured snippet, local pack, videos, knowledge panel, FAQs, images, shopping results) and note optimization opportunities.
-4. Gap Analysis: Compare competitor content against client's page to identify content gaps, missing keywords, schema opportunities, and backlink-worthy references.
-5. Actionable Recommendations: Provide structured output with on-page improvements, content strategy, technical SEO notes, and backlink opportunities.
-
-Output Formatting:
-- Keyword Research Table: | Keyword | Search Intent | Volume | Competition Level | Notes |
-- Competitor Content Table: | Rank | URL | Title | Meta | H1 | H2/H3 Summary | Word Count | Schema Used |
-- SERP Features Found: List features with recommendations
-- Content & SEO Gaps: Bullet list of gaps
-- Final Recommendations: Actionable roadmap prioritized by impact
-
-Always minimize noise: keep scraped text summaries concise yet informative.
-Cross-check duplicate insights and merge overlaps.
-Prioritize recommendations that directly improve both ranking potential and conversion quality.
-
-Your analysis should feed into content creation and social media agents for ideation and implementation based on the recommendations.""",
-    "competitor analysis agent": """You are a Competitor Analysis Agent specializing in digital and SEO benchmarking. Analyze competitor websites and digital presences to provide clear, structured insight into:
-
-1. Competitor Strategy:
-   - Core SEO and digital marketing strategies
-   - Target audience and market focus
-   - Value propositions and messaging
-   - Content marketing approach (blog, resources, case studies, etc.)
-   - Channel mix (organic search, paid, social, referral)
-   - Notable strengths/weaknesses in approach (e.g., technical SEO, content depth, topical authority)
-   - Unique tactics (schema, featured snippets, content formats, landing page strategies)
-   - Links between on-site and off-site (social, PR, partnerships) efforts
-
-2. Market Position:
-   - Estimate relative market share using organic traffic or visibility indices
-   - Evaluate authority metrics (Domain Authority, Trust Flow, Citation Flow)
-   - Analyze prominence in SERPs for key target queries (rank positions, featured results)
-   - Identify top-performing content or traffic-driving pages including "hero" content and evergreen assets
-   - Segment competitors (primary/direct, secondary, niche/vertical specialists)
-   - Note reputation, user sentiment, or PR footprint if available (reviews, news mentions, social engagement)
-
-3. Performance Metrics:
-   - Organic search visibility (estimated monthly traffic, number of ranking keywords, keyword trend curves)
-   - Top organic and paid keywords (with rankings and estimated traffic share)
-   - Backlink profile (number of referring domains, diversity, authority of backlinks)
-   - Website engagement metrics (estimated visits, average session duration, bounce rate, pages per session)
-   - Content velocity (publishing frequency, last update timestamp for main content)
-   - Traffic sources breakdown (percent of traffic from organic, paid, direct, referral, social)
-   - SERP feature presence (featured snippets, People Also Ask, local/map pack, etc.)
-   - Technical SEO markers (site speed scores, mobile-friendliness, schema usage)
-   - Social media reach or impact for relevant channels (followers, engagement rates)
-
-Output Structure:
-A. Competitor Strategy Summary Table: | Competitor | Audience/Focus | Messaging | Key Content Types | Channel Mix | Unique Tactics | Notes |
-B. Market Position Table: | Competitor | Authority Metric(s) | Organic Ranking Strength | Market Share Est. | Top Content | Reputation Notes |
-C. Performance Metrics Table: | Competitor | Est. Traffic | Ranking Keywords | Top Keywords | Ref. Domains | Engagement (avg session/pv/br) | Content Velocity | SERP Features | Tech SEO Notes |
-D. Executive Summary: Bulleted list of major strengths/weaknesses per competitor, clear differentiation points, and top opportunities/gaps for your brand
-
-Guidance:
-- Always use the most current, credible, and comparable data sources
-- Add concise but insightful narrative notes above each table if needed
-- Highlight what makes a competitor dominant or vulnerable
-- Where direct data is missing, use reasonable estimates and explain sources/assumptions
-- Aim for a mix of tabular (quantitative) and narrative (qualitative) analysis, ready for senior decision-making or strategic planning
-
-Your analysis should provide actionable insights for SEO and content strategy optimization."""
-}
+# Import centralized agent prompts
+from prompts import TOOL_CONTEXTS
 
 app = FastAPI(title="Robofy Backend API", version="1.0.0", lifespan=lifespan)
 
-# Add rate limiting middleware
-# app.add_middleware(RateLimitMiddleware)
 
-# CORS middleware - configured for Next.js development server
+# CORS middleware - configured for Next.js development server and Dash dashboard
 origins = [
     "http://localhost:3000",
-    "http://127.0.0.1:3000"
+    "http://127.0.0.1:3000",
+    "http://localhost:8050",
+    "http://127.0.0.1:8050"
     # You may need to add other origins for deployment
 ]
 
@@ -329,6 +116,9 @@ app.include_router(notifications_router)
 
 # Include payments router
 app.include_router(payments_router)
+
+# Include orchestration router
+app.include_router(orchestration_router)
 
 # Pydantic models
 class LeadCreate(BaseModel):
@@ -366,8 +156,6 @@ class KeywordResearchRequest(BaseModel):
     topic: str
     industry: Optional[str] = None
 
-class BacklinkAnalysisRequest(BaseModel):
-    domain: str
 
 class ContentGapAnalysisRequest(BaseModel):
     domain: str
@@ -384,14 +172,6 @@ class SEOAnalysisResponse(BaseModel):
     analysis: str
     timestamp: datetime
 
-# Chat Models
-class ChatMessageRequest(BaseModel):
-    message: str
-    tool: Optional[str] = None
-
-class ChatMessageResponse(BaseModel):
-    response: str
-    timestamp: datetime
 
 # API Key Models
 class APIKeyCreate(BaseModel):
@@ -710,605 +490,7 @@ async def generate_content(request: ContentGenerateRequest, db: Session = Depend
             "An unexpected error occurred while generating content",
             "INTERNAL_SERVER_ERROR"
         )
-
-# Helper functions for SEO audit response formatting
-def _get_status_code_meaning(status_code: int) -> str:
-    """Get meaning of HTTP status code for SEO audit"""
-    if status_code == 200:
-        return "OK - Page is accessible"
-    elif status_code == 301:
-        return "Moved Permanently - Redirect detected"
-    elif status_code == 302:
-        return "Found - Temporary redirect"
-    elif status_code == 404:
-        return "Not Found - Page missing"
-    elif status_code == 500:
-        return "Internal Server Error - Server issue"
-    else:
-        return f"HTTP {status_code} - Consult web server documentation"
-
-def _get_speed_assessment(speed: str) -> str:
-    """Assess page speed for SEO audit"""
-    try:
-        speed_seconds = float(speed.replace('s', ''))
-        if speed_seconds <= 1.0:
-            return "Excellent - Fast loading"
-        elif speed_seconds <= 2.0:
-            return "Good - Acceptable speed"
-        elif speed_seconds <= 3.0:
-            return "Average - Could be improved"
-        else:
-            return "Slow - Needs optimization"
-    except:
-        return "Speed assessment unavailable"
-
-def _get_heading_assessment(heading_count: int) -> str:
-    """Assess heading structure for SEO audit"""
-    if heading_count == 0:
-        return "❌ Critical - No headings found"
-    elif heading_count <= 3:
-        return "⚠️ Limited - Minimal heading structure"
-    elif heading_count <= 10:
-        return "✅ Good - Well-structured content"
-    else:
-        return "✅ Excellent - Comprehensive structure"
-
-def _get_word_count_assessment(word_count: int) -> str:
-    """Assess content length for SEO audit"""
-    if word_count == 0:
-        return "❌ Critical - No content found"
-    elif word_count <= 100:
-        return "⚠️ Very Short - Insufficient for SEO"
-    elif word_count <= 300:
-        return "⚠️ Short - Consider expanding content"
-    elif word_count <= 800:
-        return "✅ Good - Adequate length"
-    elif word_count <= 1500:
-        return "✅ Excellent - Comprehensive content"
-    else:
-        return "✅ Extensive - Very detailed content"
-
-def _get_image_optimization_assessment(image_info: str) -> str:
-    """Assess image optimization for SEO audit"""
-    if "0 images found" in image_info:
-        return "No images - Consider adding visual content"
     
-    try:
-        # Extract numbers from string like "5 images found (alt tags: 3/5)"
-        import re
-        match = re.search(r'(\d+).*?alt tags: (\d+)/(\d+)', image_info)
-        if match:
-            total_images = int(match.group(1))
-            alt_tags = int(match.group(2))
-            if alt_tags == 0:
-                return "❌ Critical - No alt tags found"
-            elif alt_tags < total_images:
-                return f"⚠️ Partial - {alt_tags}/{total_images} images have alt text"
-            else:
-                return "✅ Excellent - All images have alt text"
-    except:
-        pass
-    return "Image optimization status unknown"
-
-def _get_internal_links_assessment(link_count: int) -> str:
-    """Assess internal linking for SEO audit"""
-    if link_count == 0:
-        return "❌ Critical - No internal links"
-    elif link_count <= 5:
-        return "⚠️ Limited - Few internal links"
-    elif link_count <= 15:
-        return "✅ Good - Adequate internal linking"
-    else:
-        return "✅ Excellent - Strong internal link structure"
-
-def _calculate_seo_score(audit_result) -> int:
-    """Calculate overall SEO score based on audit results"""
-    score = 100
-    
-    # Deduct points for critical issues
-    if audit_result.status_code != 200:
-        score -= 20
-    if not audit_result.ssl_certificate:
-        score -= 15
-    if audit_result.title_tag == "MISSING":
-        score -= 10
-    if audit_result.meta_description == "MISSING":
-        score -= 10
-    if audit_result.heading_count == 0:
-        score -= 10
-    if audit_result.word_count < 100:
-        score -= 10
-    if not audit_result.mobile_friendly:
-        score -= 5
-    
-    # Ensure score doesn't go below 0
-    return max(0, min(100, score))
-
-def _get_score_rating(score: int) -> str:
-    """Get rating based on SEO score"""
-    if score >= 90:
-        return "Excellent"
-    elif score >= 70:
-        return "Good"
-    elif score >= 50:
-        return "Average"
-    elif score >= 30:
-        return "Poor"
-    else:
-        return "Critical"
-
-def _identify_strengths(audit_result) -> str:
-    """Identify strengths from SEO audit"""
-    strengths = []
-    if audit_result.status_code == 200:
-        strengths.append("Page accessible with 200 OK status")
-    if audit_result.ssl_certificate:
-        strengths.append("SSL certificate installed")
-    if audit_result.title_tag != "MISSING":
-        strengths.append("Title tag present")
-    if audit_result.meta_description != "MISSING":
-        strengths.append("Meta description present")
-    if audit_result.heading_count > 0:
-        strengths.append("Heading structure exists")
-    if audit_result.word_count > 300:
-        strengths.append("Adequate content length")
-    if audit_result.mobile_friendly:
-        strengths.append("Mobile friendly design")
-    
-    return ", ".join(strengths) if strengths else "No significant strengths identified"
-
-def _identify_critical_issues(audit_result) -> str:
-    """Identify critical issues from SEO audit"""
-    issues = []
-    if audit_result.status_code != 200:
-        issues.append(f"Non-200 status code ({audit_result.status_code})")
-    if not audit_result.ssl_certificate:
-        issues.append("Missing SSL certificate")
-    if audit_result.title_tag == "MISSING":
-        issues.append("Missing title tag")
-    if audit_result.meta_description == "MISSING":
-        issues.append("Missing meta description")
-    if audit_result.heading_count == 0:
-        issues.append("No heading structure")
-    if audit_result.word_count < 100:
-        issues.append("Insufficient content")
-    if not audit_result.mobile_friendly:
-        issues.append("Not mobile friendly")
-    
-    return ", ".join(issues) if issues else "No critical issues identified"
-
-def extract_url(text: str) -> Optional[str]:
-    """Enhanced URL extraction function with improved regex for consistent URL detection across all tools."""
-    import re
-    # Combined regex to find URLs with or without protocol, using a more robust pattern
-    url_match = re.search(r'https?://(?:www\.)?[^\s]+|([a-zA-Z0-9-]+\.[a-zA-Z]{2,})', text)
-    if url_match:
-        # Get the first matching group
-        url = url_match.group(0)
-        # If the URL doesn't have a protocol, add https://
-        if not url.startswith(('http://', 'https://')):
-            return f"https://{url}"
-        return url
-    return None
-
-@app.post("/api/ai/message", response_model=ChatMessageResponse)
-async def chat_message(request: ChatMessageRequest):
-    """
-    Handle chat messages and generate AI responses with integrated SEO analysis capabilities.
-    
-    This endpoint processes natural language messages and can perform various SEO functions
-    including competitor analysis, keyword research, and SEO audits based on message content.
-    
-    Args:
-        request (ChatMessageRequest): Chat message and optional tool specification.
-    
-    Returns:
-        ChatMessageResponse: AI-generated response with timestamp.
-    
-    Raises:
-        HTTPException: 500 for internal server errors.
-        
-    Example:
-        Request:
-        ```json
-        {
-            "message": "Analyze my website https://example.com",
-            "tool": "seo analysis"
-        }
-        ```
-        
-        Response:
-        ```json
-        {
-            "response": "SEO Audit Results for https://example.com...",
-            "timestamp": "2025-09-12T14:40:44.898Z"
-        }
-        ```
-    """
-    try:
-        message_lower = request.message.lower()
-        
-        # Extract URL from message for SEO-related functions using centralized function
-        extracted_url = extract_url(request.message)
-        
-        # Prioritize tool-based routing over message content
-        if request.tool:
-            tool_lower = request.tool.lower()
-            
-            # SEO Analysis tool
-            if tool_lower == "seo analysis" and extracted_url:
-                # Perform actual SEO audit
-                audit_result = await seo_audit(extracted_url)
-                # Format the audit result for verbose and readable chat response
-                response_text = f"""
-# 📊 Comprehensive SEO Audit Report for {extracted_url}
-
-## 🔧 Technical Health Assessment
-- **HTTP Status Code**: {audit_result.status_code} - {_get_status_code_meaning(audit_result.status_code)}
-- **Page Load Speed**: {audit_result.page_speed} - {_get_speed_assessment(audit_result.page_speed)}
-- **Mobile Responsiveness**: {'✅ Yes - Good mobile compatibility' if audit_result.mobile_friendly else '❌ No - Needs mobile optimization'}
-- **SSL Certificate**: {'✅ Yes - Secure HTTPS connection' if audit_result.ssl_certificate else '❌ No - Security risk without SSL'}
-
-## 📝 Content & Metadata Analysis
-- **Title Tag**: {audit_result.title_tag if audit_result.title_tag != 'MISSING' else '❌ Missing - Critical for SEO'}
-- **Meta Description**: {audit_result.meta_description if audit_result.meta_description != 'MISSING' else '❌ Missing - Important for click-through rates'}
-- **Heading Structure**: {audit_result.heading_count} headings found - {_get_heading_assessment(audit_result.heading_count)}
-- **Content Length**: {audit_result.word_count} words - {_get_word_count_assessment(audit_result.word_count)}
-
-## 🖼️ Media Optimization
-- **Images**: {audit_result.image_optimization} - {_get_image_optimization_assessment(audit_result.image_optimization)}
-
-## 🔗 Internal Linking
-- **Internal Links**: {audit_result.internal_links} links found - {_get_internal_links_assessment(audit_result.internal_links)}
-
-## 🎯 Actionable Recommendations
-
-### 🚀 High Priority Improvements
-{chr(10).join('- ' + rec for rec in audit_result.recommendations if any(word in rec.lower() for word in ['optimize', 'add', 'improve', 'ensure', 'implement']))}
-
-### 📈 Medium Priority Enhancements
-{chr(10).join('- ' + rec for rec in audit_result.recommendations if any(word in rec.lower() for word in ['consider', 'enhance', 'expand', 'develop']))}
-
-### 💡 Additional Insights
-- **Overall Score**: {_calculate_seo_score(audit_result)}/100 - {_get_score_rating(_calculate_seo_score(audit_result))}
-- **Key Strengths**: {_identify_strengths(audit_result)}
-- **Critical Issues**: {_identify_critical_issues(audit_result)}
-
-*Report generated at: {audit_result.generated_at}*
-
----
-*Note: This analysis combines technical SEO checks with content quality assessment. For comprehensive monitoring, consider regular audits and performance tracking.*
-"""
-                return ChatMessageResponse(
-                    response=response_text,
-                    timestamp=datetime.now()
-                )
-            elif tool_lower == "seo analysis":
-                return ChatMessageResponse(
-                    response="I'd be happy to perform an SEO audit! Please provide the website URL you'd like me to analyze (e.g., https://example.com or example.com).",
-                    timestamp=datetime.now()
-                )
-            
-            # Competitor Analysis tool
-            elif tool_lower == "competitor analysis" and extracted_url:
-                # Extract domain from URL
-                from urllib.parse import urlparse
-                parsed_url = urlparse(extracted_url)
-                domain = parsed_url.netloc or parsed_url.path
-                analysis_result = await analyze_competitors(domain)
-                # Format the competitor analysis for verbose and readable chat response
-                response_text = f"""
-# 🏆 Comprehensive Competitor Analysis for {domain}
-
-## 📊 Market Position Overview
-- **Domain Authority**: {analysis_result.domain_authority}
-- **Estimated Monthly Traffic**: {analysis_result.estimated_traffic}
-- **Competitors Identified**: {len(analysis_result.competitors) if analysis_result.competitors else 0} competitors
-
-## 🎯 Key Competitors
-{chr(10).join(f'- **{comp}**' for comp in analysis_result.competitors) if analysis_result.competitors else '- No direct competitors identified'}
-
-## 📈 Content Gap Analysis
-{chr(10).join(f'- {gap}' for gap in analysis_result.content_gaps) if analysis_result.content_gaps else '- No significant content gaps identified'}
-
-## 🔗 Backlink Profile Comparison
-{analysis_result.backlink_comparison}
-
-## 💡 Strategic Recommendations
-
-### 🚀 Immediate Opportunities
-{chr(10).join('- ' + rec for rec in analysis_result.recommendations if any(word in rec.lower() for word in ['optimize', 'implement', 'create', 'build']))}
-
-### 📈 Medium-Term Initiatives
-{chr(10).join('- ' + rec for rec in analysis_result.recommendations if any(word in rec.lower() for word in ['develop', 'expand', 'enhance', 'improve']))}
-
-### 🎯 Long-Term Strategy
-{chr(10).join('- ' + rec for rec in analysis_result.recommendations if any(word in rec.lower() for word in ['strategic', 'long-term', 'partnership', 'authority']))}
-
-*Analysis generated at: {analysis_result.generated_at}*
-
----
-*Note: Competitor analysis helps identify market opportunities and content gaps. Regular monitoring is recommended for ongoing strategy adjustments.*
-"""
-                return ChatMessageResponse(
-                    response=response_text,
-                    timestamp=datetime.now()
-                )
-            elif tool_lower == "competitor analysis":
-                return ChatMessageResponse(
-                    response="I can analyze your competitors! Please provide your website domain (e.g., example.com) so I can identify and analyze your competitors.",
-                    timestamp=datetime.now()
-                )
-            
-            # Keyword Research tool
-            elif tool_lower == "keyword research":
-                # Extract topic from message using more robust pattern
-                topic_match = re.search(r'(?:for|about|research|analyze)\s+(.+?)(?:\s|$)', message_lower, re.IGNORECASE)
-                if topic_match:
-                    topic = topic_match.group(1).strip()
-                    research_result = await conduct_keyword_research(topic)
-                    # Format the keyword research for verbose and readable chat response
-                    response_text = f"""
-# 🔍 Comprehensive Keyword Research for '{topic}'
-
-## 📊 Keyword Volume Analysis
-
-### 🚀 High Volume Keywords (1000+ monthly searches)
-{chr(10).join(f'- **{kw}** - High search volume, competitive' for kw in research_result.high_volume_keywords) if research_result.high_volume_keywords else '- No high volume keywords identified'}
-
-### 📈 Medium Volume Keywords (100-999 monthly searches)
-{chr(10).join(f'- **{kw}** - Moderate search volume, good opportunity' for kw in research_result.medium_volume_keywords) if research_result.medium_volume_keywords else '- No medium volume keywords identified'}
-
-### 🎯 Long Tail Keywords (Low volume, high intent)
-{chr(10).join(f'- **{kw}** - Specific intent, lower competition' for kw in research_result.long_tail_keywords) if research_result.long_tail_keywords else '- No long tail keywords identified'}
-
-## 🏆 Competitor Keyword Insights
-{chr(10).join(f'- **{kw}** - Competitors are ranking for this' for kw in research_result.competitor_keywords) if research_result.competitor_keywords else '- No competitor keyword insights available'}
-
-## 💡 Strategic Recommendations
-
-### 🎯 Immediate Targeting Opportunities
-- Focus on **medium volume keywords** for quicker ranking potential
-- Target **long tail keywords** for specific user intent and lower competition
-- Monitor **competitor keywords** for gap analysis and opportunity identification
-
-### 📈 Content Strategy Suggestions
-- Create comprehensive content around high volume keywords
-- Develop targeted pages for long tail keyword clusters
-- Build topical authority around core keyword themes
-
-*Research generated at: {research_result.generated_at}*
-
----
-*Note: Keyword research should inform content strategy and SEO efforts. Regular updates are recommended as search trends evolve.*
-"""
-                    return ChatMessageResponse(
-                        response=response_text,
-                        timestamp=datetime.now()
-                    )
-                else:
-                    return ChatMessageResponse(
-                        response="I can help with keyword research! Please specify what topic or industry you'd like me to research keywords for (e.g., 'keyword research for digital marketing').",
-                        timestamp=datetime.now()
-                    )
-        
-        # Fallback to message-based routing if no tool specified
-        # Check for SEO audit requests
-        seo_audit_phrases = ["seo audit", "website analysis", "analyze my website", "comprehensive audit", "comprehensive seo audit"]
-        if any(phrase in message_lower for phrase in seo_audit_phrases) and extracted_url:
-            # Perform actual SEO audit
-            audit_result = await seo_audit(extracted_url)
-            # Format the audit result for verbose and readable chat response
-            response_text = f"""
-# 📊 Comprehensive SEO Audit Report for {extracted_url}
-
-## 🔧 Technical Health Assessment
-- **HTTP Status Code**: {audit_result.status_code} - {_get_status_code_meaning(audit_result.status_code)}
-- **Page Load Speed**: {audit_result.page_speed} - {_get_speed_assessment(audit_result.page_speed)}
-- **Mobile Responsiveness**: {'✅ Yes - Good mobile compatibility' if audit_result.mobile_friendly else '❌ No - Needs mobile optimization'}
-- **SSL Certificate**: {'✅ Yes - Secure HTTPS connection' if audit_result.ssl_certificate else '❌ No - Security risk without SSL'}
-
-## 📝 Content & Metadata Analysis
-- **Title Tag**: {audit_result.title_tag if audit_result.title_tag != 'MISSING' else '❌ Missing - Critical for SEO'}
-- **Meta Description**: {audit_result.meta_description if audit_result.meta_description != 'MISSING' else '❌ Missing - Important for click-through rates'}
-- **Heading Structure**: {audit_result.heading_count} headings found - {_get_heading_assessment(audit_result.heading_count)}
-- **Content Length**: {audit_result.word_count} words - {_get_word_count_assessment(audit_result.word_count)}
-
-## 🖼️ Media Optimization
-- **Images**: {audit_result.image_optimization} - {_get_image_optimization_assessment(audit_result.image_optimization)}
-
-## 🔗 Internal Linking
-- **Internal Links**: {audit_result.internal_links} links found - {_get_internal_links_assessment(audit_result.internal_links)}
-
-## 🎯 Actionable Recommendations
-
-### 🚀 High Priority Improvements
-{chr(10).join('- ' + rec for rec in audit_result.recommendations if any(word in rec.lower() for word in ['optimize', 'add', 'improve', 'ensure', 'implement']))}
-
-### 📈 Medium Priority Enhancements
-{chr(10).join('- ' + rec for rec in audit_result.recommendations if any(word in rec.lower() for word in ['consider', 'enhance', 'expand', 'develop']))}
-
-### 💡 Additional Insights
-- **Overall Score**: {_calculate_seo_score(audit_result)}/100 - {_get_score_rating(_calculate_seo_score(audit_result))}
-- **Key Strengths**: {_identify_strengths(audit_result)}
-- **Critical Issues**: {_identify_critical_issues(audit_result)}
-
-*Report generated at: {audit_result.generated_at}*
-
----
-*Note: This analysis combines technical SEO checks with content quality assessment. For comprehensive monitoring, consider regular audits and performance tracking.*
-"""
-            return ChatMessageResponse(
-                response=response_text,
-                timestamp=datetime.now()
-            )
-        elif any(phrase in message_lower for phrase in seo_audit_phrases):
-            return ChatMessageResponse(
-                response="I'd be happy to perform an SEO audit! Please provide the website URL you'd like me to analyze (e.g., https://example.com or example.com).",
-                timestamp=datetime.now()
-            )
-        
-        # Check for competitor analysis requests
-        elif any(phrase in message_lower for phrase in ["competitor analysis", "analyze competitors", "competitor seo"]) and extracted_url:
-            # Extract domain from URL
-            from urllib.parse import urlparse
-            parsed_url = urlparse(extracted_url)
-            domain = parsed_url.netloc or parsed_url.path
-            analysis_result = await analyze_competitors(domain)
-            # Format the competitor analysis for verbose and readable chat response
-            response_text = f"""
-# 🏆 Comprehensive Competitor Analysis for {domain}
-
-## 📊 Market Position Overview
-- **Domain Authority**: {analysis_result.domain_authority}
-- **Estimated Monthly Traffic**: {analysis_result.estimated_traffic}
-- **Competitors Identified**: {len(analysis_result.competitors) if analysis_result.competitors else 0} competitors
-
-## 🎯 Key Competitors
-{chr(10).join(f'- **{comp}**' for comp in analysis_result.competitors) if analysis_result.competitors else '- No direct competitors identified'}
-
-## 📈 Content Gap Analysis
-{chr(10).join(f'- {gap}' for gap in analysis_result.content_gaps) if analysis_result.content_gaps else '- No significant content gaps identified'}
-
-## 🔗 Backlink Profile Comparison
-{analysis_result.backlink_comparison}
-
-## 💡 Strategic Recommendations
-
-### 🚀 Immediate Opportunities
-{chr(10).join('- ' + rec for rec in analysis_result.recommendations if any(word in rec.lower() for word in ['optimize', 'implement', 'create', 'build']))}
-
-### 📈 Medium-Term Initiatives
-{chr(10).join('- ' + rec for rec in analysis_result.recommendations if any(word in rec.lower() for word in ['develop', 'expand', 'enhance', 'improve']))}
-
-### 🎯 Long-Term Strategy
-{chr(10).join('- ' + rec for rec in analysis_result.recommendations if any(word in rec.lower() for word in ['strategic', 'long-term', 'partnership', 'authority']))}
-
-*Analysis generated at: {analysis_result.generated_at}*
-
----
-*Note: Competitor analysis helps identify market opportunities and content gaps. Regular monitoring is recommended for ongoing strategy adjustments.*
-"""
-            return ChatMessageResponse(
-                response=response_text,
-                timestamp=datetime.now()
-            )
-        elif any(phrase in message_lower for phrase in ["competitor analysis", "analyze competitors", "competitor seo"]):
-            return ChatMessageResponse(
-                response="I can analyze your competitors! Please provide your website domain (e.g., example.com) so I can identify and analyze your competitors.",
-                timestamp=datetime.now()
-            )
-        
-        # Check for keyword research requests
-        elif any(phrase in message_lower for phrase in ["keyword research", "keyword analysis", "find keywords"]):
-            # Extract topic from message using more robust pattern
-            topic_match = re.search(r'(?:for|about|research|analyze)\s+(.+?)(?:\s|$)', message_lower, re.IGNORECASE)
-            if topic_match:
-                topic = topic_match.group(1).strip()
-                research_result = await conduct_keyword_research(topic)
-                # Format the keyword research for verbose and readable chat response
-                response_text = f"""
-# 🔍 Comprehensive Keyword Research for '{topic}'
-
-## 📊 Keyword Volume Analysis
-
-### 🚀 High Volume Keywords (1000+ monthly searches)
-{chr(10).join(f'- **{kw}** - High search volume, competitive' for kw in research_result.high_volume_keywords) if research_result.high_volume_keywords else '- No high volume keywords identified'}
-
-### 📈 Medium Volume Keywords (100-999 monthly searches)
-{chr(10).join(f'- **{kw}** - Moderate search volume, good opportunity' for kw in research_result.medium_volume_keywords) if research_result.medium_volume_keywords else '- No medium volume keywords identified'}
-
-### 🎯 Long Tail Keywords (Low volume, high intent)
-{chr(10).join(f'- **{kw}** - Specific intent, lower competition' for kw in research_result.long_tail_keywords) if research_result.long_tail_keywords else '- No long tail keywords identified'}
-
-## 🏆 Competitor Keyword Insights
-{chr(10).join(f'- **{kw}** - Competitors are ranking for this' for kw in research_result.competitor_keywords) if research_result.competitor_keywords else '- No competitor keyword insights available'}
-
-## 💡 Strategic Recommendations
-
-### 🎯 Immediate Targeting Opportunities
-- Focus on **medium volume keywords** for quicker ranking potential
-- Target **long tail keywords** for specific user intent and lower competition
-- Monitor **competitor keywords** for gap analysis and opportunity identification
-
-### 📈 Content Strategy Suggestions
-- Create comprehensive content around high volume keywords
-- Develop targeted pages for long tail keyword clusters
-- Build topical authority around core keyword themes
-
-*Research generated at: {research_result.generated_at}*
-
----
-*Note: Keyword research should inform content strategy and SEO efforts. Regular updates are recommended as search trends evolve.*
-"""
-                return ChatMessageResponse(
-                    response=response_text,
-                    timestamp=datetime.now()
-                )
-            else:
-                return ChatMessageResponse(
-                    response="I can help with keyword research! Please specify what topic or industry you'd like me to research keywords for (e.g., 'keyword research for digital marketing').",
-                    timestamp=datetime.now()
-                )
-        
-        # For other messages, use the AI service with enhanced context
-        enhanced_prompt = request.message
-        if request.tool:
-            # Use the module-level systemic prompts for consistent AI behavior across the application
-            context = TOOL_CONTEXTS.get(request.tool.lower(), "")
-            enhanced_prompt = context + enhanced_prompt
-        
-        # Generate AI response using the AI service from container
-        ai_service = container.ai_service()
-        ai_response = await ai_service.generate_text(enhanced_prompt)
-        
-        return ChatMessageResponse(
-            response=ai_response,
-            timestamp=datetime.now()
-        )
-        
-    except AIProviderError as e:
-        logger.warning(f"AI service unavailable, providing fallback response: {str(e)}")
-        # Provide a friendly fallback response when AI services are unavailable
-        fallback_responses = {
-            "seo": "I'd be happy to help with SEO analysis! For detailed SEO recommendations, please ensure your AI API keys are configured.",
-            "support": "I can help with technical support! To get the best assistance, please configure your AI service API keys.",
-            "appointment": "I can help you schedule an appointment! For full functionality, please set up your AI service credentials.",
-            "competitor": "I can analyze competitors! To provide detailed competitor analysis, please configure your AI API keys.",
-            "social": "I can create social media content! For personalized content generation, please set up your AI services.",
-            "content": "I can help with content creation! To generate marketing content, please configure your AI API keys."
-        }
-        
-        # Check if tool parameter is provided for fallback
-        if request.tool:
-            tool_key = request.tool.lower()
-            if tool_key in fallback_responses:
-                return ChatMessageResponse(
-                    response=fallback_responses[tool_key],
-                    timestamp=datetime.now()
-                )
-        
-        # Check if this is a quick action prompt and provide appropriate fallback
-        prompt_lower = request.message.lower()
-        for key, response in fallback_responses.items():
-            if key in prompt_lower:
-                return ChatMessageResponse(
-                    response=response,
-                    timestamp=datetime.now()
-                )
-        
-        # Generic fallback response
-        return ChatMessageResponse(
-            response="I'm here to help! To use the full AI capabilities, please configure your AI service API keys in the AI tools settings. You can still use the available tools for guidance on what I can assist with.",
-            timestamp=datetime.now()
-        )
-    except Exception as e:
-        logger.error(f"Unexpected error in chat: {str(e)}")
-        raise internal_server_error(
-            "An unexpected error occurred while processing your message",
-            "INTERNAL_SERVER_ERROR"
-        )
-
 @app.get("/api/content", response_model=List[ContentResponse])
 async def get_content(db: Session = Depends(get_db)):
     """
@@ -1626,7 +808,7 @@ async def create_api_key(
     """
     try:
         # Validate provider
-        valid_providers = ["openai", "google", "deepseek", "huggingface"]
+        valid_providers = ["openai", "google", "deepseek", "huggingface", "apify"]
         if api_key_data.provider not in valid_providers:
             raise bad_request_error(
                 f"Invalid provider. Must be one of: {', '.join(valid_providers)}",
@@ -1906,7 +1088,7 @@ async def create_api_access_request(
     """
     try:
         # Check if email already exists
-        existing_request = db.query(APIAccessRequest).filter(APIAccessRequest.email == request_data.email).first()
+        existing_request = db.query(APIAccessRequestModel).filter(APIAccessRequestModel.email == request_data.email).first()
         if existing_request:
             raise conflict_error(
                 "Access request with this email already exists",
@@ -1919,7 +1101,7 @@ async def create_api_access_request(
         user_agent = user_request.headers.get("User-Agent") if user_request else None
         
         # Create new access request
-        db_access_request = APIAccessRequest(
+        db_access_request = APIAccessRequestModel(
             email=request_data.email,
             name=request_data.name,
             company=request_data.company,
@@ -1955,82 +1137,55 @@ async def create_api_access_request(
             "An unexpected error occurred while creating access request",
             "INTERNAL_SERVER_ERROR"
         )
-    except SQLAlchemyError as e:
-        db.rollback()
-        logger.error(f"Database error validating API key: {str(e)}")
-        raise service_unavailable_error(
-            "Database temporarily unavailable. Please try again later.",
-            "DATABASE_UNAVAILABLE"
-        )
-    except HTTPException:
-        raise
-    except Exception as e:
-        logger.error(f"Unexpected error validating API key: {str(e)}")
-        raise internal_server_error(
-            "An unexpected error occurred while validating API key",
-            "INTERNAL_SERVER_ERROR"
-        )
 
 
 # SEO Analysis Endpoints
 @app.post("/api/seo/competitor-analysis", response_model=SEOAnalysisResponse)
 async def seo_competitor_analysis(
-    request: SEOCompetitorAnalysisRequest,
-    current_user: UserModel = Depends(get_current_active_user)
+    analysis_request: SEOCompetitorAnalysisRequest,
+    current_user: UserModel = Depends(get_current_active_user),
+    request: Request = None
 ):
     """
     Perform comprehensive competitor SEO analysis for a given domain.
-    
-    Args:
-        request (SEOCompetitorAnalysisRequest): Domain and optional competitors list.
-        current_user (UserModel): Authenticated user from dependency.
-    
-    Returns:
-        SEOAnalysisResponse: JSON analysis results with timestamp.
-    
-    Raises:
-        HTTPException: 400 for invalid domain, 500 for analysis errors.
-        
-    Example:
-        Request:
-        ```json
-        {
-            "domain": "example.com",
-            "competitors": ["competitor1.com", "competitor2.com"]
-        }
-        ```
-        
-        Response:
-        ```json
-        {
-            "analysis": "{\"domain_authority\": 45, \"competitors\": [...]}",
-            "timestamp": "2025-09-12T14:40:44.898Z"
-        }
-        ```
     """
     try:
         # Validate domain to prevent abuse
-        if not is_valid_domain(request.domain):
+        if not is_valid_domain(analysis_request.domain):
             raise bad_request_error(
                 "Invalid domain format. Please provide a valid domain name.",
                 "INVALID_DOMAIN",
-                {"domain": request.domain}
+                {"domain": analysis_request.domain}
             )
         
         # Sanitize competitor domains if provided
         sanitized_competitors = []
-        if request.competitors:
-            for competitor in request.competitors:
+        if analysis_request.competitors:
+            for competitor in analysis_request.competitors:
                 if is_valid_domain(competitor):
                     sanitized_competitors.append(sanitize_input(competitor))
         
-        analysis_result = await analyze_competitors(request.domain, sanitized_competitors)
+        # Get MCP client from app state
+        mcp_client = request.app.state.mcp_client
+        if not mcp_client or not mcp_client.is_connected:
+            raise service_unavailable_error(
+                "SEO analysis service is currently unavailable. Failed to connect to the FastMCP server.",
+                "MCP_SERVER_UNAVAILABLE"
+            )
+
+        analysis_result = await mcp_client.call(
+            "seo-analysis.analyze_competitors_tool",
+            domain=analysis_request.domain,
+            competitors=sanitized_competitors
+        )
         
         return SEOAnalysisResponse(
-            analysis=analysis_result.json(),
+            analysis=json.dumps(analysis_result),
             timestamp=datetime.now()
         )
-            
+    except MCPError as e:
+        logger.error(f"Error calling FastMCP server for competitor analysis: {str(e)}")
+        raise internal_server_error(f"An error occurred during SEO analysis: {e}", "SEO_ANALYSIS_ERROR")
     except Exception as e:
         logger.error(f"Error in competitor analysis: {str(e)}")
         raise internal_server_error(
@@ -2040,51 +1195,39 @@ async def seo_competitor_analysis(
 
 @app.post("/api/seo/keyword-research", response_model=SEOAnalysisResponse)
 async def seo_keyword_research(
-    request: KeywordResearchRequest,
-    current_user: UserModel = Depends(get_current_active_user)
+    analysis_request: KeywordResearchRequest,
+    current_user: UserModel = Depends(get_current_active_user),
+    request: Request = None
 ):
     """
     Conduct keyword research for a given topic or industry.
-    
-    Args:
-        request (KeywordResearchRequest): Topic and optional industry.
-        current_user (UserModel): Authenticated user from dependency.
-    
-    Returns:
-        SEOAnalysisResponse: JSON research results with timestamp.
-    
-    Raises:
-        HTTPException: 500 for research errors.
-        
-    Example:
-        Request:
-        ```json
-        {
-            "topic": "digital marketing",
-            "industry": "technology"
-        }
-        ```
-        
-        Response:
-        ```json
-        {
-            "analysis": "{\"high_volume_keywords\": [\"digital marketing strategy\", ...]}",
-            "timestamp": "2025-09-12T14:40:44.898Z"
-        }
-        ```
     """
     try:
         # Sanitize topic and industry inputs
-        sanitized_topic = sanitize_input(request.topic)
-        sanitized_industry = sanitize_input(request.industry) if request.industry else None
+        sanitized_topic = sanitize_input(analysis_request.topic)
+        sanitized_industry = sanitize_input(analysis_request.industry) if analysis_request.industry else None
         
-        research_result = await conduct_keyword_research(sanitized_topic, sanitized_industry)
-        
+        # Get MCP client from app state
+        mcp_client = request.app.state.mcp_client
+        if not mcp_client or not mcp_client.is_connected:
+            raise service_unavailable_error(
+                "SEO analysis service is currently unavailable. Failed to connect to the FastMCP server.",
+                "MCP_SERVER_UNAVAILABLE"
+            )
+
+        research_result = await mcp_client.call(
+            "seo-analysis.conduct_keyword_research_tool",
+            topic=sanitized_topic,
+            industry=sanitized_industry
+        )
+
         return SEOAnalysisResponse(
-            analysis=research_result.json(),
+            analysis=json.dumps(research_result),
             timestamp=datetime.now()
         )
-            
+    except MCPError as e:
+        logger.error(f"Error calling FastMCP server for keyword research: {str(e)}")
+        raise internal_server_error(f"An error occurred during SEO analysis: {e}", "SEO_ANALYSIS_ERROR")
     except Exception as e:
         logger.error(f"Error in keyword research: {str(e)}")
         raise internal_server_error(
@@ -2092,64 +1235,51 @@ async def seo_keyword_research(
             "SEO_ANALYSIS_ERROR"
         )
 
-@app.post("/api/seo/backlink-analysis", response_model=SEOAnalysisResponse)
-async def seo_backlink_analysis(
-    request: BacklinkAnalysisRequest,
-    current_user: UserModel = Depends(get_current_active_user)
-):
-    """Analyze backlink profile"""
-    try:
-        # Validate domain to prevent abuse
-        if not is_valid_domain(request.domain):
-            raise bad_request_error(
-                "Invalid domain format. Please provide a valid domain name.",
-                "INVALID_DOMAIN",
-                {"domain": request.domain}
-            )
-        
-        analysis_result = await backlink_analysis(request.domain)
-        
-        return SEOAnalysisResponse(
-            analysis=analysis_result.json(),
-            timestamp=datetime.now()
-        )
-            
-    except Exception as e:
-        logger.error(f"Error in backlink analysis: {str(e)}")
-        raise internal_server_error(
-            "Failed to perform backlink analysis",
-            "SEO_ANALYSIS_ERROR"
-        )
 
 @app.post("/api/seo/content-gap-analysis", response_model=SEOAnalysisResponse)
 async def seo_content_gap_analysis(
-    request: ContentGapAnalysisRequest,
-    current_user: UserModel = Depends(get_current_active_user)
+    analysis_request: ContentGapAnalysisRequest,
+    current_user: UserModel = Depends(get_current_active_user),
+    request: Request = None
 ):
     """Identify content gaps"""
     try:
         # Validate domains to prevent abuse
-        if not is_valid_domain(request.domain):
+        if not is_valid_domain(analysis_request.domain):
             raise bad_request_error(
                 "Invalid domain format. Please provide a valid domain name.",
                 "INVALID_DOMAIN",
-                {"domain": request.domain}
+                {"domain": analysis_request.domain}
             )
         
-        if not is_valid_domain(request.competitor):
+        if not is_valid_domain(analysis_request.competitor):
             raise bad_request_error(
                 "Invalid competitor domain format. Please provide a valid domain name.",
                 "INVALID_DOMAIN",
-                {"competitor": request.competitor}
+                {"competitor": analysis_request.competitor}
             )
         
-        analysis_result = await content_gap_analysis(request.domain, request.competitor)
-        
+        # Get MCP client from app state
+        mcp_client = request.app.state.mcp_client
+        if not mcp_client or not mcp_client.is_connected:
+            raise service_unavailable_error(
+                "SEO analysis service is currently unavailable. Failed to connect to the FastMCP server.",
+                "MCP_SERVER_UNAVAILABLE"
+            )
+
+        analysis_result = await mcp_client.call(
+            "seo-analysis.content_gap_analysis_tool",
+            domain=analysis_request.domain,
+            competitor=analysis_request.competitor
+        )
+
         return SEOAnalysisResponse(
-            analysis=analysis_result.json(),
+            analysis=json.dumps(analysis_result),
             timestamp=datetime.now()
         )
-            
+    except MCPError as e:
+        logger.error(f"Error calling FastMCP server for content gap analysis: {str(e)}")
+        raise internal_server_error(f"An error occurred during SEO analysis: {e}", "SEO_ANALYSIS_ERROR")
     except Exception as e:
         logger.error(f"Error in content gap analysis: {str(e)}")
         raise internal_server_error(
@@ -2159,18 +1289,32 @@ async def seo_content_gap_analysis(
 
 @app.post("/api/seo/audit", response_model=SEOAnalysisResponse)
 async def perform_seo_audit(
-    request: SEOAuditRequest,
-    current_user: UserModel = Depends(get_current_active_user)
+    analysis_request: SEOAuditRequest,
+    current_user: UserModel = Depends(get_current_active_user),
+    request: Request = None
 ):
     """Perform SEO audit"""
     try:
-        audit_result = await seo_audit(request.url)
-        
+        # Get MCP client from app state
+        mcp_client = request.app.state.mcp_client
+        if not mcp_client or not mcp_client.is_connected:
+            raise service_unavailable_error(
+                "SEO analysis service is currently unavailable. Failed to connect to the FastMCP server.",
+                "MCP_SERVER_UNAVAILABLE"
+            )
+
+        audit_result = await mcp_client.call(
+            "seo-analysis.seo_audit_tool",
+            url=analysis_request.url
+        )
+
         return SEOAnalysisResponse(
-            analysis=audit_result.json(),
+            analysis=json.dumps(audit_result),
             timestamp=datetime.now()
         )
-        
+    except MCPError as e:
+        logger.error(f"Error calling FastMCP server for SEO audit: {str(e)}")
+        raise internal_server_error(f"An error occurred during SEO analysis: {e}", "SEO_ANALYSIS_ERROR")
     except Exception as e:
         logger.error(f"Error in SEO audit: {str(e)}")
         raise internal_server_error(
@@ -2178,26 +1322,160 @@ async def perform_seo_audit(
             "SEO_ANALYSIS_ERROR"
         )
 
-@app.post("/api/seo/rank-tracking", response_model=SEOAnalysisResponse)
-async def seo_rank_tracking(
-    request: RankTrackingRequest,
-    current_user: UserModel = Depends(get_current_active_user)
+
+# New comprehensive SEO analysis endpoint
+class ComprehensiveSEOAnalysisRequest(BaseModel):
+    domain: str
+
+@app.post("/api/seo/comprehensive-analysis")
+async def seo_comprehensive_analysis(
+    analysis_request: ComprehensiveSEOAnalysisRequest,
+    current_user: UserModel = Depends(get_current_active_user),
+    request: Request = None
 ):
-    """Track keyword rankings"""
+    """
+    Perform comprehensive SEO analysis including competitor analysis, keyword research,
+    SEO audit, and content gap analysis. Returns both chart data and verbose content data.
+    
+    Args:
+        analysis_request (ComprehensiveSEOAnalysisRequest): Domain to analyze.
+    
+    Returns:
+        dict: Comprehensive analysis data formatted for frontend consumption.
+    
+    Raises:
+        HTTPException: 400 for invalid domain, 500 for analysis errors.
+    """
     try:
-        tracking_result = await rank_tracking(request.keywords, request.domain)
+        # Validate domain to prevent abuse
+        if not is_valid_domain(analysis_request.domain):
+            raise bad_request_error(
+                "Invalid domain format. Please provide a valid domain name.",
+                "INVALID_DOMAIN",
+                {"domain": analysis_request.domain}
+            )
         
-        return SEOAnalysisResponse(
-            analysis=tracking_result.json(),
-            timestamp=datetime.now()
+        # Get MCP client from app state
+        mcp_client = request.app.state.mcp_client
+        if not mcp_client or not mcp_client.is_connected:
+            raise service_unavailable_error(
+                "SEO analysis service is currently unavailable. Failed to connect to the FastMCP server.",
+                "MCP_SERVER_UNAVAILABLE"
+            )
+
+        # Construct URL from domain
+        url = f"https://{analysis_request.domain}"
+
+        # Call the comprehensive analysis tool on the FastMCP server
+        logger.info(f"Calling FastMCP tool 'perform_comprehensive_seo_analysis_tool' for URL: {url}")
+        analysis_result = await mcp_client.call(
+            "seo-analysis.perform_comprehensive_seo_analysis_tool",
+            url=url
         )
-            
-    except Exception as e:
-        logger.error(f"Error in rank tracking: {str(e)}")
+        
+        # Transform the raw analysis data into a frontend-friendly format
+        logger.info("Transforming comprehensive analysis data for frontend.")
+        transformed_data = transform_analysis_for_frontend(
+            analysis_data=analysis_result,
+            domain=analysis_request.domain,
+            timestamp=datetime.now().isoformat()
+        )
+        return transformed_data
+
+    except MCPError as e:
+        logger.error(f"Error calling FastMCP server for comprehensive analysis: {str(e)}")
         raise internal_server_error(
-            "Failed to perform rank tracking",
+            f"An error occurred during SEO analysis: {e}",
             "SEO_ANALYSIS_ERROR"
         )
+    except Exception as e:
+        logger.error(f"Error in comprehensive SEO analysis: {str(e)}")
+        raise internal_server_error(
+            "Failed to perform comprehensive SEO analysis",
+            "SEO_ANALYSIS_ERROR"
+        )
+
+# AI Optimization (AIO) Audit Endpoint
+class AIOAuditRequest(BaseModel):
+    brand_name: str
+    domain: str
+    topics: List[str]
+
+@app.post("/api/seo/aio-audit")
+async def aio_audit(
+    analysis_request: AIOAuditRequest,
+    current_user: UserModel = Depends(get_current_active_user),
+    request: Request = None
+):
+    """
+    Performs an AI Optimization (AIO) audit to check brand presence across major LLMs.
+    """
+    try:
+        mcp_client = request.app.state.mcp_client
+        if not mcp_client or not mcp_client.is_connected:
+            raise service_unavailable_error("AIO analysis service is unavailable.", "MCP_SERVER_UNAVAILABLE")
+
+        logger.info(f"Calling FastMCP tool 'monitor_ai_mentions_tool' for brand: {analysis_request.brand_name}")
+        
+        # This would call the new tool on the MCP server
+        audit_result = await mcp_client.call(
+            "seo-analysis.monitor_ai_mentions_tool",
+            brand_name=analysis_request.brand_name,
+            domain=analysis_request.domain,
+            topics=analysis_request.topics
+        )
+        
+        # You could create a new transformer in data_transformers.py for this
+        # transformed_data = transform_aio_data_for_frontend(audit_result)
+        # return transformed_data
+        
+        return audit_result
+
+    except MCPError as e:
+        logger.error(f"Error calling FastMCP server for AIO audit: {str(e)}")
+        raise internal_server_error(f"An error occurred during AIO audit: {e}", "AIO_AUDIT_ERROR")
+    except Exception as e:
+        logger.error(f"Error in AIO audit: {str(e)}")
+        raise internal_server_error("Failed to perform AIO audit", "AIO_AUDIT_ERROR")
+
+# Lead Prospecting Endpoint
+class LeadProspectingRequest(BaseModel):
+    topic: str
+    keywords: List[str]
+
+@app.post("/api/leads/prospect")
+async def prospect_for_leads(
+    prospecting_request: LeadProspectingRequest,
+    current_user: UserModel = Depends(get_current_active_user),
+    request: Request = None
+):
+    """
+    Initiates a lead prospecting task to find potential customers.
+    """
+    try:
+        mcp_client = request.app.state.mcp_client
+        if not mcp_client or not mcp_client.is_connected:
+            raise service_unavailable_error("Lead prospecting service is unavailable.", "MCP_SERVER_UNAVAILABLE")
+
+        logger.info(f"Calling FastMCP tool 'prospect_for_leads_tool' for topic: {prospecting_request.topic}")
+        
+        prospecting_result = await mcp_client.call(
+            "seo-analysis.prospect_for_leads_tool",
+            topic=prospecting_request.topic,
+            keywords=prospecting_request.keywords
+        )
+        
+        # Here you could add the found leads to your CRM (the Leads table)
+        # For now, we just return the result to the frontend.
+        
+        return prospecting_result
+
+    except MCPError as e:
+        logger.error(f"Error calling FastMCP server for lead prospecting: {str(e)}")
+        raise internal_server_error(f"An error occurred during lead prospecting: {e}", "LEAD_PROSPECTING_ERROR")
+    except Exception as e:
+        logger.error(f"Error in lead prospecting: {str(e)}")
+        raise internal_server_error("Failed to perform lead prospecting", "LEAD_PROSPECTING_ERROR")
 
 if __name__ == "__main__":
     import uvicorn

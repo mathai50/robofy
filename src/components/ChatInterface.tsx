@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Send, Loader2, MessageSquare } from 'lucide-react';
+import { AuthService } from '@/lib/auth';
 
 interface Message {
   id: string;
@@ -76,9 +77,7 @@ export default function ChatInterface({
       // Send message to backend API - using the exact same structure as the working AI tools page
       const response = await fetch(apiEndpoint, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: AuthService.getAuthHeaders(),
         body: JSON.stringify({
           message: messageToSend,
           tool: toolName.toLowerCase() // Include tool context for better responses
@@ -86,16 +85,32 @@ export default function ChatInterface({
       });
 
       if (!response.ok) {
-        throw new Error(`Server error: ${response.status}`);
+        // Handle server errors with detailed message
+        const errorData = await response.json();
+        const errorMessage = errorData.error?.message || `Server error: ${response.status}`;
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
+      
+      // Handle both successful responses and error responses from backend
+      let responseContent;
+      if (data.response) {
+        // Successful response with response field
+        responseContent = data.response;
+      } else if (data.error?.message) {
+        // Error response from backend
+        responseContent = `Error: ${data.error.message}`;
+      } else {
+        // Fallback for unexpected response format
+        responseContent = 'Received unexpected response format from server';
+      }
       
       // Add assistant message to the chat
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: data.response,
+        content: responseContent,
         timestamp: new Date()
       };
       setMessages(prev => [...prev, assistantMessage]);

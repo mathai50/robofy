@@ -1,47 +1,51 @@
 'use client';
 
-import ChatInterface from '@/components/ChatInterface';
-import { Share2, Instagram, Facebook, Twitter } from 'lucide-react';
+import ModernChatDashboard from '@/components/ModernChatDashboard';
+import { Share2, Instagram, Facebook, Twitter, MessageCircle, TrendingUp } from 'lucide-react';
 
-const socialMediaQuickActions = [
+const socialMediaAgents = [
   {
     id: 'content-ideas',
-    label: 'Content Ideas',
+    name: 'Content Ideas',
     description: 'Generate social content ideas',
     icon: <Share2 className="w-5 h-5" />,
-    prompt: 'Give me ideas for social media content for my business.'
   },
   {
     id: 'instagram-strategy',
-    label: 'Instagram Strategy',
+    name: 'Instagram Strategy',
     description: 'Plan Instagram content',
     icon: <Instagram className="w-5 h-5" />,
-    prompt: 'Help me create an Instagram content strategy.'
   },
   {
     id: 'facebook-posts',
-    label: 'Facebook Posts',
+    name: 'Facebook Posts',
     description: 'Create Facebook content',
     icon: <Facebook className="w-5 h-5" />,
-    prompt: 'Help me write engaging Facebook posts.'
   },
   {
     id: 'twitter-engagement',
-    label: 'Twitter Engagement',
+    name: 'Twitter Engagement',
     description: 'Boost Twitter engagement',
     icon: <Twitter className="w-5 h-5" />,
-    prompt: 'How can I increase engagement on Twitter?'
+  },
+  {
+    id: 'strategy-planner',
+    name: 'Strategy Planner',
+    description: 'Develop social media strategies',
+    icon: <TrendingUp className="w-5 h-5" />,
   }
 ];
 
 export default function SocialMediaPage() {
   return (
-    <ChatInterface
+    <ModernChatDashboard
       toolName="Social Media"
       toolDescription="Create engaging social media content, strategies, and boost engagement"
       apiEndpoint="/api/ai/message"
-      quickActions={socialMediaQuickActions}
+      agents={socialMediaAgents}
+      defaultAgent="content-ideas"
       placeholder="Ask for help with social media content, strategies, or engagement..."
+      welcomeMessage="Welcome to Social Media tools! I can help you create content, plan strategies, and improve engagement across various platforms."
     />
   );
 }

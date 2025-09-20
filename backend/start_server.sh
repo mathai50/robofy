@@ -8,7 +8,7 @@ set -e  # Exit on any error
 PORT=8000
 LOG_FILE="server.log"
 PID_FILE="server.pid"
-VENV_DIR="venv"
+VENV_DIR="../.venv"
 MAX_RETRIES=3
 RETRY_DELAY=2
 

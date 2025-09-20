@@ -2,6 +2,8 @@
 
 import React from 'react';
 import NavBar from '@/components/ui/NavBar';
+import { usePathname } from 'next/navigation';
+import { realEstateBusiness } from '@/config/demo-businesses';
 
 /**
  * Layout Component
@@ -20,6 +22,52 @@ import NavBar from '@/components/ui/NavBar';
  */
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const isDemoPage = pathname?.startsWith('/demo');
+
+  if (isDemoPage) {
+    // Customize navbar for specific demo pages
+    let customLogo = undefined;
+    let customNavigationItems = undefined;
+    let showAuth = true;
+    let ctaText = 'Get Started';
+    let theme: 'dark' | 'light' = 'dark';
+    
+    if (pathname === '/demo/real-estate') {
+      customLogo = (
+        <h1 className="text-2xl sm:text-3xl font-normal text-gray-900 font-sans tracking-tight">
+          {realEstateBusiness.name}
+        </h1>
+      );
+      customNavigationItems = [
+        { label: 'Home', href: '/demo/real-estate' },
+        { label: 'Projects', href: '#projects' },
+        { label: 'Services', href: '#services' },
+        { label: 'Testimonials', href: '#testimonials' },
+        { label: 'Contact', href: '#contact' }
+      ];
+      showAuth = false;
+      ctaText = '';
+      theme = 'light';
+    }
+
+    return (
+      <div className="min-h-screen flex flex-col">
+        {/* Navigation Bar for demo pages */}
+        <NavBar
+          logo={customLogo}
+          navigationItems={customNavigationItems}
+          showAuth={showAuth}
+          ctaText={ctaText}
+          theme={theme}
+        />
+        <main className="flex-grow">
+          {children}
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Navigation Bar */}

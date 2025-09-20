@@ -1,7 +1,7 @@
 'use client';
 
 import { BlogCategory, BLOG_CATEGORIES } from '@/types/blog';
-import Button from './Button';
+import { Button } from './Button';
 
 interface FilterBarProps {
   selectedCategory: BlogCategory;
@@ -19,7 +19,7 @@ export function FilterBar({ selectedCategory, onCategoryChange }: FilterBarProps
         {BLOG_CATEGORIES.map((category) => (
           <Button
             key={category}
-            variant={selectedCategory === category ? 'primary' : 'outline'}
+            variant={selectedCategory === category ? 'default' : 'outline'}
             size="sm"
             onClick={() => onCategoryChange(category)}
             role="tab"

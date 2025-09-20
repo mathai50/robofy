@@ -18,6 +18,54 @@ class Settings(BaseSettings):
         description="Database connection URL (PostgreSQL for production, SQLite for development)"
     )
     
+    # Supabase Configuration
+    SUPABASE_URL: Optional[str] = Field(
+        default=None,
+        description="Supabase project URL"
+    )
+    SUPABASE_ANON_KEY: Optional[str] = Field(
+        default=None,
+        description="Supabase anonymous API key"
+    )
+    
+    # Backend Configuration
+    BACKEND_HOST: str = Field(
+        default="0.0.0.0",
+        description="Backend server host address"
+    )
+    BACKEND_PORT: int = Field(
+        default=8000,
+        description="Backend server port"
+    )
+    
+    # Frontend Configuration
+    PORT: int = Field(
+        default=3000,
+        description="Frontend server port"
+    )
+    PYTHON_BACKEND_URL: str = Field(
+        default="http://localhost:8000",
+        description="Python backend URL for frontend"
+    )
+    FRONTEND_URL: str = Field(
+        default="http://localhost:3000",
+        description="Frontend URL for CORS"
+    )
+    PRODUCTION_URL: str = Field(
+        default="https://robofy.uk",
+        description="Production frontend URL"
+    )
+    
+    # Email Configuration
+    MAILGUN_API_KEY: Optional[str] = Field(
+        default=None,
+        description="Mailgun API key for email services"
+    )
+    MAILGUN_DOMAIN: Optional[str] = Field(
+        default=None,
+        description="Mailgun domain for email services"
+    )
+    
     # JWT Configuration
     JWT_SECRET_KEY: str = Field(
         default_factory=lambda: secrets.token_urlsafe(32),
@@ -291,6 +339,15 @@ class Settings(BaseSettings):
         allowed_preferences = ['sms', 'whatsapp']
         if v not in allowed_preferences:
             raise ValueError(f'TWILIO_FALLBACK_PREFERENCE must be one of {allowed_preferences}')
+        return v
+
+    @field_validator('AI_SERVICE_PRIORITY')
+    def validate_ai_service_priority(cls, v):
+        """Parse comma-separated string into list if needed"""
+        if isinstance(v, str):
+            # Remove any quotes and split by commas
+            v = v.strip().strip('"').strip("'")
+            return [service.strip() for service in v.split(',') if service.strip()]
         return v
 
     @field_validator('REDIS_URL')

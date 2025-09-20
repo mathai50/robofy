@@ -37,6 +37,14 @@ module.exports = {
   				DEFAULT: 'hsl(var(--primary))',
   				foreground: 'hsl(var(--primary-foreground))'
   			},
+  			// Luxury real estate color palette
+  			luxury: {
+  				emerald: '#056D4F',
+  				burgundy: '#800020',
+  				gold: '#D4AF37',
+  				cream: '#F5F1E9',
+  				charcoal: '#2E2E2E'
+  			},
   			blue: {
   				600: '#2563eb',
   				700: '#1d4ed8',
@@ -128,6 +136,10 @@ module.exports = {
   			],
   			'source-sans': [
   				'Source Sans Pro',
+  				'sans-serif'
+  			],
+  			montserrat: [
+  				'Montserrat',
   				'sans-serif'
   			]
   		},

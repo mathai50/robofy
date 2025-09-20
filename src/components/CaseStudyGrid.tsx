@@ -167,15 +167,12 @@ export default function CaseStudyGrid({ initialStudies = caseStudies, showHeader
               aria-label="Sort case studies"
             >
               <option value="most-recent" className="bg-gray-800">
-                <Calendar className="w-4 h-4 inline mr-2" />
                 Most Recent
               </option>
               <option value="highest-roi" className="bg-gray-800">
-                <TrendingUp className="w-4 h-4 inline mr-2" />
                 Highest ROI
               </option>
               <option value="alphabetical" className="bg-gray-800">
-                <AArrowUp className="w-4 h-4 inline mr-2" />
                 Alphabetical
               </option>
             </select>

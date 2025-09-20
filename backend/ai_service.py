@@ -12,6 +12,8 @@ from providers.openai_provider import OpenAIProvider
 from providers.huggingface_provider import HuggingFaceProvider
 from providers.assemblyai_provider import AssemblyAIProvider
 from providers.twilio_provider import TwilioProvider
+from providers.anthropic_provider import AnthropicProvider
+from providers.perplexity_provider import PerplexityProvider
 from providers.base_provider import AIProviderError
 from database import get_async_db, APIKey as APIKeyModel
 from security import decrypt_api_key
@@ -51,6 +53,18 @@ class AIServiceManager:
             "openai": OpenAIProvider(
                 api_key=settings.OPENAI_API_KEY,
                 model=settings.OPENAI_MODEL,
+                timeout=settings.AI_TIMEOUT,
+                max_retries=settings.AI_MAX_RETRIES
+            ),
+            "anthropic": AnthropicProvider(
+                api_key=settings.ANTHROPIC_API_KEY,
+                model=settings.ANTHROPIC_MODEL,
+                timeout=settings.AI_TIMEOUT,
+                max_retries=settings.AI_MAX_RETRIES
+            ),
+            "perplexity": PerplexityProvider(
+                api_key=settings.PERPLEXITY_API_KEY,
+                model=settings.PERPLEXITY_MODEL,
                 timeout=settings.AI_TIMEOUT,
                 max_retries=settings.AI_MAX_RETRIES
             ),
@@ -283,6 +297,8 @@ class AIServiceManager:
                     (name == "google" and settings.GOOGLE_API_KEY) or
                     (name == "deepseek" and settings.DEEPSEEK_API_KEY) or
                     (name == "openai" and settings.OPENAI_API_KEY) or
+                    (name == "anthropic" and settings.ANTHROPIC_API_KEY) or
+                    (name == "perplexity" and settings.PERPLEXITY_API_KEY) or
                     (name == "huggingface" and settings.HUGGINGFACE_API_KEY)
                 ),
                 "user_has_key": user_has_key

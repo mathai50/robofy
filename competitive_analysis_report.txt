@@ -1,0 +1,47 @@
+============================================================
+COMPETITIVE ANALYSIS REPORT
+============================================================
+
+🎯 TARGET DOMAIN: cgi.com
+
+🔍 COMPETITORS FOUND: 13
+   1. www.gartner.com
+   2. www.zoominfo.com
+   3. ahrefs.com
+   4. en.wikipedia.org
+   5. www.marketbeat.com
+   6. www.facebook.com
+   7. www.globaldata.com
+   8. www.comparably.com
+   9. craft.co
+   10. www.cbinsights.com
+   11. www.g2.com
+   12. www.linkedin.com
+   13. www.owler.com
+
+📊 SERP METRICS:
+   • Total Organic Results: 10
+   • SERP Features Detected: 8
+
+📋 SERP FEATURES:
+   • search_metadata
+   • search_parameters
+   • search_information
+   • related_questions
+   • ai_overview
+   • organic_results
+   • pagination
+   • serpapi_pagination
+
+📝 SAMPLE SEARCH RESULTS:
+   1. CGI Alternatives - Enterprise Asset Management Software
+      Link: https://www.gartner.com/reviews/market/enterprise-asset-management-software/vendor/cgi-advantage-hrms/alternatives
+      Snippet: Top CGI Alternatives · Oracle · IBM · SAP · Ramco Systems · Microsoft · SpecTec · 4Site · AVEVA. Considering alternatives to CGI? See what Enterprise Asset ...
+
+   2. Top CGI Alternatives, Competitors
+      Link: https://www.cbinsights.com/company/cgi-3/alternatives-competitors
+      Snippet: CGI's top competitors include Cegeka, Cigniti, and NashTech. Cegeka is an IT solutions provider with a focus on integrated end-to-end solutions in the ...
+
+============================================================
+END OF REPORT
+============================================================

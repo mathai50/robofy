@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Input from './Input';
+import { Input } from './Input';
 
 interface SearchInputProps {
   value: string;

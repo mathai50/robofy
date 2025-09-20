@@ -14,8 +14,12 @@ export async function POST(request: NextRequest) {
     });
 
     if (!response.ok) {
+      // Return the backend response directly to preserve status code and error message
       const errorText = await response.text();
-      throw new Error(`Python backend error: ${response.status} - ${errorText}`);
+      return NextResponse.json(
+        { error: errorText || 'Backend error' },
+        { status: response.status }
+      );
     }
 
     const data = await response.json();

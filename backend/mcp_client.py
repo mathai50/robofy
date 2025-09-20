@@ -28,12 +28,15 @@ class MCPClient:
                 return
             else:
                 # Stdio-based MCP server
-                session = ClientSession()
-                transport = await stdio_client(server_url)
-                await session.initialize(transport)
-                self.sessions[server_name] = session
-                logger.info(f"Connected to MCP server: {server_name}")
-                
+                async with stdio_client(server_url) as transport:
+                    session = ClientSession(
+                        read_stream=transport.stdin,
+                        write_stream=transport.stdout
+                    )
+                    await session.initialize(transport)
+                    self.sessions[server_name] = session
+                    logger.info(f"Connected to MCP server: {server_name}")
+                    
         except Exception as e:
             logger.error(f"Failed to connect to MCP server {server_name}: {e}")
             raise
@@ -197,6 +200,24 @@ class SEOAnalysisClient:
                 "seo_analysis",
                 "rank_tracking",
                 {"keywords": keywords, "domain": domain}
+            )
+
+    async def comprehensive_seo_analysis(self, url: str) -> str:
+        """Perform comprehensive SEO analysis including audit, keyword research, and competitor analysis"""
+        if self.base_url and self.base_url.startswith('http'):
+            async with httpx.AsyncClient(timeout=self.timeout) as client:
+                payload = {"url": url}
+                response = await client.post(
+                    f"{self.base_url}/tools/perform_comprehensive_seo_analysis",
+                    json=payload
+                )
+                response.raise_for_status()
+                return response.text
+        else:
+            return await mcp_client.call_tool(
+                "seo_analysis",
+                "perform_comprehensive_seo_analysis_tool",
+                {"url": url}
             )
 
 @asynccontextmanager

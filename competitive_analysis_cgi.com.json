@@ -1,0 +1,57 @@
+{
+  "target_domain": "cgi.com",
+  "competitors": [
+    "www.gartner.com",
+    "www.zoominfo.com",
+    "ahrefs.com",
+    "en.wikipedia.org",
+    "www.marketbeat.com",
+    "www.facebook.com",
+    "www.globaldata.com",
+    "www.comparably.com",
+    "craft.co",
+    "www.cbinsights.com",
+    "www.g2.com",
+    "www.linkedin.com",
+    "www.owler.com"
+  ],
+  "total_organic_results": 10,
+  "serp_features": [
+    "search_metadata",
+    "search_parameters",
+    "search_information",
+    "related_questions",
+    "ai_overview",
+    "organic_results",
+    "pagination",
+    "serpapi_pagination"
+  ],
+  "raw_results_sample": [
+    {
+      "position": 1,
+      "title": "CGI Alternatives - Enterprise Asset Management Software",
+      "link": "https://www.gartner.com/reviews/market/enterprise-asset-management-software/vendor/cgi-advantage-hrms/alternatives",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.gartner.com/reviews/market/enterprise-asset-management-software/vendor/cgi-advantage-hrms/alternatives&ved=2ahUKEwib-d7intaPAxUtdDABHc9HIlAQFnoECBkQAQ",
+      "displayed_link": "https://www.gartner.com \u203a vendor \u203a cgi-advantage-hrms",
+      "favicon": "https://serpapi.com/searches/68c5a6cbe827079b635715da/images/8d6425c68f135411f98eca467ae22bd784901e5e31fad824a8e2a0c6bf97b653.png",
+      "snippet": "Top CGI Alternatives \u00b7 Oracle \u00b7 IBM \u00b7 SAP \u00b7 Ramco Systems \u00b7 Microsoft \u00b7 SpecTec \u00b7 4Site \u00b7 AVEVA. Considering alternatives to CGI? See what Enterprise Asset ...",
+      "snippet_highlighted_words": [
+        "Oracle"
+      ],
+      "source": "Gartner"
+    },
+    {
+      "position": 2,
+      "title": "Top CGI Alternatives, Competitors",
+      "link": "https://www.cbinsights.com/company/cgi-3/alternatives-competitors",
+      "redirect_link": "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.cbinsights.com/company/cgi-3/alternatives-competitors&ved=2ahUKEwib-d7intaPAxUtdDABHc9HIlAQFnoECBwQAQ",
+      "displayed_link": "https://www.cbinsights.com \u203a company \u203a cgi-3 \u203a alternat...",
+      "favicon": "https://serpapi.com/searches/68c5a6cbe827079b635715da/images/8d6425c68f135411f98eca467ae22bd79f64d76c166b120045e9280dd3538aa2.png",
+      "snippet": "CGI's top competitors include Cegeka, Cigniti, and NashTech. Cegeka is an IT solutions provider with a focus on integrated end-to-end solutions in the ...",
+      "snippet_highlighted_words": [
+        "Cegeka, Cigniti, and NashTech"
+      ],
+      "source": "CB Insights"
+    }
+  ]
+}

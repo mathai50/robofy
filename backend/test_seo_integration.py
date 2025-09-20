@@ -87,9 +87,8 @@ async def test_fastmcp_tools_direct():
     print("\nTesting FastMCP tools directly...")
     
     try:
-        # Import the FastMCP instance and tools
+        # Import the SEO analysis tools directly
         from seo_mcp_server import (
-            mcp,
             analyze_competitors,
             conduct_keyword_research,
             backlink_analysis,
@@ -125,7 +124,7 @@ async def test_fastmcp_tools_direct():
         
         # Test rank tracking
         print("Testing rank tracking...")
-        result = await rank_tracking(["digital marketing", "seo services"], "test.com")
+        result = await rank_tracking("test.com", ["digital marketing", "seo services"])
         print(f"✓ Rank tracking: {len(result.rankings)} keywords tracked")
         
         print("All direct tool tests passed! ✓")

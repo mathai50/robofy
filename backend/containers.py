@@ -9,14 +9,6 @@ from ai_service import AIServiceManager
 from security import SecurityService
 from auth import AuthService
 from rate_limiting import RateLimitingService
-from seo_mcp_server import (
-    analyze_competitors,
-    conduct_keyword_research,
-    backlink_analysis,
-    content_gap_analysis,
-    seo_audit,
-    rank_tracking
-)
 from config import settings
 import logging
 
@@ -53,30 +45,6 @@ class Container(containers.DeclarativeContainer):
         config=config
     )
     
-    # SEO Analysis Functions
-    analyze_competitors_provider = providers.Callable(
-        analyze_competitors
-    )
-    
-    conduct_keyword_research_provider = providers.Callable(
-        conduct_keyword_research
-    )
-    
-    backlink_analysis_provider = providers.Callable(
-        backlink_analysis
-    )
-    
-    content_gap_analysis_provider = providers.Callable(
-        content_gap_analysis
-    )
-    
-    seo_audit_provider = providers.Callable(
-        seo_audit
-    )
-    
-    rank_tracking_provider = providers.Callable(
-        rank_tracking
-    )
 
 # Create and configure the container instance
 container = Container()
