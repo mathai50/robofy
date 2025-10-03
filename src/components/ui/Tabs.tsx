@@ -1,79 +1,55 @@
-'use client';
+"use client"
 
-import React, { useState } from 'react';
+import * as React from "react"
+import * as TabsPrimitive from "@radix-ui/react-tabs"
 
-interface TabsProps {
-  defaultValue: string;
-  children: React.ReactNode;
-  className?: string;
-}
+import { cn } from "@/lib/utils"
 
-interface TabsListProps {
-  children: React.ReactNode;
-  className?: string;
-}
+const Tabs = TabsPrimitive.Root
 
-interface TabsTriggerProps {
-  value: string;
-  children: React.ReactNode;
-  className?: string;
-}
+const TabsList = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.List>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.List
+    ref={ref}
+    className={cn(
+      "inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground",
+      className
+    )}
+    {...props}
+  />
+))
+TabsList.displayName = TabsPrimitive.List.displayName
 
-interface TabsContentProps {
-  value: string;
-  children: React.ReactNode;
-  className?: string;
-}
+const TabsTrigger = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.Trigger
+    ref={ref}
+    className={cn(
+      "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow",
+      className
+    )}
+    {...props}
+  />
+))
+TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
 
-const Tabs = ({ defaultValue, children, className = '' }: TabsProps) => {
-  const [activeTab, setActiveTab] = useState(defaultValue);
+const TabsContent = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.Content
+    ref={ref}
+    className={cn(
+      "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+      className
+    )}
+    {...props}
+  />
+))
+TabsContent.displayName = TabsPrimitive.Content.displayName
 
-  return (
-    <div className={className}>
-      {React.Children.map(children, (child) => {
-        if (React.isValidElement(child)) {
-          return React.cloneElement(child, { activeTab, setActiveTab } as any);
-        }
-        return child;
-      })}
-    </div>
-  );
-};
-
-const TabsList = ({ children, className = '', activeTab, setActiveTab }: TabsListProps & { activeTab: string; setActiveTab: (value: string) => void }) => {
-  return (
-    <div className={`flex border-b border-gray-200 ${className}`}>
-      {React.Children.map(children, (child) => {
-        if (React.isValidElement(child)) {
-          return React.cloneElement(child, { activeTab, setActiveTab } as any);
-        }
-        return child;
-      })}
-    </div>
-  );
-};
-
-const TabsTrigger = ({ value, children, className = '', activeTab, setActiveTab }: TabsTriggerProps & { activeTab: string; setActiveTab: (value: string) => void }) => {
-  const isActive = activeTab === value;
-
-  return (
-    <button
-      onClick={() => setActiveTab(value)}
-      className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${
-        isActive
-          ? 'border-blue-500 text-blue-600'
-          : 'border-transparent text-gray-500 hover:text-gray-700'
-      } ${className}`}
-    >
-      {children}
-    </button>
-  );
-};
-
-const TabsContent = ({ value, children, className = '', activeTab }: TabsContentProps & { activeTab: string }) => {
-  if (activeTab !== value) return null;
-
-  return <div className={`mt-4 ${className}`}>{children}</div>;
-};
-
-export { Tabs, TabsList, TabsTrigger, TabsContent };
+export { Tabs, TabsList, TabsTrigger, TabsContent }

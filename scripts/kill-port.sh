@@ -3,7 +3,7 @@
 # Script to kill processes running on port 3000
 # Usage: ./scripts/kill-port.sh
 
-PORT=8000
+PORT=3000
 
 echo "Checking for processes using port $PORT..."
 

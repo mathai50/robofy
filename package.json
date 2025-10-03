@@ -38,28 +38,47 @@
   },
   "dependencies": {
     "@ai-sdk/react": "^2.0.44",
+    "@date-fns/tz": "^1.4.1",
+    "@google/generative-ai": "^0.24.1",
+    "@radix-ui/react-accordion": "^1.2.12",
+    "@radix-ui/react-avatar": "^1.1.10",
+    "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-navigation-menu": "^1.2.14",
     "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-tabs": "^1.1.13",
+    "@tabler/icons-react": "^3.35.0",
     "ai": "^5.0.44",
+    "autoprefixer": "^10.4.21",
     "chart.js": "^4.5.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.23.16",
     "gsap": "^3.13.0",
     "lucide-react": "^0.542.0",
-    "motion": "^12.23.12",
+    "matter-js": "^0.20.0",
+    "motion": "^12.23.22",
     "next": "~15.2.4",
+    "next-themes": "^0.4.6",
+    "pg": "^8.16.3",
     "react": "19.0.0",
     "react-bits": "^1.0.5",
     "react-chartjs-2": "^5.3.0",
+    "react-day-picker": "^9.11.0",
     "react-dom": "19.0.0",
+    "recharts": "^3.2.1",
     "swiper": "^11.2.10",
+    "swr": "^2.3.6",
     "tailwind-merge": "^3.3.1",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "uvicorn": "^0.0.1-security"
   },
   "devDependencies": {
+    "@types/matter-js": "^0.20.2",
     "babel-jest": "^30.0.2",
+    "concurrently": "^8.2.2",
     "eslint": "^9.8.0",
     "eslint-config-next": "^15.2.4",
     "eslint-config-prettier": "^10.0.0",
@@ -74,12 +93,10 @@
     "ts-node": "10.9.1",
     "tslib": "^2.3.0",
     "typescript": "~5.9.2",
-    "typescript-eslint": "^8.40.0",
-    "concurrently": "^8.2.2"
+    "typescript-eslint": "^8.40.0"
   },
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=8.0.0"
   }
 }
-

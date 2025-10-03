@@ -65,13 +65,14 @@ export class AuthService {
     return this.getToken() !== null;
   }
 
-  static async login(username: string, password: string): Promise<AuthUser> {
-    const response = await fetch('http://localhost:8000/api/auth/login', {
+  static async login(usernameOrEmail: string, password: string): Promise<AuthUser> {
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || 'http://127.0.0.1:8000';
+    const response = await fetch(`${backendUrl}/api/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username: usernameOrEmail, password }),
     });
 
     if (!response.ok) {
@@ -88,7 +89,7 @@ export class AuthService {
 
     const data = await response.json();
     const user: AuthUser = {
-      email: username, // Note: We're using username as email for storage, but backend returns token
+      email: usernameOrEmail, // Note: We're using usernameOrEmail as email for storage, but backend returns token
       token: data.access_token
     };
 
@@ -99,7 +100,8 @@ export class AuthService {
   }
 
   static async register(username: string, email: string, password: string): Promise<void> {
-    const response = await fetch('http://localhost:8000/api/auth/register', {
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || 'http://127.0.0.1:8000';
+    const response = await fetch(`${backendUrl}/api/auth/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -211,8 +213,8 @@ export const useAuth = () => {
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
-  const login = async (email: string, password: string): Promise<AuthUser> => {
-    const user = await AuthService.login(email, password);
+  const login = async (usernameOrEmail: string, password: string): Promise<AuthUser> => {
+    const user = await AuthService.login(usernameOrEmail, password);
     setIsAuthenticated(true);
     setUser(user);
     return user;

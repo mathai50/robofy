@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/Card';
-import Input from '@/components/ui/Input';
-import Button from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
+import { Button } from '@/components/ui/Button';
 
 const providers = [
   { value: 'openai', label: 'OpenAI' },
@@ -158,7 +158,6 @@ export function APIKeyForm({ onSuccess }: APIKeyFormProps) {
               value={apiKey}
               onChange={handleApiKeyChange}
               required
-              error={validationError || undefined}
             />
             {!validationError && (
               <p className="text-xs text-gray-400">

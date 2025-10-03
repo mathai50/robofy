@@ -17,8 +17,8 @@ module.exports = {
   	extend: {
   		colors: {
   			primary: {
-  				600: '#2563eb',
-  				700: '#1d4ed8',
+  				'600': '#2563eb',
+  				'700': '#1d4ed8',
   				background: {
   					dark: '#000000',
   					light: '#FFFFFF'
@@ -37,7 +37,19 @@ module.exports = {
   				DEFAULT: 'hsl(var(--primary))',
   				foreground: 'hsl(var(--primary-foreground))'
   			},
-  			// Luxury real estate color palette
+  			// Yoga Studio - Earthy Pastels
+  			yoga: {
+  				cream: '#FDF8F3',
+  				beige: '#F5F1E8',
+  				'light-green': '#E8F5E8',
+  				lavender: '#F0E6FF',
+  				'soft-pink': '#FDE8E8',
+  				'warm-gray': '#F8F4F0',
+  				sage: '#C7D2B8',
+  				terracotta: '#E8B4B8',
+  				'deep-green': '#4A5D3A',
+  				'warm-brown': '#8B6F47'
+  			},
   			luxury: {
   				emerald: '#056D4F',
   				burgundy: '#800020',
@@ -46,35 +58,35 @@ module.exports = {
   				charcoal: '#2E2E2E'
   			},
   			blue: {
-  				600: '#2563eb',
-  				700: '#1d4ed8',
+  				'600': '#2563eb',
+  				'700': '#1d4ed8'
   			},
   			purple: {
-  				500: '#8b5cf6',
-  				600: '#7c3aed',
+  				'500': '#8b5cf6',
+  				'600': '#7c3aed'
   			},
   			green: {
-  				600: '#059669',
-  				700: '#047857',
+  				'600': '#059669',
+  				'700': '#047857'
   			},
   			orange: {
-  				600: '#ea580c',
-  				700: '#c2410c',
+  				'600': '#ea580c',
+  				'700': '#c2410c'
   			},
   			red: {
-  				600: '#dc2626',
-  				700: '#b91c1c',
+  				'600': '#dc2626',
+  				'700': '#b91c1c'
   			},
   			gray: {
-  				100: '#f3f4f6',
-  				200: '#e5e7eb',
-  				300: '#d1d5db',
-  				400: '#9ca3af',
-  				500: '#6b7280',
-  				600: '#4b5563',
-  				700: '#374151',
-  				800: '#1f2937',
-  				900: '#111827',
+  				'100': '#f3f4f6',
+  				'200': '#e5e7eb',
+  				'300': '#d1d5db',
+  				'400': '#9ca3af',
+  				'500': '#6b7280',
+  				'600': '#4b5563',
+  				'700': '#374151',
+  				'800': '#1f2937',
+  				'900': '#111827'
   			},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -160,27 +172,45 @@ module.exports = {
   			'glow-accent': '0 0 20px rgba(0, 255, 0, 0.5)'
   		},
   		borderRadius: {
-  		  lg: 'var(--radius)',
-  		  md: 'calc(var(--radius) - 2px)',
-  		  sm: 'calc(var(--radius) - 4px)'
+  			lg: 'var(--radius)',
+  			md: 'calc(var(--radius) - 2px)',
+  			sm: 'calc(var(--radius) - 4px)'
   		},
   		animation: {
-  		  'fade-in-up': 'fadeInUp 0.6s ease-out forwards'
+  			'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
+  			'accordion-down': 'accordion-down 0.2s ease-out',
+  			'accordion-up': 'accordion-up 0.2s ease-out'
   		},
   		keyframes: {
-  		  fadeInUp: {
-  		    '0%': {
-  		      opacity: '0',
-  		      transform: 'translateY(20px)'
-  		    },
-  		    '100%': {
-  		      opacity: '1',
-  		      transform: 'translateY(0)'
-  		    }
-  		  }
+  			fadeInUp: {
+  				'0%': {
+  					opacity: '0',
+  					transform: 'translateY(20px)'
+  				},
+  				'100%': {
+  					opacity: '1',
+  					transform: 'translateY(0)'
+  				}
+  			},
+  			'accordion-down': {
+  				from: {
+  					height: '0'
+  				},
+  				to: {
+  					height: 'var(--radix-accordion-content-height)'
+  				}
+  			},
+  			'accordion-up': {
+  				from: {
+  					height: 'var(--radix-accordion-content-height)'
+  				},
+  				to: {
+  					height: '0'
+  				}
+  			}
   		}
   	}
   },
   plugins: [require("tailwindcss-animate")], // Add Tailwind plugins here if needed
-  darkMode: ['class', 'class'], // Enable dark mode based on CSS class
+  darkMode: 'class', // Enable dark mode based on CSS class
 }

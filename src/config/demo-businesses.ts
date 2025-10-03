@@ -237,62 +237,6 @@ export const generateBusinessSchema = (business: BusinessInfo, services: Service
   };
 };
 
-// Spa Business Configuration
-export const spaBusiness: BusinessInfo = {
-  name: 'Vintage Vibes Spa',
-  phone: '555-123-4567',
-  email: 'hello@vintagevibesspa.com',
-  address: '789 Retro Lane, Serenity City, SC 12345',
-  hours: 'Mo-Fr 09:00-20:00, Sa-Su 10:00-18:00',
-  heroImage: 'https://images.unsplash.com/photo-1583416750470-965b2707b355?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  heroSlogan: 'Reawaken Your Senses with Our Vintage-Inspired Spa Experience',
-  type: 'Spa',
-  schemaType: 'HealthAndBeautyBusiness',
-  description: 'Retro 70s inspired spa offering therapeutic massages, facials, and wellness treatments in a warm, vintage atmosphere.',
-  imageUrls: {
-    services: [
-      'https://images.unsplash.com/photo-1598901986949-f593ff2a31a6?q=80&w=1794&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Therapeutic Massages
-      'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Facials & Skincare
-      'https://images.unsplash.com/photo-1675159364615-38e1f6b62282?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Foot & Reflexology
-      'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Couples Packages
-      'https://images.unsplash.com/photo-1591343395082-e120087004b4?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Ayurvedic Treatments
-      'https://images.unsplash.com/photo-1677682693087-711e24efaa69?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'  // Body Wraps & Scrubs
-    ]
-  }
-};
-
-export const spaServices: Service[] = [
-  {
-    title: 'Therapeutic Massages',
-    description: 'Swedish, Deep Tissue, and Hot Stone massages to relieve tension and promote relaxation.',
-    icon: '💆‍♀️'
-  },
-  {
-    title: 'Facials & Skincare',
-    description: 'Anti-Aging, Lumispa, and Silk Cocoon facials for radiant, rejuvenated skin.',
-    icon: '✨'
-  },
-  {
-    title: 'Foot & Reflexology',
-    description: 'Specialized foot spa treatments and reflexology to balance your body\'s energy.',
-    icon: '🦶'
-  },
-  {
-    title: 'Couples Packages',
-    description: 'Romantic couples massage packages in our private suite with champagne service.',
-    icon: '👩‍❤️‍👨'
-  },
-  {
-    title: 'Ayurvedic Treatments',
-    description: 'Traditional Ayurvedic wellness treatments using natural herbs and oils.',
-    icon: '🌿'
-  },
-  {
-    title: 'Body Wraps & Scrubs',
-    description: 'Detoxifying body wraps and exfoliating scrubs for silky smooth skin.',
-    icon: '🧖‍♀️'
-  }
-];
 
 // Real Estate Developer Configuration
 export const realEstateBusiness: BusinessInfo = {
@@ -339,6 +283,80 @@ export const realEstateServices: Service[] = [
   }
 ];
 
+// Spa Business Configuration
+export const spaBusiness: BusinessInfo = {
+  name: 'Serenity Springs Spa',
+  phone: '(555) 123-RELAX',
+  email: 'escape@serenityspringsspa.com',
+  address: '789 Tranquility Lane, Peaceful Valley, PV 12345',
+  hours: 'Tue - Sun: 9:00 AM - 8:00 PM',
+  heroImage: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=1740&auto=format&fit=crop',
+  heroSlogan: 'Reawaken Your Senses with Our Vintage-Inspired Spa Experience',
+  type: 'Spa',
+  schemaType: 'HealthAndBeautyBusiness',
+  description: 'Experience luxury and relaxation with our vintage-inspired spa treatments that blend 70s elegance with modern wellness practices.',
+  imageUrls: {
+    services: [
+      'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?q=80&w=1740&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1740&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1740&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=1740&auto=format&fit=crop'
+    ]
+  }
+};
+
+export const spaServices: Service[] = [
+  {
+    title: 'Therapeutic Massages',
+    description: 'Deep tissue, Swedish, and hot stone massages to melt away tension and restore balance.'
+  },
+  {
+    title: 'Facials & Skin Care',
+    description: 'Customized facials using organic ingredients for radiant, rejuvenated skin.'
+  },
+  {
+    title: 'Foot & Reflexology',
+    description: 'Specialized foot treatments that promote overall wellness through pressure points.'
+  },
+  {
+    title: 'Couples Packages',
+    description: 'Shared relaxation experiences in our private couples suite.'
+  },
+  {
+    title: 'Ayurvedic Treatments',
+    description: 'Ancient healing practices tailored to your unique constitution.'
+  },
+  {
+    title: 'Body Wraps',
+    description: 'Detoxifying and hydrating treatments for silky smooth skin.'
+  },
+  {
+    title: 'Aromatherapy',
+    description: 'Custom essential oil blends to elevate mood and promote relaxation.'
+  }
+];
+
+export const spaTestimonials: Testimonial[] = [
+  {
+    name: 'Sarah Mitchell',
+    review: 'The most authentic spa experience I\'ve ever had. The attention to detail and warm atmosphere transport you to another era.',
+    rating: 5,
+    ratingIcon: '★★★★★'
+  },
+  {
+    name: 'James Wilson',
+    review: 'I was skeptical about the no-icons approach, but the elegant typography and spacing create such a sophisticated, calming experience.',
+    rating: 5,
+    ratingIcon: '★★★★★'
+  },
+  {
+    name: 'Eleanor Chen',
+    review: 'The 70s aesthetic is executed with such taste and luxury. Every treatment feels like a journey back in time with modern comforts.',
+    rating: 5,
+    ratingIcon: '★★★★★'
+  }
+];
+
 export const realEstateTestimonials: Testimonial[] = [
   {
     name: 'John & Jane Smith, Homeowners',
@@ -360,23 +378,3 @@ export const realEstateTestimonials: Testimonial[] = [
   }
 ];
 
-export const spaTestimonials: Testimonial[] = [
-  {
-    name: 'Sarah Johnson',
-    review: 'The hot stone massage was incredible! The retro ambiance made me feel like I traveled back in time to relax.',
-    rating: 5,
-    ratingIcon: '★★★★★'
-  },
-  {
-    name: 'Michael & Lisa Chen',
-    review: 'Our couples package was pure magic. The vintage champagne service and private suite made our anniversary special.',
-    rating: 5,
-    ratingIcon: '★★★★★'
-  },
-  {
-    name: 'Dr. Emily Rodriguez',
-    review: 'As a healthcare professional, I appreciate their attention to detail and authentic Ayurvedic treatments. Pure bliss!',
-    rating: 5,
-    ratingIcon: '★★★★★'
-  }
-];
