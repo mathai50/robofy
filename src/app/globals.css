@@ -6,4 +6,26 @@
   :root {
     --font-playfair-display: 'Playfair Display', serif;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Enhanced snap-scroll support */
+  .snap-scroll-container {
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+  }
+
+  .snap-scroll-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  /* Webkit prefix for Safari */
+  @supports (-webkit-appearance: none) {
+    .snap-scroll-container {
+      -webkit-overflow-scrolling: touch;
+    }
+  }
 }

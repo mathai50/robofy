@@ -50,6 +50,16 @@ module.exports = {
   				'deep-green': '#4A5D3A',
   				'warm-brown': '#8B6F47'
   			},
+  			// Retro 70s Spa - Warm Vintage Palette
+  			retro: {
+  				linen: '#FBF7F0',      // Warm Linen - Primary Background
+  				walnut: '#26201B',     // Dark Walnut - Primary Text & Headers
+  				terracotta: '#C7533B', // Burnt Terracotta - Call-to-Action
+  				sage: '#758E85',       // Muted Sage - Secondary Elements
+  				yellow: '#F9A825',     // Sunburst Yellow - Graphics & Highlights
+  				cream: '#F7F3E9',      // Warm cream for cards and sections
+  				gold: '#D4AF37'        // Antique Brass - Accent metallic
+  			},
   			luxury: {
   				emerald: '#056D4F',
   				burgundy: '#800020',

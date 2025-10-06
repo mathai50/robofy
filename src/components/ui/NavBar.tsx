@@ -38,10 +38,8 @@ export default function NavBar({
       href: '/demo',
       children: [
         { label: 'Dental Demo', href: '/demo/dental' },
-        { label: 'Real Estate Demo', href: '/demo/property-developer' },
         { label: 'Spa Demo', href: '/demo/spa' },
         { label: 'Salon Demo', href: '/demo/salon' },
-        { label: 'Salon Organic Demo', href: '/demo/salon-organic' },
         { label: 'Pet Care Demo', href: '/demo/pet-care' },
         { label: 'Child Care Demo', href: '/demo/child-care' },
         { label: 'Garden Supplies Demo', href: '/demo/garden-supplies' },

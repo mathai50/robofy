@@ -9,7 +9,7 @@ export interface BusinessInfo {
   hours: string;
   heroImage: string;
   heroSlogan: string;
-  type: 'Dental' | 'Salon' | 'PetCare' | 'Spa' | 'RealEstate';
+  type: 'Dental' | 'Salon' | 'PetCare' | 'Spa' | 'RealEstate' | 'ChildCare' | 'Garden' | 'TravelAgency';
   schemaType: string;
   description: string;
   imageUrls?: {
@@ -30,108 +30,6 @@ export interface Testimonial {
   ratingIcon: string;
 }
 
-// Dental Business Configuration
-export const dentalBusiness: BusinessInfo = {
-  name: 'Pearly Whites Dental',
-  phone: '(555) 123-4567',
-  email: 'info@pearlywhitesdental.com',
-  address: '123 Dental Ave, Smile City, ST 12345',
-  hours: 'Mon - Fri: 9:00 AM - 5:00 PM',
-  heroImage: 'https://images.unsplash.com/photo-1616391182219-e080b4d1043a?q=80&w=2766&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  heroSlogan: 'Modern Dentistry, Exceptional Care.',
-  type: 'Dental',
-  schemaType: 'Dentist',
-  description: 'Experience a new standard of dental care with our state-of-the-art technology and patient-focused approach.'
-};
-
-export const dentalServices: Service[] = [
-  {
-    title: 'General Dentistry',
-    description: 'Routine check-ups, cleanings, and fillings to maintain your oral health.'
-  },
-  {
-    title: 'Cosmetic Dentistry',
-    description: 'Transform your smile with teeth whitening, veneers, and smile makeovers.'
-  },
-  {
-    title: 'Restorative Care',
-    description: 'Advanced solutions like dental implants, crowns, and bridges.'
-  }
-];
-
-export const dentalTestimonials: Testimonial[] = [
-  {
-    name: 'Sarah Johnson',
-    review: 'Best dental experience ever! The staff was incredibly professional and caring.',
-    rating: 5,
-    ratingIcon: '★★★★★'
-  },
-  {
-    name: 'Michael Chen',
-    review: 'Dr. Reed is amazing! She made me feel completely at ease during my procedure.',
-    rating: 5,
-    ratingIcon: '★★★★★'
-  },
-  {
-    name: 'Emily Rodriguez',
-    review: 'The technology here is state-of-the-art. My smile has never looked better!',
-    rating: 5,
-    ratingIcon: '★★★★★'
-  }
-];
-
-// Salon Business Configuration
-export const salonBusiness: BusinessInfo = {
-  name: 'Vintage Vibe Salon',
-  phone: '555-987-6543',
-  email: 'hello@vintagevibesalon.com',
-  address: '456 Retro Avenue, City, State 12345',
-  hours: 'Tue-Sat: 9AM-7PM, Sun: 10AM-4PM',
-  heroImage: 'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?q=80&w=2070&auto=format&fit=crop',
-  heroSlogan: 'Experience Your Best Look with Our Expert Stylists',
-  type: 'Salon',
-  schemaType: 'HairSalon',
-  description: 'Cutting-edge Haircuts, Vibrant Colors & Personalized Beauty Services'
-};
-
-export const salonServices: Service[] = [
-  {
-    title: 'Haircuts',
-    description: 'Expert cuts for women, men, and kids with personalized styling advice.',
-    icon: '✂️'
-  },
-  {
-    title: 'Hair Coloring',
-    description: 'Balayage, highlights, and vibrant color transformations with keratin treatments.',
-    icon: '🎨'
-  },
-  {
-    title: 'Styling',
-    description: 'Wedding hair, blowouts, updos, and special occasion styling.',
-    icon: '💇‍♀️'
-  }
-];
-
-export const salonTestimonials: Testimonial[] = [
-  {
-    name: 'Jessica Taylor',
-    review: 'Best color service I\'ve ever had! The balayage turned out perfectly and lasted months.',
-    rating: 5,
-    ratingIcon: '★★★★★'
-  },
-  {
-    name: 'Marcus Rodriguez',
-    review: 'The stylists really listen to what you want. Got the perfect cut that suits my face shape.',
-    rating: 5,
-    ratingIcon: '★★★★★'
-  },
-  {
-    name: 'Sophia Chen',
-    review: 'Love the retro vibe and the amazing service. My wedding hair was absolutely stunning!',
-    rating: 5,
-    ratingIcon: '★★★★★'
-  }
-];
 
 // Pet Care Business Configuration
 export const petCareBusiness: BusinessInfo = {
@@ -238,50 +136,6 @@ export const generateBusinessSchema = (business: BusinessInfo, services: Service
 };
 
 
-// Real Estate Developer Configuration
-export const realEstateBusiness: BusinessInfo = {
-  name: 'Apex Luxury Developments',
-  phone: '(555) 555-5555',
-  email: 'contact@apexdevelopments.com',
-  address: '100 Prestige Plaza, Metro City, ST 67890',
-  hours: 'Mon - Fri: 9:00 AM - 6:00 PM',
-  heroImage: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=2874&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  heroSlogan: 'Crafting Exceptional Spaces, Defining Luxury Living',
-  type: 'RealEstate',
-  schemaType: 'RealEstateAgent',
-  description: 'Innovative Architecture | Strategic Locations | Timeless Design. We specialize in high-end residential and commercial properties, urban renewal, and sustainable building solutions.',
-  imageUrls: {
-    services: [
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Project 1
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2950&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Project 2
-      'https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Project 3
-      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'  // Project 4
-    ]
-  }
-};
-
-export const realEstateServices: Service[] = [
-  {
-    title: 'Residential & Commercial Developments',
-    description: 'Crafting high-end properties that blend innovative architecture with strategic locations.'
-  },
-  {
-    title: 'Urban Renewal Projects',
-    description: 'Transforming urban landscapes into vibrant, sustainable communities for the future.'
-  },
-  {
-    title: 'Sustainable Building Solutions',
-    description: 'Integrating eco-friendly materials and green technologies for a smaller environmental footprint.'
-  },
-  {
-    title: 'Custom Design Consultancy',
-    description: 'A personalized, client-centric approach to bring your unique architectural visions to life.'
-  },
-  {
-    title: 'Investment Advisory',
-    description: 'Providing expert guidance and transparent partnership for real estate investment opportunities.'
-  }
-];
 
 // Spa Business Configuration
 export const spaBusiness: BusinessInfo = {
@@ -337,42 +191,494 @@ export const spaServices: Service[] = [
 ];
 
 export const spaTestimonials: Testimonial[] = [
+   {
+     name: 'Sarah Mitchell',
+     review: 'The most authentic spa experience I\'ve ever had. The attention to detail and warm atmosphere transport you to another era.',
+     rating: 5,
+     ratingIcon: '★★★★★'
+   },
+   {
+     name: 'James Wilson',
+     review: 'I was skeptical about the no-icons approach, but the elegant typography and spacing create such a sophisticated, calming experience.',
+     rating: 5,
+     ratingIcon: '★★★★★'
+   },
+   {
+     name: 'Eleanor Chen',
+     review: 'The 70s aesthetic is executed with such taste and luxury. Every treatment feels like a journey back in time with modern comforts.',
+     rating: 5,
+     ratingIcon: '★★★★★'
+   }
+ ];
+
+// 70s Retro Salon Business Configuration
+export const retroSalonBusiness: BusinessInfo = {
+  name: 'Retro Glamour Studio',
+  phone: '(555) STYLE-UP',
+  email: 'hello@retroglamourstudio.com',
+  address: '456 Glamour Avenue, Style District, SD 12345',
+  hours: 'Tue - Sat: 9:00 AM - 7:00 PM, Sun: 10:00 AM - 5:00 PM',
+  heroImage: 'https://images.unsplash.com/photo-1744095407400-aa337918bbb1?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  heroSlogan: 'Retro Glamour Meets Modern Artistry - Transform Your Look',
+  type: 'Salon',
+  schemaType: 'BeautySalon',
+  description: 'Premier hair salon and beauty studio specializing in vintage-inspired styling, expert cuts, vibrant colors, and personalized beauty services in a beautifully curated 70s aesthetic environment.',
+  imageUrls: {
+    services: [
+      'https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1974&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1605497788044-5a32c7078486?q=80&w=1974&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1974&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=1974&auto=format&fit=crop'
+    ]
+  }
+};
+
+export const retroSalonServices: Service[] = [
   {
-    name: 'Sarah Mitchell',
-    review: 'The most authentic spa experience I\'ve ever had. The attention to detail and warm atmosphere transport you to another era.',
+    title: 'Signature Haircuts',
+    description: 'Expert cuts tailored to your face shape and lifestyle, from classic bobs to modern layers with personalized consultation.'
+  },
+  {
+    title: 'Vibrant Color Services',
+    description: 'Professional coloring techniques from subtle highlights to bold transformations using premium products.'
+  },
+  {
+    title: 'Luxury Styling',
+    description: 'Special occasion styling, bridal hair, and editorial looks for every event with trial runs included.'
+  },
+  {
+    title: 'Hair Treatments',
+    description: 'Deep conditioning, keratin treatments, and scalp therapies for healthy, beautiful hair.'
+  },
+  {
+    title: 'Bridal Packages',
+    description: 'Complete bridal party styling with rehearsal and wedding day services plus touch-up kits.'
+  },
+  {
+    title: 'Men\'s Grooming',
+    description: 'Classic cuts, beard styling, and modern grooming services for the modern gentleman.'
+  }
+];
+
+export const retroSalonTestimonials: Testimonial[] = [
+  {
+    name: 'Sophia Martinez',
+    review: 'Luna transformed my hair completely! The balayage is absolutely stunning and I\'ve never received so many compliments. The 70s vibe makes every visit special.',
     rating: 5,
     ratingIcon: '★★★★★'
   },
   {
-    name: 'James Wilson',
-    review: 'I was skeptical about the no-icons approach, but the elegant typography and spacing create such a sophisticated, calming experience.',
+    name: 'David Kim',
+    review: 'Marco gave me the perfect cut for my wedding day. Professional, precise, and the hot towel treatment was incredible. The vintage atmosphere added such a cool touch.',
     rating: 5,
     ratingIcon: '★★★★★'
   },
   {
-    name: 'Eleanor Chen',
-    review: 'The 70s aesthetic is executed with such taste and luxury. Every treatment feels like a journey back in time with modern comforts.',
+    name: 'Elena Rodriguez',
+    review: 'Aria made me feel like a princess on my wedding day. The trial run and final styling were perfect. The attention to detail and retro elegance made it magical.',
     rating: 5,
     ratingIcon: '★★★★★'
   }
 ];
 
-export const realEstateTestimonials: Testimonial[] = [
+// Child Care Business Configuration
+export const childCareBusiness: BusinessInfo = {
+  name: 'Little Explorers Child Care',
+  phone: '(555) 123-KIDS',
+  email: 'hello@littleexplorers.com',
+  address: '789 Sunshine Lane, Happy Valley, State 12345',
+  hours: 'Mon-Fri: 6:30AM-6:30PM, Sat-Sun: Closed',
+  heroImage: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=1772&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  heroSlogan: 'Nurturing Young Minds, Building Bright Futures',
+  type: 'ChildCare',
+  schemaType: 'ChildCare',
+  description: 'Premium child care services for infants through school-age children with age-appropriate programs and family support services.'
+};
+
+export const childCareServices: Service[] = [
   {
-    name: 'John & Jane Smith, Homeowners',
-    review: 'Working with Apex was a seamless experience. Their commitment to quality and timeless design is evident in every detail of our new home.',
+    title: 'Infant Care',
+    description: 'Gentle, nurturing care for babies 6 weeks to 12 months with individualized attention and sensory stimulation.',
+    icon: '🍼'
+  },
+  {
+    title: 'Toddler Programs',
+    description: 'Active exploration and discovery for curious 1-2 year olds with motor skills development and social interaction.',
+    icon: '👶'
+  },
+  {
+    title: 'Preschool',
+    description: 'Early learning through play and structured activities for 3-4 year olds with pre-literacy and math skills.',
+    icon: '🧸'
+  },
+  {
+    title: 'Pre-K',
+    description: 'Kindergarten readiness for 4-5 year olds with letter recognition, phonics, and independence building.',
+    icon: '🎨'
+  },
+  {
+    title: 'School-Age Care',
+    description: 'Before and after school programs with homework assistance and enrichment activities for 5-12 year olds.',
+    icon: '📚'
+  },
+  {
+    title: 'Family Support',
+    description: 'Resources and support for families including parent education workshops and community partnerships.',
+    icon: '👨‍👩‍👧‍👦'
+  }
+];
+
+export const childCareTestimonials: Testimonial[] = [
+   {
+     name: 'Sarah Martinez',
+     review: 'Little Explorers has been a second home for Emma. The teachers are so loving and patient, and I love getting daily updates about her activities!',
+     rating: 5,
+     ratingIcon: '★★★★★'
+   },
+   {
+     name: 'Michael Chen',
+     review: 'The Pre-K program prepared Alex so well for kindergarten. He learned so much and made wonderful friends. Couldn\'t ask for a better environment!',
+     rating: 5,
+     ratingIcon: '★★★★★'
+   },
+   {
+     name: 'Jessica Williams',
+     review: 'As a first-time mom, I was nervous about daycare. Little Explorers put all my worries at ease with their caring staff and excellent infant program.',
+     rating: 5,
+     ratingIcon: '★★★★★'
+   }
+];
+
+// Garden Supplier Business Configuration
+export const gardenSupplierBusiness: BusinessInfo = {
+  name: 'Bloom & Grow Garden Supplies',
+  phone: '(555) GARDEN-1',
+  email: 'hello@bloomandgrow.com',
+  address: '456 Garden Way, Green Valley, GV 12345',
+  hours: 'Mon - Sat: 8:00 AM - 6:00 PM, Sun: 10:00 AM - 4:00 PM',
+  heroImage: 'https://images.unsplash.com/photo-1718166166019-85ac4df18717?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  heroSlogan: 'Cultivate Your Perfect Garden Oasis',
+  type: 'Garden',
+  schemaType: 'GardenStore',
+  description: 'Premium garden supplies, organic seeds, expert tools, and seasonal plants delivered to your doorstep. From beginner gardeners to landscape professionals, we provide everything you need to create and maintain your dream garden.',
+  imageUrls: {
+    services: [
+      'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Garden overview
+      'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Plants and flowers
+      'https://images.unsplash.com/photo-1604762511511-9e1d6d8206d7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Garden tools
+      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0'  // Garden supplies
+    ]
+  }
+};
+
+export const gardenSupplierServices: Service[] = [
+  {
+    title: 'Premium Plants & Seeds',
+    description: 'Organic seeds, seedlings, flowering plants, shrubs, and trees selected for your local climate and soil conditions.',
+    icon: '🌱'
+  },
+  {
+    title: 'Garden Tools & Equipment',
+    description: 'Professional-grade tools, ergonomic hand tools, watering systems, and garden machinery for every gardening need.',
+    icon: '🛠️'
+  },
+  {
+    title: 'Soil & Fertilizers',
+    description: 'Premium organic soils, compost, natural fertilizers, and soil amendments to nourish your garden naturally.',
+    icon: '🌍'
+  },
+  {
+    title: 'Garden Décor & Furniture',
+    description: 'Beautiful garden ornaments, outdoor furniture, lighting, and decorative elements to enhance your outdoor space.',
+    icon: '🏡'
+  },
+  {
+    title: 'Pest Control & Plant Care',
+    description: 'Organic pest control solutions, plant protection products, and expert advice for maintaining healthy plants.',
+    icon: '🛡️'
+  },
+  {
+    title: 'Seasonal Garden Planning',
+    description: 'Expert consultation on seasonal planting schedules, garden design, and landscape planning services.',
+    icon: '📅'
+  }
+];
+
+export const gardenSupplierTestimonials: Testimonial[] = [
+  {
+    name: 'Margaret Thompson',
+    review: 'Bloom & Grow transformed my backyard into a stunning oasis. Their plant recommendations were perfect for our climate, and the quality is outstanding!',
     rating: 5,
     ratingIcon: '★★★★★'
   },
   {
-    name: 'Investor Group Inc.',
-    review: 'Their strategic locations and innovative architecture have consistently delivered exceptional returns on our investments. A true partner in growth.',
+    name: 'David Rodriguez',
+    review: 'As a professional landscaper, I rely on Bloom & Grow for consistent quality and expert knowledge. Their organic selection is unmatched in the area.',
     rating: 5,
     ratingIcon: '★★★★★'
   },
   {
-    name: 'Eleanor Vance, Client',
-    review: 'The custom design consultancy helped bring my vision to life, creating a space that is both luxurious and uniquely mine. Unparalleled craftsmanship.',
+    name: 'Sarah Kim',
+    review: 'Just started gardening this year and the staff at Bloom & Grow made it so easy! They took time to explain everything and my vegetable garden is thriving.',
+    rating: 5,
+    ratingIcon: '★★★★★'
+  }
+];
+
+
+// Dental Business Configuration
+export const dentalBusiness: BusinessInfo = {
+  name: 'Radiant Roots Dental',
+  phone: '(555) 123-DENTAL',
+  email: 'smile@radiantrootsdental.com',
+  address: '123 Smile Avenue, Healthy City, HC 12345',
+  hours: 'Mon - Thu: 8:00 AM - 6:00 PM, Fri: 8:00 AM - 5:00 PM, Sat: 9:00 AM - 3:00 PM',
+  heroImage: 'https://images.unsplash.com/photo-1631248055158-edec7a3c072b?q=80&w=1722&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  heroSlogan: 'Healthy Smiles, Happy Lives - Advanced Dental Care for Modern Families',
+  type: 'Dental',
+  schemaType: 'Dentist',
+  description: 'Comprehensive dental care with cutting-edge technology and personalized treatment plans. From routine cleanings to advanced cosmetic procedures, we create beautiful, healthy smiles that last a lifetime.',
+  imageUrls: {
+    services: [
+      'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Dental office
+      'https://images.unsplash.com/photo-1606815014909-9ebe8cc48e87?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Dental treatment
+      'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Dental technology
+      'https://images.unsplash.com/photo-1559059963-2e19b6c70243?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'  // Patient comfort
+    ]
+  }
+};
+
+export const dentalServices: Service[] = [
+  {
+    title: 'General Dentistry',
+    description: 'Comprehensive oral health examinations, cleanings, fillings, and preventive care to maintain optimal dental health.',
+    icon: '🦷'
+  },
+  {
+    title: 'Pediatric Dentistry',
+    description: 'Specialized dental care for children including gentle cleanings, fluoride treatments, and early orthodontic guidance.',
+    icon: '👶'
+  },
+  {
+    title: 'Cosmetic Dentistry',
+    description: 'Transform your smile with teeth whitening, veneers, bonding, and complete smile makeovers using advanced techniques.',
+    icon: '✨'
+  },
+  {
+    title: 'Surgical Dentistry',
+    description: 'Wisdom teeth extractions, dental implants, bone grafting, and other oral surgery procedures with sedation options.',
+    icon: '🔬'
+  },
+  {
+    title: 'Emergency Dentistry',
+    description: '24/7 emergency dental care for toothaches, broken teeth, lost fillings, and other urgent dental needs.',
+    icon: '🚨'
+  },
+  {
+    title: 'Orthodontic Treatment',
+    description: 'Traditional braces, clear aligners, and other orthodontic solutions to straighten teeth and improve bite alignment.',
+    icon: '📏'
+  }
+];
+
+export const dentalTestimonials: Testimonial[] = [
+   {
+     name: 'Sarah Martinez',
+     review: 'Dr. Sterling and her team are absolutely wonderful! They made my dental anxiety disappear with their gentle approach and modern techniques. My smile has never looked better!',
+     rating: 5,
+     ratingIcon: '★★★★★'
+   },
+   {
+     name: 'Michael Chen',
+     review: 'The emergency care I received was outstanding. They got me in immediately when I had a broken tooth and the entire process was painless. Highly recommend Radiant Roots!',
+     rating: 5,
+     ratingIcon: '★★★★★'
+   },
+   {
+     name: 'Jennifer Walsh',
+     review: 'My kids actually look forward to dentist appointments now! The pediatric care is fantastic - they make it fun while being thorough. Best dental experience ever.',
+     rating: 5,
+     ratingIcon: '★★★★★'
+   }
+];
+
+// Property Developer Business Configuration
+export const propertyDeveloperBusiness: BusinessInfo = {
+  name: 'Aureum Properties',
+  phone: '(555) LUXURY-HOME',
+  email: 'info@aureumproperties.com',
+  address: '888 Golden Gate Boulevard, Prestige Heights, PH 12345',
+  hours: 'Mon - Fri: 9:00 AM - 6:00 PM, Sat: 10:00 AM - 4:00 PM',
+  heroImage: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2075&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  heroSlogan: 'Architectural Excellence Meets Luxury Living',
+  type: 'RealEstate',
+  schemaType: 'RealEstateAgent',
+  description: 'Award-winning property developer creating exceptional residential and commercial spaces that redefine luxury living. From innovative architectural designs to sustainable developments, we craft timeless properties that inspire and endure.',
+  imageUrls: {
+    services: [
+      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2075&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Luxury homes
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2053&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Modern architecture
+      'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Interior design
+      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'  // Property development
+    ]
+  }
+};
+
+export const propertyDeveloperServices: Service[] = [
+  {
+    title: 'Luxury Residential Development',
+    description: 'Exclusive custom homes and high-end residential communities designed for discerning homeowners seeking unparalleled quality and sophistication.',
+    icon: '🏘️'
+  },
+  {
+    title: 'Commercial Property Development',
+    description: 'Premium office spaces, retail centers, and mixed-use developments that combine functionality with architectural excellence.',
+    icon: '🏢'
+  },
+  {
+    title: 'Sustainable Building Solutions',
+    description: 'Eco-friendly construction using cutting-edge green technologies and sustainable materials for environmentally conscious developments.',
+    icon: '🌱'
+  },
+  {
+    title: 'Architectural Design & Planning',
+    description: 'Collaborative design process with world-renowned architects to create bespoke properties that reflect your vision and lifestyle.',
+    icon: '✏️'
+  },
+  {
+    title: 'Property Investment Advisory',
+    description: 'Strategic investment guidance for high-net-worth individuals and institutional investors seeking premium property opportunities.',
+    icon: '📈'
+  },
+  {
+    title: 'Urban Renewal & Redevelopment',
+    description: 'Transforming underutilized spaces into vibrant, modern communities that enhance the urban landscape and create lasting value.',
+    icon: '🏙️'
+  }
+];
+
+export const propertyDeveloperTestimonials: Testimonial[] = [
+  {
+    name: 'Isabella Rodriguez',
+    review: 'Aureum Properties exceeded every expectation. Our custom home is a masterpiece of design and craftsmanship. The attention to detail is extraordinary.',
+    rating: 5,
+    ratingIcon: '★★★★★'
+  },
+  {
+    name: 'Alexander Thompson',
+    review: 'Investing with Aureum was the best decision for our portfolio. Their developments consistently outperform the market with exceptional ROI.',
+    rating: 5,
+    ratingIcon: '★★★★★'
+  },
+  {
+    name: 'Catherine Park',
+    review: 'The sustainable building practices and innovative design make Aureum Properties stand apart. Our office complex is both beautiful and environmentally responsible.',
+    rating: 5,
+    ratingIcon: '★★★★★'
+  }
+];
+
+export const smartGlassServices: Service[] = [
+  {
+    title: 'Clear View Technology',
+    description: 'Crystal clear vision with adaptive brightness that automatically adjusts to any lighting condition.',
+    icon: '👁️'
+  },
+  {
+    title: 'Fast Sync Connectivity',
+    description: 'Lightning-fast connectivity and seamless integration with all your devices and applications.',
+    icon: '⚡'
+  },
+  {
+    title: 'Active Mode Intelligence',
+    description: 'Advanced sensors track your activity and provide intelligent insights for productivity and wellness.',
+    icon: '🎯'
+  },
+  {
+    title: 'Smart Touch Controls',
+    description: 'Intuitive gesture controls and voice commands for seamless interaction with your smart glass.',
+    icon: '👆'
+  }
+];
+
+export const smartGlassTestimonials: Testimonial[] = [
+   {
+     name: 'Sarah Chen',
+     review: 'Changed the way I work and live. The clarity and intelligence are unmatched. Worth every penny!',
+     rating: 5,
+     ratingIcon: '★★★★★'
+   },
+   {
+     name: 'Marcus Rodriguez',
+     review: 'The adaptive brightness is incredible. Perfect for both indoor meetings and outdoor activities.',
+     rating: 5,
+     ratingIcon: '★★★★★'
+   },
+   {
+     name: 'Jennifer Walsh',
+     review: 'Seamless integration with all my devices. The AI features actually make me more productive.',
+     rating: 5,
+     ratingIcon: '★★★★★'
+   }
+ ];
+
+// Travel Agency Business Configuration
+export const travelAgencyBusiness: BusinessInfo = {
+  name: 'Horizon Explorers',
+  phone: '(555) 123-WANDER',
+  email: 'journey@horizonexplorers.com',
+  address: '888 Adventure Avenue, Wanderlust City, WC 12345',
+  hours: 'Mon-Fri: 9AM-8PM, Sat-Sun: 10AM-6PM',
+  heroImage: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=2070&auto=format&fit=crop',
+  heroSlogan: 'Where Dreams Meet Destinations - Curated Luxury Travel Experiences',
+  type: 'TravelAgency',
+  schemaType: 'TravelAgency',
+  description: 'Luxury travel experiences with personalized service and exclusive access to the world\'s most extraordinary destinations.',
+};
+
+export const travelAgencyServices: Service[] = [
+  {
+    title: 'Luxury Travel Planning',
+    description: 'Personalized travel itineraries crafted by expert advisors for seamless luxury experiences.'
+  },
+  {
+    title: 'Destination Management',
+    description: 'Exclusive access to premium destinations with VIP treatment and private experiences.'
+  },
+  {
+    title: 'Custom Itineraries',
+    description: 'Bespoke travel plans designed around your specific interests, preferences, and schedule.'
+  },
+  {
+    title: 'VIP Travel Services',
+    description: 'Premium concierge services, private jets, luxury accommodations, and exclusive experiences.'
+  },
+  {
+    title: 'Adventure Tourism',
+    description: 'Curated adventure experiences with expert guides and safety-first approach.'
+  },
+  {
+    title: 'Cultural Experiences',
+    description: 'Deep cultural immersion programs connecting you with local traditions and communities.'
+  }
+];
+
+export const travelAgencyTestimonials: Testimonial[] = [
+  {
+    name: 'Isabella Santos',
+    review: 'Horizon Explorers created the most magical honeymoon experience. Every detail was perfect, from the private villa in Bali to the sunset yacht cruise.',
+    rating: 5,
+    ratingIcon: '★★★★★'
+  },
+  {
+    name: 'Marcus Thompson',
+    review: 'The African safari organized by Horizon Explorers exceeded all expectations. The luxury lodges and wildlife encounters were absolutely breathtaking.',
+    rating: 5,
+    ratingIcon: '★★★★★'
+  },
+  {
+    name: 'Elena Rodriguez',
+    review: 'As a frequent traveler, I\'ve worked with many agencies, but Horizon Explorers stands apart. Their attention to detail and personal touch is unmatched.',
     rating: 5,
     ratingIcon: '★★★★★'
   }

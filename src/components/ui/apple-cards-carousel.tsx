@@ -26,6 +26,7 @@ type Card = {
   title: string;
   category: string;
   content: React.ReactNode;
+  link?: string;
 };
 
 export const CarouselContext = createContext<{
@@ -185,7 +186,11 @@ export const Card = ({
   useOutsideClick(containerRef, () => handleClose());
 
   const handleOpen = () => {
-    setOpen(true);
+    if (card.link) {
+      window.open(card.link, '_blank');
+    } else {
+      setOpen(true);
+    }
   };
 
   const handleClose = () => {

@@ -8,12 +8,12 @@ const inter = Inter({ subsets: ['latin'] });
 const playfairDisplay = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair-display' });
 
 export const metadata: Metadata = {
-  title: 'robofy Ai transformation for Small and Medium Business from serenity yoga studio',
+  title: 'Robofy AI Transformation for Small Medium Business',
   description: 'Transform your small and medium business with Robofy AI solutions. From yoga studio to AI-powered business transformation - streamline operations, automate workflows, and drive growth with intelligent technology.',
   keywords: 'yoga studio [City], Hatha yoga, Vinyasa yoga, mindfulness classes, meditation [City], wellness workshops, yoga near me',
   authors: [{ name: 'Serenity Yoga Studio' }],
   openGraph: {
-    title: 'robofy Ai transformation for Small and Medium Business from serenity yoga studio',
+    title: 'Robofy AI Transformation for Small Medium Business',
     description: 'Transform your small and medium business with Robofy AI solutions. From yoga studio to AI-powered business transformation - streamline operations, automate workflows, and drive growth with intelligent technology.',
     url: 'https://serenity-yoga.com',
     siteName: 'Serenity Yoga Studio',
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'robofy Ai transformation for Small and Medium Business from serenity yoga studio',
+    title: 'Robofy AI Transformation for Small Medium Business',
     description: 'Transform your small and medium business with Robofy AI solutions. From yoga studio to AI-powered business transformation - streamline operations, automate workflows, and drive growth with intelligent technology.',
     images: ['/og-image.jpg'],
   },
