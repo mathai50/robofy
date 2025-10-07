@@ -34,6 +34,7 @@
     "dev:alt": "PORT=3001 npm run dev:frontend"
   },
   "dependencies": {
+    "zod": "^4.1.12",
     "@ai-sdk/react": "^2.0.44",
     "@date-fns/tz": "^1.4.1",
     "@google/generative-ai": "^0.24.1",
@@ -73,6 +74,7 @@
   },
   "devDependencies": {
     "@types/matter-js": "^0.20.2",
+    "jest": "^30.2.0",
     "babel-jest": "^30.0.2",
     "concurrently": "^8.2.2",
     "eslint": "^9.8.0",
