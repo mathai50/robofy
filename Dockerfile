@@ -1,50 +1,59 @@
-FROM node:20-alpine AS builder
+# Alternative: Use Debian slim for potentially fewer vulnerabilities
+# FROM node:20-slim AS builder
+
+FROM node:20-alpine3.20 AS builder
 
 WORKDIR /app
+
+# Add non-root user for build process
+RUN addgroup -g 1001 -S nodejs && adduser -S nextjs -u 1001
 
 # Copy package files
 COPY package*.json ./
 COPY package-lock.json ./
 
-# Install dependencies with exact versions
-RUN npm ci
+# Install dependencies with exact versions and security audit
+RUN npm ci && npm audit --audit-level=moderate
 
-# Copy source code
-COPY . .
+# Copy source code with correct ownership
+COPY --chown=nextjs:nodejs . .
 
 # List contents to verify files are copied correctly
 RUN ls -la src/components/ui/ && echo "=== Dialog component ===" && cat src/components/ui/dialog.tsx | head -5
 
+# Update and upgrade Alpine packages for security fixes
+RUN apk update && apk upgrade --no-cache && apk cache clean
+
 # Build the application
 RUN npm run build
 
-FROM node:20-alpine AS production
+FROM node:20-alpine3.20 AS production
 
 WORKDIR /app
+
+# Add non-root user for production
+RUN addgroup -g 1001 -S nodejs && adduser -S nextjs -u 1001
 
 # Copy package files
 COPY package*.json ./
 COPY package-lock.json ./
 
-# Install production dependencies only
-RUN npm ci --omit=dev
+# Install production dependencies only with security audit
+RUN npm ci --omit=dev && npm audit --audit-level=moderate
 
-# Copy built application from builder
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
+# Copy built application from builder with correct ownership
+COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/package.json ./
 
-# Create non-root user for security
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
-
+# Switch to non-root user
 USER nextjs
 
 # Expose port
 EXPOSE 3000
 
-# Health check
+# Health check with security considerations
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost:3000 || exit 1
 
