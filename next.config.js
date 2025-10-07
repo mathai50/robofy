@@ -11,11 +11,26 @@
 
 const nextConfig = {
   /**
-   * Output Mode
-   * Configures Next.js for static export
-   */
+    * Output Mode
+    * Configures Next.js for static export
+    */
   output: 'export',
   trailingSlash: true,
+
+  /**
+    * Build Configuration for Static Export
+    * Ensures client-side components work with static export
+    */
+  generateBuildId: async () => {
+    return 'build-cache-' + Date.now()
+  },
+
+  /**
+    * Disable static optimization for pages with client-side components
+    */
+  experimental: {
+    serverComponentsExternalPackages: [],
+  },
   
   /**
    * React Strict Mode
