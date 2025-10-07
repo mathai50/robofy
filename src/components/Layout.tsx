@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from '@/components/ui/NavBar';
 import { usePathname } from 'next/navigation';
-import { realEstateBusiness } from '@/config/demo-businesses';
+import { propertyDeveloperBusiness } from '@/config/demo-businesses';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -68,7 +68,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     if (pathname === '/demo/real-estate') {
       customLogo = (
         <h1 className="text-2xl sm:text-3xl font-normal text-gray-900 font-sans tracking-tight">
-          {realEstateBusiness.name}
+          {propertyDeveloperBusiness.name}
         </h1>
       );
       customNavigationItems = [

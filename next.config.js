@@ -14,7 +14,8 @@ const nextConfig = {
    * Output Mode
    * Configures Next.js for static export
    */
-  // output: 'export', // Commented out for development server
+  output: 'export',
+  trailingSlash: true,
   
   /**
    * React Strict Mode

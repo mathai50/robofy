@@ -19,9 +19,8 @@
   "author": "Robofy Team <team@robofy.com>",
   "homepage": "https://robofy.uk",
   "scripts": {
-    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev": "npm run dev:frontend",
     "dev:frontend": "node --require=./set-dns.mjs node_modules/next/dist/bin/next dev -p ${PORT:-3000}",
-    "dev:backend": "cd backend && uvicorn main:app --host 0.0.0.0 --reload",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -29,10 +28,8 @@
     "format": "prettier --write .",
     "type-check": "tsc --noEmit",
     "generate:content": "bash scripts/generate-content.sh",
-    "dev:content": "cd backend && python3 autoblogging.py --watch",
     "test:frontend": "jest",
-    "test:backend": "cd backend && python3 -m pytest",
-    "test": "npm run test:frontend && npm run test:backend",
+    "test": "npm run test:frontend",
     "kill-port-3000": "npx kill-port 3000",
     "dev:alt": "PORT=3001 npm run dev:frontend"
   },
@@ -72,8 +69,7 @@
     "swiper": "^11.2.10",
     "swr": "^2.3.6",
     "tailwind-merge": "^3.3.1",
-    "tailwindcss-animate": "^1.0.7",
-    "uvicorn": "^0.0.1-security"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@types/matter-js": "^0.20.2",

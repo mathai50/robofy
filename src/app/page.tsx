@@ -1374,6 +1374,7 @@ const AppleCardCarousel = () => {
       src: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?q=80&w=1740&auto=format&fit=crop",
       title: "Fitness Studio AI",
       category: "Fitness",
+      link: "/demo/gym",
       content: (
         <div className="space-y-4">
           <p className="text-neutral-600 dark:text-neutral-300">
@@ -1405,6 +1406,7 @@ const AppleCardCarousel = () => {
       src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
       title: "Serenity Yoga Studio",
       category: "Wellness",
+      link: "/demo/yoga-studio",
       content: (
         <div className="space-y-4">
           <p className="text-neutral-600 dark:text-neutral-300">
@@ -1436,6 +1438,7 @@ const AppleCardCarousel = () => {
       src: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       title: "Magical Events",
       category: "Events",
+      link: "/demo/event-manager",
       content: (
         <div className="space-y-4">
           <p className="text-neutral-600 dark:text-neutral-300">
@@ -1467,6 +1470,7 @@ const AppleCardCarousel = () => {
       src: "https://images.unsplash.com/photo-1724026822916-3da5df1260f8?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       title: "Crystal Clear Pro",
       category: "Cleaning",
+      link: "/demo/professional-cleaners",
       content: (
         <div className="space-y-4">
           <p className="text-neutral-600 dark:text-neutral-300">
@@ -1498,6 +1502,7 @@ const AppleCardCarousel = () => {
       src: "https://images.unsplash.com/photo-1581888227599-779811939961?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       title: "Pawfect Care",
       category: "Pet Care",
+      link: "/demo/pet-care",
       content: (
         <div className="space-y-4">
           <p className="text-neutral-600 dark:text-neutral-300">
@@ -1529,6 +1534,7 @@ const AppleCardCarousel = () => {
       src: "https://images.unsplash.com/photo-1581056771107-24ca5f033842?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       title: "Caldwell Medicine",
       category: "Healthcare",
+      link: "/demo/physician",
       content: (
         <div className="space-y-4">
           <p className="text-neutral-600 dark:text-neutral-300">
@@ -1560,6 +1566,7 @@ const AppleCardCarousel = () => {
       src: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=1772&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       title: "Little Explorers",
       category: "Child Care",
+      link: "/demo/child-care",
       content: (
         <div className="space-y-4">
           <p className="text-neutral-600 dark:text-neutral-300">
@@ -1591,6 +1598,7 @@ const AppleCardCarousel = () => {
       src: "https://images.unsplash.com/photo-1718166166019-85ac4df18717?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       title: "Bloom & Grow",
       category: "Garden Supply",
+      link: "/demo/garden-supplier",
       content: (
         <div className="space-y-4">
           <p className="text-neutral-600 dark:text-neutral-300">
@@ -1622,6 +1630,7 @@ const AppleCardCarousel = () => {
       src: "https://images.unsplash.com/photo-1631248055158-edec7a3c072b?q=80&w=1722&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       title: "Radiant Roots Dental",
       category: "Healthcare",
+      link: "/demo/dentist",
       content: (
         <div className="space-y-4">
           <p className="text-neutral-600 dark:text-neutral-300">
@@ -1653,6 +1662,7 @@ const AppleCardCarousel = () => {
       src: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2075&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       title: "Aureum Properties",
       category: "Real Estate",
+      link: "/demo/property-developer",
       content: (
         <div className="space-y-4">
           <p className="text-neutral-600 dark:text-neutral-300">
@@ -1684,6 +1694,7 @@ const AppleCardCarousel = () => {
       src: "https://images.unsplash.com/photo-1693578538512-fc66f318c833?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       title: "Serenity Springs Spa",
       category: "Wellness",
+      link: "/demo/retro-70s-spa",
       content: (
         <div className="space-y-4">
           <p className="text-neutral-600 dark:text-neutral-300">
@@ -1715,6 +1726,7 @@ const AppleCardCarousel = () => {
       src: "https://images.unsplash.com/photo-1744095407400-aa337918bbb1?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       title: "Retro Glamour Studio",
       category: "Beauty",
+      link: "/demo/retro-70s-salon",
       content: (
         <div className="space-y-4">
           <p className="text-neutral-600 dark:text-neutral-300">
@@ -1746,6 +1758,7 @@ const AppleCardCarousel = () => {
       src: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=2070&auto=format&fit=crop",
       title: "Horizon Explorers",
       category: "Travel",
+      link: "/demo/travel-agency",
       content: (
         <div className="space-y-4">
           <p className="text-neutral-600 dark:text-neutral-300">
@@ -1777,6 +1790,7 @@ const AppleCardCarousel = () => {
       src: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop",
       title: "Summit Financial Partners",
       category: "Finance",
+      link: "/demo/accounting-firm",
       content: (
         <div className="space-y-4">
           <p className="text-neutral-600 dark:text-neutral-300">
