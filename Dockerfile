@@ -6,11 +6,14 @@ WORKDIR /app
 COPY package*.json ./
 COPY package-lock.json ./
 
-# Install dependencies
+# Install dependencies with exact versions
 RUN npm ci
 
 # Copy source code
 COPY . .
+
+# List contents to verify files are copied correctly
+RUN ls -la src/components/ui/ && echo "=== Dialog component ===" && cat src/components/ui/dialog.tsx | head -5
 
 # Build the application
 RUN npm run build

@@ -26,6 +26,20 @@ const nextConfig = {
   },
 
   /**
+    * Webpack Configuration for Module Resolution
+    * Ensures @ path aliases work correctly in all environments
+    */
+  webpack: (config, { dev, isServer }) => {
+    // Ensure path aliases work in Docker and other environments
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': require('path').resolve(__dirname, 'src'),
+    };
+
+    return config;
+  },
+
+  /**
     * Disable static optimization for pages with client-side components
     */
   experimental: {
