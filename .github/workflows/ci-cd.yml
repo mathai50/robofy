@@ -125,7 +125,7 @@ jobs:
         script: |
           cd /var/www/robofy
           git pull origin main
-          npm ci --production
+          npm ci --omit=dev
           cd backend
           pip install -r requirements.txt
           npm run generate:content

@@ -24,7 +24,7 @@ COPY package*.json ./
 COPY package-lock.json ./
 
 # Install production dependencies only
-RUN npm ci --production
+RUN npm ci --omit=dev
 
 # Copy built application from builder
 COPY --from=builder /app/.next ./.next
