@@ -41,7 +41,7 @@ RUN groupadd -g 1001 nodejs && useradd -m -u 1001 -g nodejs nextjs
 RUN npm install -g serve
 
 # Copy static export files from builder
-COPY --from=builder --chown=nextjs:nodejs /app/out ./
+COPY --from=builder --chown=nextjs:nodejs /app/out/ ./
 
 # Switch to non-root user
 USER nextjs
