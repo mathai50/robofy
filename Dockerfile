@@ -37,15 +37,11 @@ WORKDIR /app
 # Add non-root user for production
 RUN groupadd -g 1001 nodejs && useradd -m -u 1001 -g nodejs nextjs
 
-# Copy production dependencies from builder stage (already installed with correct versions)
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
+# Install serve globally for static file serving
+RUN npm install -g serve
 
-# Copy built application from builder with correct ownership
-COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
-COPY --from=builder /app/next.config.js ./
-COPY --from=builder /app/package.json ./
-COPY --from=builder /app/tailwind.config.js ./
-COPY --from=builder /app/postcss.config.js ./
+# Copy static export files from builder
+COPY --from=builder --chown=nextjs:nodejs /app/out ./
 
 # Switch to non-root user
 USER nextjs
@@ -57,5 +53,5 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost:3000 || exit 1
 
-# Start the Next.js production server
-CMD ["npm", "start"]
+# Start the static file server
+CMD ["serve", ".", "-l", "3000"]

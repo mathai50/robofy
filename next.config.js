@@ -12,9 +12,9 @@
 const nextConfig = {
   /**
     * Output Mode
-    * Configures Next.js for server-side rendering
+    * Configures Next.js for static export
     */
-  // output: 'export', // Removed for API routes support
+  output: 'export',
   trailingSlash: true,
 
   /**
