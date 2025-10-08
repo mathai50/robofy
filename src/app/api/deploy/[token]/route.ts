@@ -9,11 +9,13 @@ const DEPLOY_TOKEN = 'JSonzMF_ThkwGksRC1nyb';
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { token: string } }
+  { params }: { params: Promise<{ token: string }> }
 ) {
   try {
+    const { token } = await params;
+
     // Check if the token matches
-    if (params.token !== DEPLOY_TOKEN) {
+    if (token !== DEPLOY_TOKEN) {
       return NextResponse.json(
         { error: 'Invalid deployment token' },
         { status: 401 }
