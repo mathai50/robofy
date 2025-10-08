@@ -1,57 +1,39 @@
-# Alternative: Use Debian slim for potentially fewer vulnerabilities
-# FROM node:20-slim AS builder
+FROM node:18-alpine AS base
 
-FROM node:20 AS builder
-
+# Install dependencies only when needed
+FROM base AS deps
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Add non-root user for build process
-RUN groupadd -g 1001 nodejs && useradd -m -u 1001 -g nodejs nextjs
-
-# Copy package files
-COPY package*.json ./
-COPY package-lock.json ./
-
-# Upgrade npm to latest version
-RUN npm install -g npm@latest
-
-# Set npm registry to ensure reliable package downloads
-RUN npm config set registry https://registry.npmjs.org/
-
-# Install dependencies with exact versions
+COPY package.json package-lock.json* ./
 RUN npm ci
 
-# Copy source code with correct ownership
-COPY --chown=nextjs:nodejs . .
+# Rebuild the source code only when needed
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
 
-# List contents to verify files are copied correctly
-RUN ls -la src/components/ui/ && echo "=== Dialog component ===" && cat src/components/ui/Dialog.tsx | head -5
-
-# Build the application
 RUN npm run build
 
-FROM node:20 AS production
-
+# Production image, copy all the files and run next
+FROM base AS runner
 WORKDIR /app
 
-# Add non-root user for production
-RUN groupadd -g 1001 nodejs && useradd -m -u 1001 -g nodejs nextjs
+ENV NODE_ENV production
 
-# Install serve globally for static file serving
-RUN npm install -g serve
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
-# Copy static export files from builder
-COPY --from=builder --chown=nextjs:nodejs /app/out/ ./
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# Switch to non-root user
 USER nextjs
 
-# Expose port
 EXPOSE 3000
 
-# Health check with security considerations
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:3000 || exit 1
+ENV PORT 3000
+ENV HOSTNAME "0.0.0.0"
 
-# Start the static file server
-CMD ["serve", ".", "-l", "3000"]
+CMD ["node", "server.js"]

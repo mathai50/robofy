@@ -11,11 +11,10 @@
 
 const nextConfig = {
   /**
-    * Output Mode
-    * Configures Next.js for static export
-    */
-  output: 'export',
-  trailingSlash: true,
+     * Output Mode
+     * Configures Next.js for standalone deployment
+     */
+  output: 'standalone',
 
   /**
     * Build Configuration for Static Export
