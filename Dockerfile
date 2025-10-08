@@ -15,6 +15,9 @@ COPY package-lock.json ./
 # Upgrade npm to latest version
 RUN npm install -g npm@latest
 
+# Set npm registry to ensure reliable package downloads
+RUN npm config set registry https://registry.npmjs.org/
+
 # Install dependencies with exact versions
 RUN npm ci
 
