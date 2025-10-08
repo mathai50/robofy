@@ -16,12 +16,6 @@ export interface BlogFilters {
 
 export const BLOG_CATEGORIES = [
   'all',
-  'beauty',
-  'dental',
-  'fitness',
-  'healthcare',
-  'retail',
-  'solar',
   'technology'
 ] as const;
 
