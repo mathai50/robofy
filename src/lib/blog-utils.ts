@@ -20,6 +20,7 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
   
   // Extract posts from file names - in a real app, we'd read the actual files
   const blogFiles = [
+    'blog_ai-marketing-automation-guide.md',
     'blog_beauty_personalized-customer-experiences.md',
     'blog_beauty_social-media-automation-for-salons.md',
     'blog_dental_appointment-reminder-systems.md',
@@ -53,6 +54,11 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
 }
 
 function parseBlogFilename(filename: string): BlogPost | null {
+  // Handle special case for blog_ai-marketing-automation-guide.md
+  if (filename === 'blog_ai-marketing-automation-guide.md') {
+    return createBlogPost('technology', 'ai-marketing-automation-guide', filename);
+  }
+
   // Extract category and slug from filename pattern: blog_{category}_{slug}.md
   const match = filename.match(/^blog_([^_]+)_(.+)\.md$/);
   if (!match) {
@@ -86,7 +92,7 @@ function createBlogPost(category: string, slug: string, filename: string): BlogP
     healthcare: 'Transform healthcare marketing with AI-driven patient engagement and lead generation solutions.',
     retail: 'Optimize retail operations with inventory management and e-commerce automation technologies.',
     solar: 'Drive solar energy lead generation with targeted marketing automation and content strategies.',
-    technology: 'Stay updated with the latest technology trends and AI automation insights for various industries.',
+    technology: 'Explore comprehensive AI marketing automation strategies, implementation guides, and industry insights for business growth.',
   };
 
   const excerpt = excerpts[category] || 'Explore insights and strategies for business growth through AI automation.';
@@ -144,6 +150,11 @@ export function filterBlogPosts(posts: BlogPost[], category: BlogCategory, searc
   }
 
   return filtered;
+}
+
+export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
+  const allPosts = await getAllBlogPosts();
+  return allPosts.find(post => post.slug === slug) || null;
 }
 
 export function formatDate(dateString: string): string {
