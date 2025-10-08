@@ -2,12 +2,6 @@ import { BlogPost, BlogCategory } from '@/types/blog';
 
 // Mock image URLs for blog posts - in a real app, these would come from a CMS or file system
 const BLOG_IMAGES: Record<string, string> = {
-  'beauty': '/images/blog/beauty.jpg',
-  'dental': '/images/blog/dental.jpg',
-  'fitness': '/images/blog/fitness.jpg',
-  'healthcare': '/images/blog/healthcare.jpg',
-  'retail': '/images/blog/retail.jpg',
-  'solar': '/images/blog/solar.jpg',
   'technology': '/images/blog/technology.jpg',
 };
 
@@ -19,21 +13,6 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
   // Extract posts from file names - in a real app, we'd read the actual files
   const blogFiles = [
     'blog_ai-marketing-automation-guide.md',
-    'blog_beauty_personalized-customer-experiences.md',
-    'blog_beauty_social-media-automation-for-salons.md',
-    'blog_dental_appointment-reminder-systems.md',
-    'blog_dental_dental-seo-content-generation.md',
-    'blog_dental_patient-acquisition-automation.md',
-    'blog_fitness_fitness-content-marketing.md',
-    'blog_fitness_workout-program-personalization.md',
-    'blog_healthcare_2.md',
-    'blog_healthcare_healthcare-content-marketing.md',
-    'blog_healthcare_medical-practice-lead-generation.md',
-    'blog_retail_inventory-management-automation.md',
-    'blog_retail_retail-e-commerce-automation.md',
-    'blog_solar_renewable-energy-marketing.md',
-    'blog_solar_solar-energy-lead-generation.md',
-    'blog_solar_solar-installation-automation.md',
   ];
 
   for (const filename of blogFiles) {
@@ -80,12 +59,6 @@ function createBlogPost(category: string, slug: string, filename: string): BlogP
 
   // Generate excerpt based on category
   const excerpts: Record<string, string> = {
-    beauty: 'Discover AI-powered marketing strategies for beauty businesses to enhance customer experiences and drive growth.',
-    dental: 'Learn how dental practices can leverage automation for patient acquisition and appointment management.',
-    fitness: 'Explore fitness content marketing and member acquisition strategies powered by AI automation.',
-    healthcare: 'Transform healthcare marketing with AI-driven patient engagement and lead generation solutions.',
-    retail: 'Optimize retail operations with inventory management and e-commerce automation technologies.',
-    solar: 'Drive solar energy lead generation with targeted marketing automation and content strategies.',
     technology: 'Explore comprehensive AI marketing automation strategies, implementation guides, and industry insights for business growth.',
   };
 
