@@ -15,6 +15,9 @@ COPY package-lock.json ./
 # Upgrade npm to latest version
 RUN npm install -g npm@latest
 
+# Set npm concurrency to reduce likelihood of install hangs
+RUN npm config set jobs 2
+
 # Install dependencies with exact versions
 RUN npm ci
 
