@@ -22,7 +22,7 @@ RUN npm ci
 COPY --chown=nextjs:nodejs . .
 
 # List contents to verify files are copied correctly
-RUN ls -la src/components/ui/ && echo "=== Dialog component ===" && cat src/components/ui/dialog.tsx | head -5
+RUN ls -la src/components/ui/ && echo "=== Dialog component ===" && cat src/components/ui/Dialog.tsx | head -5
 
 # Build the application
 RUN npm run build
@@ -39,7 +39,6 @@ COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
 
 # Copy built application from builder with correct ownership
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
-COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/src ./src
 COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/package.json ./
