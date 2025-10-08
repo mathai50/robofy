@@ -83,17 +83,6 @@ const nextConfig = {
     // Example: API_URL: process.env.API_URL,
   },
 
-  /**
-   * Security Headers
-   * Configures HTTP headers for security
-   * Note: Headers are disabled for static export (output: 'export')
-   * Headers should be configured on the server hosting the static files
-   */
-  async headers() {
-    // Headers are not supported with output: 'export'
-    // Configure headers on your hosting platform instead
-    return [];
-  },
 
 
   /**
