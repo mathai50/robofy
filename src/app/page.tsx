@@ -9,7 +9,7 @@ import { Carousel, Card as AppleCard } from '@/components/ui/apple-cards-carouse
 import TeamSection from '@/components/ui/TeamSection';
 import { DarkModeToggle } from '@/components/ui/DarkModeToggle';
 import { teamMembers } from '@/data/team';
-import { useGestureNavigation, useSectionNavigation } from '@/app/demo/gym/hooks/useGestureNavigation';
+// import { useGestureNavigation, useSectionNavigation } from '@/app/demo/gym/hooks/useGestureNavigation';
 import {
   Zap,
   Brain,
@@ -413,10 +413,12 @@ const ParticleBackground = ({ prefersReducedMotion }: { prefersReducedMotion: bo
 // Interactive Service Card Component
 const InteractiveServiceCard = ({ service, index }: { service: any, index: number }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const { ref: gestureRef, isGestureActive } = useGestureNavigation({
-    onSwipeUp: () => setIsExpanded(true),
-    onSwipeDown: () => setIsExpanded(false)
-  });
+  // const { ref: gestureRef, isGestureActive } = useGestureNavigation({
+  //   onSwipeUp: () => setIsExpanded(true),
+  //   onSwipeDown: () => setIsExpanded(false)
+  // });
+  const gestureRef = useRef<HTMLDivElement>(null);
+  const isGestureActive = false;
 
   return (
     <motion.div
@@ -2178,17 +2180,22 @@ export default function HomePage() {
   const prefersReducedMotion = useReducedMotion();
 
   // Section-based swipe navigation
-  const { ref: gestureRef, isGestureActive } = useGestureNavigation({
-    onSwipeUp: () => scrollToNextSection(),
-    onSwipeDown: () => scrollToPreviousSection(),
-    onSwipeLeft: () => goToNextSection(),
-    onSwipeRight: () => goToPreviousSection()
-  });
+  // const { ref: gestureRef, isGestureActive } = useGestureNavigation({
+  //   onSwipeUp: () => scrollToNextSection(),
+  //   onSwipeDown: () => scrollToPreviousSection(),
+  //   onSwipeLeft: () => goToNextSection(),
+  //   onSwipeRight: () => goToPreviousSection()
+  // });
 
   // Fix TypeScript ref type issue
-  const divRef = gestureRef as React.RefObject<HTMLDivElement>;
+  // const divRef = gestureRef as React.RefObject<HTMLDivElement>;
+  const divRef = useRef<HTMLDivElement>(null);
+  const [isGestureActive, setIsGestureActive] = useState(false);
 
-  const { currentSection, goToNext, goToPrevious } = useSectionNavigation(9); // 9 sections total
+  // const { currentSection, goToNext, goToPrevious } = useSectionNavigation(9); // 9 sections total
+  const [currentSection, setCurrentSection] = useState(0);
+  const goToNext = () => setCurrentSection((prev) => (prev + 1) % 9);
+  const goToPrevious = () => setCurrentSection((prev) => (prev - 1 + 9) % 9);
 
   // Section navigation functions
   const scrollToNextSection = () => {
