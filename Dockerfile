@@ -24,7 +24,7 @@ COPY --chown=nextjs:nodejs . .
 # List contents to verify files are copied correctly
 RUN ls -la src/components/ui/ && echo "=== Dialog component ===" && cat src/components/ui/Dialog.tsx | head -5
 
-# Build the application
+# Build the application with static export
 RUN npm run build
 
 FROM node:20 AS production
@@ -34,12 +34,14 @@ WORKDIR /app
 # Add non-root user for production
 RUN groupadd -g 1001 nodejs && useradd -m -u 1001 -g nodejs nextjs
 
+# Install serve globally for static file serving
+RUN npm install -g serve@latest
+
 # Copy production dependencies from builder stage (already installed with correct versions)
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
 
-# Copy built application from builder with correct ownership
-COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
-COPY --from=builder --chown=nextjs:nodejs /app/src ./src
+# Copy built static application from builder with correct ownership
+COPY --from=builder --chown=nextjs:nodejs /app/out ./out
 COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/tailwind.config.js ./
@@ -55,5 +57,5 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost:3000 || exit 1
 
-# Start the application
-CMD ["npm", "start"]
+# Start the static file server
+CMD ["serve", "out", "-l", "3000"]
