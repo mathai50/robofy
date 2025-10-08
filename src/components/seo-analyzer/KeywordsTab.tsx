@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Keyword } from '../types';
+import type { Keyword } from '../../types';
 
 interface KeywordsTabProps {
   keywords: Keyword[];

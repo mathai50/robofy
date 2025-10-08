@@ -20,7 +20,7 @@ const ContentGapsTab: React.FC<ContentGapsTabProps> = ({ contentGaps }) => {
                     </div>
                     <div>
                         <h4 className="font-semibold text-slate-100">{gap.topic}</h4>
-                        <p className="mt-1 text-sm text-slate-400">{gap.recommendation}</p>
+                        <p className="mt-1 text-sm text-slate-400">{gap.description}</p>
                     </div>
                  </div>
             </div>

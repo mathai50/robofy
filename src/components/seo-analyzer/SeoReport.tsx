@@ -15,7 +15,7 @@ const SeoReport: React.FC<SeoReportProps> = ({ techSeo }) => {
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8 bg-slate-800/50 border border-slate-700 p-6 rounded-xl">
             <div className="flex-shrink-0">
                 <h4 className="text-lg font-semibold text-center mb-2 text-slate-300">Overall Score</h4>
-                <ScoreGauge score={techSeo.overallScore} />
+                <ScoreGauge technicalSeo={techSeo} />
             </div>
             <div className="flex-grow grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
                 <ReportCard title="Performance" status={techSeo.performance.status} recommendation={techSeo.performance.recommendation}>

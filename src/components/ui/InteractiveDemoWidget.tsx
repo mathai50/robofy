@@ -198,7 +198,7 @@ const InteractiveDemoWidget: React.FC = () => {
                   status === 'processing' ? 'bg-blue-400/20' :
                   'bg-gray-700'
                 }`}>
-                  {React.cloneElement(step.icon as React.ReactElement, {
+                  {React.cloneElement(step.icon as React.ReactElement<any>, {
                     className: `w-4 h-4 ${
                       status === 'completed' ? 'text-green-400' :
                       status === 'processing' ? 'text-blue-400' :
