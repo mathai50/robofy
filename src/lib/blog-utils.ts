@@ -1,5 +1,3 @@
-import fs from 'fs';
-import path from 'path';
 import { BlogPost, BlogCategory } from '@/types/blog';
 
 // Mock image URLs for blog posts - in a real app, these would come from a CMS or file system
@@ -27,19 +25,15 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
     'blog_dental_dental-seo-content-generation.md',
     'blog_dental_patient-acquisition-automation.md',
     'blog_fitness_fitness-content-marketing.md',
-    'blog_fitness_fitness-studio-member-acquisition.md',
     'blog_fitness_workout-program-personalization.md',
-    'blog_healthcare_1.md',
     'blog_healthcare_2.md',
     'blog_healthcare_healthcare-content-marketing.md',
-    'blog_healthcare_healthcare-digital-marketing-automation.md',
     'blog_healthcare_medical-practice-lead-generation.md',
     'blog_retail_inventory-management-automation.md',
     'blog_retail_retail-e-commerce-automation.md',
     'blog_solar_renewable-energy-marketing.md',
     'blog_solar_solar-energy-lead-generation.md',
     'blog_solar_solar-installation-automation.md',
-    'blog_technology_1.md',
   ];
 
   for (const filename of blogFiles) {

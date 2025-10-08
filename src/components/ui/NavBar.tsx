@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { AuthService } from '@/lib/auth';
 import { useTheme } from 'next-themes';
+import { Menu } from 'lucide-react';
 
 export interface NavigationItem {
   label: string;
@@ -61,19 +61,13 @@ export default function NavBar({
 }: NavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(null);
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     setIsMounted(true);
-    if (showAuth) {
-      setIsAuthenticated(AuthService.isAuthenticated());
-    } else {
-      setIsAuthenticated(false);
-    }
-  }, [showAuth]);
+  }, []);
 
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
@@ -142,11 +136,6 @@ export default function NavBar({
     };
   }, [dropdownTimeout]);
 
-  const handleLogout = () => {
-    AuthService.logout();
-    setIsAuthenticated(false);
-    window.location.href = '/';
-  };
 
   return (
     <>
@@ -167,7 +156,7 @@ export default function NavBar({
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="flex items-center space-x-4">
+            <nav className="hidden md:flex items-center space-x-4">
               {navigationItems.map((item, index) => (
                 <div
                   key={index}
@@ -192,7 +181,7 @@ export default function NavBar({
                 >
                   <Link
                    href={item.href}
-                   className="font-semibold text-lg transition-all duration-300 relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-md px-4 py-2 text-gray-900 dark:text-white after:bg-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 focus:ring-blue-500 hover:text-gray-700 dark:hover:text-gray-300"
+                   className="font-semibold text-base transition-all duration-300 relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-0 after:left-0 after:transition-all after:duration-300 hover:after:w-full focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-md px-4 py-2 text-gray-900 dark:text-white after:bg-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 focus:ring-blue-500 hover:text-gray-700 dark:hover:text-gray-300"
                  >
                     {item.label}
                   </Link>
@@ -254,10 +243,19 @@ export default function NavBar({
             </nav>
 
 
+            {/* Mobile Menu Button */}
+            <button
+              onClick={toggleMenu}
+              className="md:hidden p-2 rounded-lg transition-colors bg-blue-600 text-white hover:bg-blue-700"
+              aria-label="Toggle menu"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+
             {/* Theme Toggle Button */}
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg transition-colors bg-blue-600 text-white hover:bg-blue-700"
+              className="hidden md:block p-2 rounded-lg transition-colors bg-blue-600 text-white hover:bg-blue-700"
               aria-label="Toggle theme"
               suppressHydrationWarning
             >
@@ -266,6 +264,56 @@ export default function NavBar({
 
           </div>
         </div>
+
+        {/* Mobile Navigation Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden absolute top-full left-0 right-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+              <nav className="space-y-2">
+                {navigationItems.map((item, index) => (
+                  <div key={index} className="space-y-1">
+                    <Link
+                      href={item.href}
+                      className="block font-semibold text-base py-2 px-4 rounded-lg transition-colors text-gray-900 dark:text-white hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                      onClick={closeMenu}
+                    >
+                      {item.label}
+                    </Link>
+
+                    {/* Mobile Dropdown */}
+                    {item.children && (
+                      <div className="ml-4 space-y-1">
+                        {item.children.map((child, childIndex) => (
+                          child.href.startsWith('/demo') ? (
+                            <a
+                              key={childIndex}
+                              href={child.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block py-1 px-4 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                              onClick={closeMenu}
+                            >
+                              {child.label}
+                            </a>
+                          ) : (
+                            <Link
+                              key={childIndex}
+                              href={child.href}
+                              className="block py-1 px-4 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                              onClick={closeMenu}
+                            >
+                              {child.label}
+                            </Link>
+                          )
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </nav>
+            </div>
+          </div>
+        )}
       </header>
 
     </>

@@ -9,7 +9,7 @@ import { Carousel, Card as AppleCard } from '@/components/ui/apple-cards-carouse
 import TeamSection from '@/components/ui/TeamSection';
 import { DarkModeToggle } from '@/components/ui/DarkModeToggle';
 import { teamMembers } from '@/data/team';
-// import { useGestureNavigation, useSectionNavigation } from '@/app/demo/gym/hooks/useGestureNavigation';
+import { useGestureNavigation, useSectionNavigation } from '@/app/demo/gym/hooks/useGestureNavigation';
 import {
   Zap,
   Brain,
@@ -66,6 +66,13 @@ const FloatingNavigation = () => {
     { id: 'contact', label: 'Contact', icon: MessageCircle },
   ];
 
+  const siteNavItems = [
+    { label: 'Demo', href: '/demo', icon: Play },
+    { label: 'Blog', href: '/blog', icon: MessageCircle },
+    { label: 'SEO Analysis', href: '/seo-analysis', icon: TrendingUp },
+    { label: 'SEO Dashboard', href: '/seo-dashboard', icon: TrendingUp },
+  ];
+
   useEffect(() => {
     const handleScroll = () => {
       const sections = navItems.map(item => item.id);
@@ -95,15 +102,40 @@ const FloatingNavigation = () => {
     setIsMenuOpen(false);
   };
 
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
     <>
       {/* Floating Action Buttons */}
       <motion.div
-        className="fixed top-6 right-6 z-50 flex gap-3"
+        className="fixed top-4 right-4 z-50 flex flex-col md:flex-row gap-1 md:gap-1"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 1, type: "spring", stiffness: 200 }}
       >
+        {/* Site Navigation Links */}
+        {siteNavItems.map((item, index) => (
+          <motion.div
+            key={item.label}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 1.2 + index * 0.1, type: "spring", stiffness: 200 }}
+          >
+            <Button
+              asChild
+              size="sm"
+              className="px-3 py-2 rounded-full bg-white/10 dark:bg-white/5 backdrop-blur-sm border border-white/20 dark:border-white/10 shadow-lg hover:bg-white/20 dark:hover:bg-white/10 hover:scale-105 transition-all duration-300 text-white"
+            >
+              <a href={item.href} className="flex items-center gap-2">
+                <item.icon className="w-4 h-4" />
+                <span className="text-sm font-medium">{item.label}</span>
+              </a>
+            </Button>
+          </motion.div>
+        ))}
+
         {/* Dark Mode Toggle */}
         <DarkModeToggle />
 
@@ -163,6 +195,34 @@ const FloatingNavigation = () => {
             className="fixed top-0 right-0 h-full w-80 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-2xl z-50 border-l border-gray-200 dark:border-gray-700"
           >
             <div className="p-6 pt-20">
+              {/* Site Navigation Links */}
+              <motion.div
+                variants={staggerContainer}
+                initial="hidden"
+                animate="visible"
+                className="space-y-3 mb-6 pb-6 border-b border-gray-200 dark:border-gray-700"
+              >
+                {siteNavItems.map((item, index) => {
+                  const Icon = item.icon;
+
+                  return (
+                    <motion.a
+                      key={item.label}
+                      variants={fadeInUp}
+                      href={item.href}
+                      onClick={closeMenu}
+                      className="w-full flex items-center gap-4 p-4 rounded-xl transition-all duration-300 group hover:bg-gray-50 dark:hover:bg-gray-800 hover:shadow-md"
+                    >
+                      <div className="p-2 rounded-lg bg-primary/10 dark:bg-primary/20 group-hover:bg-primary/20 dark:group-hover:bg-primary/30 transition-colors">
+                        <Icon className="w-5 h-5 text-primary dark:text-primary" />
+                      </div>
+                      <span className="font-medium text-gray-900 dark:text-white">{item.label}</span>
+                    </motion.a>
+                  );
+                })}
+              </motion.div>
+
+              {/* Section Navigation */}
               <motion.div
                 variants={staggerContainer}
                 initial="hidden"
@@ -413,12 +473,10 @@ const ParticleBackground = ({ prefersReducedMotion }: { prefersReducedMotion: bo
 // Interactive Service Card Component
 const InteractiveServiceCard = ({ service, index }: { service: any, index: number }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  // const { ref: gestureRef, isGestureActive } = useGestureNavigation({
-  //   onSwipeUp: () => setIsExpanded(true),
-  //   onSwipeDown: () => setIsExpanded(false)
-  // });
-  const gestureRef = useRef<HTMLDivElement>(null);
-  const isGestureActive = false;
+  const { ref: gestureRef, isGestureActive } = useGestureNavigation({
+    onSwipeUp: () => setIsExpanded(true),
+    onSwipeDown: () => setIsExpanded(false)
+  });
 
   return (
     <motion.div
@@ -572,7 +630,7 @@ const HeroSection = ({ prefersReducedMotion }: { prefersReducedMotion: boolean }
 
           <motion.h1
             variants={fadeInUp}
-            className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-primary to-white bg-clip-text text-transparent leading-tight"
+            className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-primary to-white bg-clip-text text-transparent leading-tight"
           >
             <MorphingText texts={[
               "AI-Powered Websites",
@@ -2180,22 +2238,17 @@ export default function HomePage() {
   const prefersReducedMotion = useReducedMotion();
 
   // Section-based swipe navigation
-  // const { ref: gestureRef, isGestureActive } = useGestureNavigation({
-  //   onSwipeUp: () => scrollToNextSection(),
-  //   onSwipeDown: () => scrollToPreviousSection(),
-  //   onSwipeLeft: () => goToNextSection(),
-  //   onSwipeRight: () => goToPreviousSection()
-  // });
+  const { ref: gestureRef, isGestureActive } = useGestureNavigation({
+    onSwipeUp: () => scrollToNextSection(),
+    onSwipeDown: () => scrollToPreviousSection(),
+    onSwipeLeft: () => goToNextSection(),
+    onSwipeRight: () => goToPreviousSection()
+  });
 
   // Fix TypeScript ref type issue
-  // const divRef = gestureRef as React.RefObject<HTMLDivElement>;
-  const divRef = useRef<HTMLDivElement>(null);
-  const [isGestureActive, setIsGestureActive] = useState(false);
+  const divRef = gestureRef as React.RefObject<HTMLDivElement>;
 
-  // const { currentSection, goToNext, goToPrevious } = useSectionNavigation(9); // 9 sections total
-  const [currentSection, setCurrentSection] = useState(0);
-  const goToNext = () => setCurrentSection((prev) => (prev + 1) % 9);
-  const goToPrevious = () => setCurrentSection((prev) => (prev - 1 + 9) % 9);
+  const { currentSection, goToNext, goToPrevious } = useSectionNavigation(9); // 9 sections total
 
   // Section navigation functions
   const scrollToNextSection = () => {
