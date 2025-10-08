@@ -49,5 +49,4 @@ services:
 # Networks
 networks:
   web:
-    external: true
     name: ${TRAEFIK_NETWORK:-traefik-network}
