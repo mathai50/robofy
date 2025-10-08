@@ -26,8 +26,8 @@ const nextConfig = {
   },
 
   /**
-    * Webpack Configuration for Module Resolution
-    * Ensures @ path aliases work correctly in all environments
+    * Webpack Configuration for Module Resolution and Optimization
+    * Ensures @ path aliases work correctly in all environments and optimizes builds
     */
   webpack: (config, { dev, isServer }) => {
     // Ensure path aliases work in Docker and other environments
@@ -36,6 +36,12 @@ const nextConfig = {
       '@': require('path').resolve(__dirname, 'src'),
     };
 
+    // Enable tree shaking for production
+    if (!dev && !isServer) {
+      config.optimization.usedExports = true;
+    }
+
+    // Add custom Webpack plugins or rules here
     return config;
   },
 
@@ -89,19 +95,6 @@ const nextConfig = {
     return [];
   },
 
-  /**
-   * Webpack Configuration
-   * Custom Webpack settings for bundle optimization
-   */
-  webpack: (config, { dev, isServer }) => {
-    // Enable tree shaking for production
-    if (!dev && !isServer) {
-      config.optimization.usedExports = true;
-    }
-
-    // Add custom Webpack plugins or rules here
-    return config;
-  },
 
   /**
    * Compiler Options
