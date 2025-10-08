@@ -1,17 +1,17 @@
 services:
-  robofy-app:
+  robofy-static:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: robofy-app
+    container_name: robofy-static
     restart: unless-stopped
 
-    # Traefik labels for Dokploy routing
+    # Traefik labels for Dokploy routing - optimized for static files
     labels:
       # Enable Traefik for this service
       - "traefik.enable=true"
 
-      # HTTP router configuration
+      # HTTP router configuration for static site
       - "traefik.http.routers.robofyuk.rule=Host(`robofy.uk`)"
       - "traefik.http.routers.robofyuk.entrypoints=websecure"
       - "traefik.http.routers.robofyuk.tls.certresolver=letsencrypt"
@@ -21,7 +21,7 @@ services:
       - "traefik.http.routers.robofyuk-www.entrypoints=websecure"
       - "traefik.http.routers.robofyuk-www.tls.certresolver=letsencrypt"
 
-      # Service configuration
+      # Service configuration for static files
       - "traefik.http.services.robofyuk.loadbalancer.server.port=3000"
 
       # Middleware for www to non-www redirect (optional)
@@ -29,18 +29,17 @@ services:
       - "traefik.http.middlewares.redirect-to-non-www.redirectregex.replacement=https://$${1}"
       - "traefik.http.routers.robofyuk-www.middlewares=redirect-to-non-www"
 
-    # Health check
+    # Simplified health check for static file server
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 40s
+      start_period: 10s
 
-    # Environment variables
+    # Minimal environment variables for static serving
     environment:
       - NODE_ENV=production
-      - PORT=3000
 
     # Network
     networks:
