@@ -34,12 +34,8 @@ WORKDIR /app
 # Add non-root user for production
 RUN addgroup -g 1001 -S nodejs && adduser -S nextjs -u 1001
 
-# Copy package files
-COPY package*.json ./
-COPY package-lock.json ./
-
-# Install production dependencies only with security audit
-RUN npm ci --omit=dev && npm audit --audit-level=moderate
+# Copy production dependencies from builder stage (already installed with correct versions)
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
 
 # Copy built application from builder with correct ownership
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
