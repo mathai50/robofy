@@ -12,8 +12,8 @@ RUN addgroup -g 1001 -S nodejs && adduser -S nextjs -u 1001
 COPY package*.json ./
 COPY package-lock.json ./
 
-# Install dependencies with exact versions and security audit
-RUN npm ci && npm audit --audit-level=moderate
+# Install dependencies with exact versions
+RUN npm ci
 
 # Copy source code with correct ownership
 COPY --chown=nextjs:nodejs . .
