@@ -12,6 +12,14 @@ export interface LeadData {
   company?: string;
   message?: string;
   industry?: string;
+  businessSize?: string;
+  budget?: string;
+  timeline?: string;
+  leadSource?: string;
+  utmSource?: string;
+  utmMedium?: string;
+  utmCampaign?: string;
+  gdprConsent?: boolean;
 }
 
 export const createLead = async (leadData: LeadData): Promise<ApiResponse> => {
