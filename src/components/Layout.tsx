@@ -138,7 +138,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <ul className="space-y-2">
                 <li><a href="/about" className="text-muted-foreground hover:text-foreground">About Us</a></li>
                 <li><a href="/blog" className="text-muted-foreground hover:text-foreground">Blog</a></li>
-                <li><a href="/contact" className="text-muted-foreground hover:text-foreground">Contact</a></li>
+                <li><button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} className="text-muted-foreground hover:text-foreground cursor-pointer">Contact</button></li>
                 <li><Link href="/privacy" className="text-muted-foreground hover:text-foreground">Privacy Statement</Link></li>
                 <li><Link href="/terms" className="text-muted-foreground hover:text-foreground">Terms of Service</Link></li>
               </ul>

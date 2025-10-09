@@ -248,7 +248,7 @@ const InteractiveDemoWidget: React.FC = () => {
         )}
 
         <button
-          onClick={() => window.open('/contact', '_blank')}
+          onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
           className="border border-gray-400 text-gray-400 hover:bg-gray-400/10 font-semibold py-3 px-8 rounded-lg transition-all duration-300 flex items-center justify-center"
           aria-label="Request a custom demo"
         >

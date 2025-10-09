@@ -131,7 +131,8 @@ export async function POST(request: NextRequest) {
           event: 'lead_generated',
           leadData: leadData,
           source: 'api_route',
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
+          combinedMessage: leadData.message // Message already combined in form submission
         })
       });
     } catch (webhookError) {

@@ -45,13 +45,6 @@ const nextConfig = {
   },
 
   /**
-    * Disable static optimization for pages with client-side components
-    */
-  experimental: {
-    serverComponentsExternalPackages: [],
-  },
-  
-  /**
    * React Strict Mode
    * Enables additional React development warnings and checks
    */
@@ -82,8 +75,6 @@ const nextConfig = {
     // Example: API_URL: process.env.API_URL,
   },
 
-
-
   /**
    * Compiler Options
    * Configures SWC compiler for faster builds
@@ -94,12 +85,10 @@ const nextConfig = {
   },
 
   /**
-   * Experimental Features
-   * Enable Next.js experimental features
+   * Server Components External Packages
+   * Configure external packages for server components (Next.js 15+)
    */
-  experimental: {
-    // Example: appDir: true, // Already enabled in Next.js 13+
-  },
+  serverExternalPackages: [],
 
   /**
    * ESLint Configuration

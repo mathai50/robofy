@@ -203,6 +203,12 @@ export const useGestureNavigation = ({
 
   // Keyboard navigation
   const handleKeyDown = (e: KeyboardEvent) => {
+    // Don't interfere with form inputs
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.contentEditable === 'true') {
+      return;
+    }
+
     switch (e.key) {
       case 'ArrowLeft':
         e.preventDefault();

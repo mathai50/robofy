@@ -669,7 +669,15 @@ const HeroSection = ({ prefersReducedMotion }: { prefersReducedMotion: boolean }
               <Button
                 size="lg"
                 className="px-8 py-4 text-lg bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all duration-300 group"
-                onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                  // Open form modal after scrolling
+                  setTimeout(() => {
+                    const contactButton = document.querySelector('[data-contact-form]') as HTMLElement;
+                    contactButton?.click();
+                  }, 800);
+                }}
               >
                 <Play className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
                 Schedule Free Demo
@@ -684,7 +692,15 @@ const HeroSection = ({ prefersReducedMotion }: { prefersReducedMotion: boolean }
                 variant="outline"
                 size="lg"
                 className="px-8 py-4 text-lg border-2 hover:bg-primary hover:text-white transition-all duration-300 group"
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                  // Open form modal after scrolling
+                  setTimeout(() => {
+                    const contactButton = document.querySelector('[data-contact-form]') as HTMLElement;
+                    contactButton?.click();
+                  }, 800);
+                }}
               >
                 <Rocket className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
                 Get Started Now
@@ -2058,6 +2074,7 @@ const ContactSection = () => {
                 size="lg"
                 className="px-8 py-4 text-lg bg-primary hover:bg-primary/90 text-white shadow-lg hover:shadow-xl transition-all duration-300"
                 onClick={() => setIsFormOpen(true)}
+                data-contact-form
               >
                 <Rocket className="w-5 h-5 mr-2" />
                 Ready to Win with AI?

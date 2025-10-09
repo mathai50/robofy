@@ -12,21 +12,22 @@ declare global {
 }
 
 interface FormData {
-  name: string;
-  email: string;
-  phone: string;
-  company: string;
-  subject: string;
-  message: string;
-  businessSize: string;
-  budget: string;
-  timeline: string;
-  leadSource: string;
-  utmSource?: string;
-  utmMedium?: string;
-  utmCampaign?: string;
-  gdprConsent: boolean;
-}
+   name: string;
+   email: string;
+   phone: string;
+   company: string;
+   subject: string;
+   message: string;
+   businessSize: string;
+   budget: string;
+   timeline: string;
+   leadSource: string;
+   utmSource?: string;
+   utmMedium?: string;
+   utmCampaign?: string;
+   gdprConsent: boolean;
+   technicalRequirements?: string;
+ }
 
 interface FormErrors {
   name?: string;
@@ -56,7 +57,8 @@ export default function ContactForm() {
     utmSource: undefined,
     utmMedium: undefined,
     utmCampaign: undefined,
-    gdprConsent: false
+    gdprConsent: false,
+    technicalRequirements: ''
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -152,12 +154,18 @@ export default function ContactForm() {
       }
 
       // Custom webhook for external integrations
-      await fetch('https://ai.robofy.uk/webhook-test/db241042-fc25-490b-9159-3c264fb5fcb5', {
+      await fetch('https://ai.robofy.uk/webhook/db241042-fc25-490b-9159-3c264fb5fcb5', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           event: 'lead_generated',
-          leadData: formData,
+          leadData: {
+            ...formData,
+            combinedMessage: [
+              formData.message,
+              formData.technicalRequirements ? `Technical requirements: ${formData.technicalRequirements}` : ''
+            ].filter(Boolean).join('\n\n')
+          },
           timestamp: new Date().toISOString()
         })
       });
@@ -249,10 +257,16 @@ export default function ContactForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    console.log('Form submission started');
+    console.log('Form data:', formData);
+
     if (!validateForm()) {
+      console.log('Form validation failed');
       trackFormInteraction('form_validation_error');
       return;
     }
+
+    console.log('Form validation passed, submitting...');
 
     setIsSubmitting(true);
     setSubmitStatus('idle');
@@ -261,13 +275,19 @@ export default function ContactForm() {
     // Retry mechanism for failed submissions
     const submitWithRetry = async (attempt: number = 1, maxRetries: number = 3): Promise<void> => {
       try {
+        // Combine message and technical requirements for submission
+        const combinedMessage = [
+          formData.message,
+          formData.technicalRequirements ? `Technical requirements: ${formData.technicalRequirements}` : ''
+        ].filter(Boolean).join('\n\n');
+
         const response: ApiResponse = await createLead({
           name: formData.name,
           email: formData.email,
           phone: formData.phone || undefined,
           company: formData.company,
           industry: formData.subject,
-          message: formData.message,
+          message: combinedMessage,
           businessSize: formData.businessSize || undefined,
           budget: formData.budget || undefined,
           timeline: formData.timeline || undefined,
@@ -318,7 +338,8 @@ export default function ContactForm() {
           utmSource: undefined,
           utmMedium: undefined,
           utmCampaign: undefined,
-          gdprConsent: false
+          gdprConsent: false,
+          technicalRequirements: ''
         });
 
       } catch (err) {
@@ -602,7 +623,7 @@ export default function ContactForm() {
           </div>
         )}
 
-        {/* Conditional fields based on subject */}
+        {/* Technical Requirements field - separate from main message */}
         {(formData.subject === 'custom-integration' || formData.subject === 'enterprise-solution') && (
           <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4 mb-6">
             <label htmlFor="technicalRequirements" className="block text-sm font-medium text-purple-300 mb-2 font-inter">
@@ -612,13 +633,11 @@ export default function ContactForm() {
               id="technicalRequirements"
               name="technicalRequirements"
               rows={3}
-              value={formData.message.includes('Technical requirements:') ? formData.message.split('Technical requirements:')[1]?.trim() : ''}
+              value={formData.technicalRequirements || ''}
               onChange={(e) => {
-                const baseMessage = formData.message.split('Technical requirements:')[0]?.trim() || '';
-                const technicalReqs = e.target.value ? `Technical requirements: ${e.target.value}` : '';
                 setFormData(prev => ({
                   ...prev,
-                  message: [baseMessage, technicalReqs].filter(Boolean).join('\n\n')
+                  technicalRequirements: e.target.value
                 }));
               }}
               disabled={isSubmitting}
