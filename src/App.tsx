@@ -4,9 +4,10 @@ import React, { useState } from 'react';
 import Header from './components/seo-analyzer/Header';
 import UrlInputForm from './components/seo-analyzer/UrlInputForm';
 import Dashboard from './components/seo-analyzer/Dashboard';
-import { generateComprehensiveAnalysis } from '../services/geminiService';
-import { fetchPageSpeedData } from '../services/pagespeedApiService';
-import { fetchSerpData } from '../services/serpApiService';
+// TODO: Restore these services if SEO analysis feature should be kept
+// import { generateComprehensiveAnalysis } from '../services/geminiService';
+// import { fetchPageSpeedData } from '../services/pagespeedApiService';
+// import { fetchSerpData } from '../services/serpApiService';
 import type { ComprehensiveAnalysis } from './types';
 
 const App: React.FC = () => {
@@ -25,17 +26,21 @@ const App: React.FC = () => {
     setCurrentLocation(location);
 
     try {
-      setLoadingStep('Running Lighthouse speed checks...');
-      const pageSpeedData = await fetchPageSpeedData(url);
+      // TODO: Restore these services if SEO analysis feature should be kept
+      // setLoadingStep('Running Lighthouse speed checks...');
+      // const pageSpeedData = await fetchPageSpeedData(url);
 
-      setLoadingStep('Analyzing search results for competitors...');
-      const strategicQuery = `top ${query} companies in ${location}`;
-      const serpData = await fetchSerpData(strategicQuery, location);
-      
-      setLoadingStep('Gemini agents are performing the final analysis...');
-      const geminiAnalysis = await generateComprehensiveAnalysis(url, query, location, pageSpeedData, serpData);
+      // setLoadingStep('Analyzing search results for competitors...');
+      // const strategicQuery = `top ${query} companies in ${location}`;
+      // const serpData = await fetchSerpData(strategicQuery, location);
 
-      setAnalysis(geminiAnalysis);
+      // setLoadingStep('Gemini agents are performing the final analysis...');
+      // const geminiAnalysis = await generateComprehensiveAnalysis(url, query, location, pageSpeedData, serpData);
+
+      // setAnalysis(geminiAnalysis);
+
+      // Temporary mock response until services are restored
+      setError('SEO analysis feature is temporarily disabled. AI chat system has been removed.');
 
     } catch (err) {
       console.error(err);

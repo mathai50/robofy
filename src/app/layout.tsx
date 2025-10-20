@@ -3,12 +3,12 @@ import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import '../styles/globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
-import ChatProvider from '../components/ChatProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 const playfairDisplay = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair-display' });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://robofy.uk'),
   title: 'Robofy AI Transformation for Small Medium Business',
   description: 'Transform your small and medium business with Robofy AI solutions. AI-powered business transformation - streamline operations, automate workflows, and drive growth with intelligent technology.',
   keywords: 'AI business transformation, small business automation, website building, SEO optimization, lead generation, marketing automation, AI chatbot, business growth',
@@ -101,7 +101,7 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(d,t) {
-  var BASE_URL="0.0.0.0";
+  var BASE_URL="https://chat.robofy.uk";
   var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
   g.src=BASE_URL+"/packs/js/sdk.js";
   g.defer = true;
@@ -120,7 +120,6 @@ export default function RootLayout({
       <body className={`${inter.className} ${playfairDisplay.variable}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
-          <ChatProvider />
         </ThemeProvider>
       </body>
     </html>

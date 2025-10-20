@@ -19,6 +19,7 @@
   "author": "Robofy Team <team@robofy.com>",
   "homepage": "https://robofy.uk",
   "scripts": {
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
