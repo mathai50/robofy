@@ -8,6 +8,7 @@ import Badge from '@/components/ui/Badge';
 import { Carousel, Card as AppleCard } from '@/components/ui/apple-cards-carousel';
 import TeamSection from '@/components/ui/TeamSection';
 import { DarkModeToggle } from '@/components/ui/DarkModeToggle';
+import HowItWorksInfographic from '@/components/HowItWorksInfographic';
 import { teamMembers } from '@/data/team';
 import { useGestureNavigation, useSectionNavigation } from '@/app/demo/gym/hooks/useGestureNavigation';
 import {
@@ -25,7 +26,12 @@ import {
   Sparkles,
   Rocket,
   Eye,
-  MessageCircle
+  MessageCircle,
+  Check,
+  DollarSign,
+  Award,
+  Shield,
+  HelpCircle
 } from 'lucide-react';
 
 // Animation variants
@@ -67,10 +73,13 @@ const FloatingNavigation = () => {
   ];
 
   const siteNavItems = [
+    { label: 'Pricing', href: '/pricing', icon: DollarSign },
+    { label: 'Templates', href: '/templates', icon: Settings },
+    { label: 'Success Stories', href: '/success-stories', icon: Award },
+    { label: 'Compliance', href: '/compliance', icon: Shield },
+    { label: 'FAQ', href: '/faq', icon: HelpCircle },
     { label: 'Demo', href: '/demo', icon: Play },
     { label: 'Blog', href: '/blog', icon: MessageCircle },
-    { label: 'SEO Analysis', href: '/seo-analysis', icon: TrendingUp },
-    { label: 'SEO Dashboard', href: '/seo-dashboard', icon: TrendingUp },
   ];
 
   useEffect(() => {
@@ -652,10 +661,81 @@ const HeroSection = ({ prefersReducedMotion }: { prefersReducedMotion: boolean }
 
           <motion.p
             variants={fadeInUp}
-            className="text-lg text-gray-300 dark:text-gray-300 mb-12 max-w-2xl mx-auto leading-relaxed"
+            className="text-lg text-gray-300 dark:text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed"
           >
             Turn visitors into confirmed appointments in 60 seconds with AI that works while you sleep.
           </motion.p>
+
+          {/* Mini Case Studies */}
+          <motion.div
+            variants={fadeInUp}
+            className="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto mb-12"
+          >
+            <motion.div
+              whileHover={{ scale: 1.05, y: -2 }}
+              className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20"
+            >
+              <div className="text-2xl font-bold text-green-400 mb-1">60%</div>
+              <div className="text-sm text-gray-300">More appointments</div>
+              <div className="text-xs text-gray-400 mt-1">Dental practice results</div>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ scale: 1.05, y: -2 }}
+              className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20"
+            >
+              <div className="text-2xl font-bold text-blue-400 mb-1">85%</div>
+              <div className="text-sm text-gray-300">Trial conversion rate</div>
+              <div className="text-xs text-gray-400 mt-1">Fitness studio results</div>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ scale: 1.05, y: -2 }}
+              className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20"
+            >
+              <div className="text-2xl font-bold text-purple-400 mb-1">24/7</div>
+              <div className="text-sm text-gray-300">Lead capture</div>
+              <div className="text-xs text-gray-400 mt-1">Automated response time</div>
+            </motion.div>
+          </motion.div>
+
+          {/* Social Proof Section */}
+          <motion.div
+            variants={fadeInUp}
+            className="mb-12 p-6 bg-gradient-to-r from-green-500/10 to-blue-500/10 backdrop-blur-sm rounded-2xl border border-green-200/20 max-w-4xl mx-auto"
+          >
+            <div className="grid md:grid-cols-2 gap-6 items-center">
+              <div>
+                <h3 className="text-xl font-bold text-white mb-3">
+                  See Results in Days, Not Months
+                </h3>
+                <div className="space-y-2 text-sm text-gray-300">
+                  <div className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-green-400" />
+                    <span>60% more appointments (dental practices)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-green-400" />
+                    <span>85% trial-to-member conversion (fitness)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-green-400" />
+                    <span>300% more qualified leads (accounting)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-green-400" />
+                    <span>24/7 lead capture and qualification</span>
+                  </div>
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-primary mb-2">500+</div>
+                <div className="text-gray-300 text-sm">AI automations deployed</div>
+                <div className="text-2xl font-bold text-green-400 mb-2 mt-4">98%</div>
+                <div className="text-gray-300 text-sm">Client satisfaction rate</div>
+              </div>
+            </div>
+          </motion.div>
 
           {/* Floating CTA Buttons */}
           <motion.div
@@ -2028,6 +2108,18 @@ const DemosSection = () => {
 const ContactSection = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
 
+  useEffect(() => {
+    // Initialize Formbricks widget
+    import("@formbricks/js").then(({ default: formbricks }) => {
+      if (typeof window !== "undefined") {
+        formbricks.init({
+          environmentId: "cmglgoo21000ap601981s8a8d",
+          apiHost: "http://formworks-formbricks-ae9601-188-245-45-94.traefik.me"
+        });
+      }
+    });
+  }, []);
+
   return (
     <section id="contact" className="min-h-screen md:min-h-screen flex items-center justify-center relative py-16 md:py-32">
       {/* Background */}
@@ -2072,7 +2164,7 @@ const ContactSection = () => {
             >
               <Button
                 size="lg"
-                className="px-8 py-4 text-lg bg-primary hover:bg-primary/90 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+                className="px-8 py-4 text-lg bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 font-semibold"
                 onClick={() => setIsFormOpen(true)}
                 data-contact-form
               >
@@ -2095,6 +2187,7 @@ const ContactSection = () => {
                 variant="outline"
                 size="lg"
                 className="px-8 py-4 text-lg border-white/30 text-white hover:bg-white/10 backdrop-blur-sm"
+                onClick={() => setIsFormOpen(true)}
               >
                 <Play className="w-5 h-5 mr-2" />
                 Schedule Free Demo
@@ -2104,7 +2197,7 @@ const ContactSection = () => {
         </motion.div>
       </div>
 
-      {/* Floating Contact Form */}
+      {/* Contact Form Modal */}
       <AnimatePresence>
         {isFormOpen && (
           <>
@@ -2120,70 +2213,39 @@ const ContactSection = () => {
               initial={{ opacity: 0, scale: 0.9, y: 100 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 100 }}
-              className="fixed bottom-6 right-6 w-96 bg-white rounded-2xl shadow-2xl z-50 border border-gray-200 overflow-hidden"
+              className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4"
+              onClick={(e) => e.stopPropagation()}
             >
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Get Started</h3>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setIsFormOpen(false)}
-                  >
-                    <X className="w-4 h-4" />
-                  </Button>
+              <motion.div
+                className="relative bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl max-w-2xl w-full h-[95vh] sm:h-[90vh] overflow-y-auto"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="p-4 sm:p-6 md:p-8">
+                  <div className="flex items-center justify-between mb-4 sm:mb-6">
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900">Get Started with AI</h3>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setIsFormOpen(false)}
+                      className="text-gray-500 hover:text-gray-700"
+                    >
+                      <X className="w-5 h-5" />
+                    </Button>
+                  </div>
+
+                  <div className="max-h-none">
+                    {/* Formbricks Form Widget Container */}
+                    <div id="formbricks-form-container" className="min-h-[400px] flex items-center justify-center">
+                      <div className="text-center text-gray-600">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+                        <p>Loading contact form...</p>
+                        <p className="text-sm mt-2">Powered by Formbricks</p>
+                      </div>
+                    </div>
+
+                  </div>
                 </div>
-
-                <form className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                      placeholder="Your name"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                      placeholder="your@email.com"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Company
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                      placeholder="Your company"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Message
-                    </label>
-                    <textarea
-                      rows={3}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                      placeholder="Tell us about your project..."
-                    />
-                  </div>
-
-                  <Button className="w-full" type="submit">
-                    Send Message
-                  </Button>
-                </form>
-              </div>
+              </motion.div>
             </motion.div>
           </>
         )}
@@ -2340,7 +2402,7 @@ export default function HomePage() {
       <AboutSection />
       <ServicesSection />
       <WhatWeDeliverSection />
-      <HowItWorksSection />
+      <HowItWorksInfographic />
       <AgileMethodologySection />
       <TeamSection teamMembers={teamMembers} />
       <DemosSection />

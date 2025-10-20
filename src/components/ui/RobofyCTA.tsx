@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { createLead } from '@/lib/api';
 
 interface RobofyCTAProps {
   isVisible?: boolean;
@@ -184,11 +185,32 @@ export const RobofyCTA: React.FC<RobofyCTAProps> = ({
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    try {
+      const response = await createLead({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone || undefined,
+        company: formData.businessType,
+        industry: businessType || 'General',
+        message: `Business Type: ${formData.businessType}\n\nMessage: ${formData.message}`,
+        businessSize: undefined,
+        budget: undefined,
+        timeline: undefined,
+        leadSource: 'cta_form',
+        gdprConsent: true
+      });
 
-    setIsSubmitting(false);
-    setFormStep(3); // Success step
+      if (response.error) {
+        throw new Error(response.error);
+      }
+
+      setIsSubmitting(false);
+      setFormStep(3); // Success step
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setIsSubmitting(false);
+      // Show error state - you might want to add error handling UI here
+    }
   };
 
   const resetForm = () => {

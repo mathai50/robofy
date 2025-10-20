@@ -13,6 +13,7 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
   // Extract posts from file names - in a real app, we'd read the actual files
   const blogFiles = [
     'blog_ai-marketing-automation-guide.md',
+    'blog_technology_formbricks-iframe-troubleshooting.md',
   ];
 
   for (const filename of blogFiles) {

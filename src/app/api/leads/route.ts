@@ -124,20 +124,71 @@ export async function POST(request: NextRequest) {
 
     // Send webhook notification
     try {
-      await fetch('https://ai.robofy.uk/webhook-test/db241042-fc25-490b-9159-3c264fb5fcb5', {
+      const webhookPayload = {
+        event: 'lead_generated',
+        leadData: leadData,
+        source: 'api_route',
+        timestamp: new Date().toISOString(),
+        combinedMessage: leadData.message // Message already combined in form submission
+      };
+
+      console.log('Sending webhook to:', 'https://ai.robofy.uk/webhook-test/a80eccd4-eb3f-418c-9a0c-bebdc40cbf46');
+      console.log('Webhook payload:', JSON.stringify(webhookPayload, null, 2));
+
+      // Create AbortController for timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
+      const webhookResponse = await fetch('https://ai.robofy.uk/webhook-test/a80eccd4-eb3f-418c-9a0c-bebdc40cbf46', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          event: 'lead_generated',
-          leadData: leadData,
-          source: 'api_route',
-          timestamp: new Date().toISOString(),
-          combinedMessage: leadData.message // Message already combined in form submission
-        })
+        headers: {
+          'Content-Type': 'application/json',
+          'User-Agent': 'Robofy-Webhook/1.0'
+        },
+        body: JSON.stringify(webhookPayload),
+        signal: controller.signal
       });
+
+      clearTimeout(timeoutId);
+
+      console.log('Webhook response status:', webhookResponse.status);
+      console.log('Webhook response headers:', Object.fromEntries(webhookResponse.headers.entries()));
+
+      if (!webhookResponse.ok) {
+        const errorText = await webhookResponse.text();
+        console.error('Webhook failed with status:', webhookResponse.status, 'Response:', errorText);
+        throw new Error(`Webhook failed: ${webhookResponse.status} ${errorText}`);
+      }
+
+      const responseText = await webhookResponse.text();
+      console.log('Webhook response body:', responseText);
+
     } catch (webhookError) {
       // Log webhook error but don't fail the request
-      console.error('Webhook notification failed:', webhookError);
+      console.error('🚨 Webhook notification failed:', webhookError);
+      console.error('🔍 Webhook error details:', {
+        message: webhookError instanceof Error ? webhookError.message : 'Unknown error',
+        stack: webhookError instanceof Error ? webhookError.stack : 'No stack trace',
+        leadData: {
+          name: leadData.name,
+          email: leadData.email,
+          company: leadData.company,
+          hasMessage: !!leadData.message
+        }
+      });
+
+      // Handle specific error types
+      if (webhookError instanceof Error) {
+        if (webhookError.name === 'AbortError') {
+          console.error('⏰ Webhook request timed out after 10 seconds');
+        } else if (webhookError.message.includes('ECONNREFUSED')) {
+          console.error('🚫 Webhook endpoint refused connection - check if endpoint is running');
+        } else if (webhookError.message.includes('ENOTFOUND')) {
+          console.error('🌐 Webhook endpoint not found - check URL');
+        } else if (webhookError.message.includes('network')) {
+          console.error('📡 Network error - check internet connection');
+        }
+      }
     }
 
     // Return success response with lead ID for tracking
