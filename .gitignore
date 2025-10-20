@@ -2,61 +2,158 @@
 # Clean, lightweight configuration for production deployment
 # Optimized for search engines and security
 
-# ========================================
-# ESSENTIAL FILES TO KEEP (Production)
-# ========================================
-# These are required for the website to function
-!.gitignore
-# README.md (if you want to keep it)
-# package.json
-# package-lock.json
-# next.config.js
-# tailwind.config.js
-# postcss.config.js
-# tsconfig.json
-# src/
-# public/
-
-# ========================================
-# DEVELOPMENT & BUILD FILES (Exclude)
-# ========================================
-
-# Dependencies and package managers
-node_modules/
+# Dependencies
+/node_modules
 /.pnp
 .pnp.js
-/.pnp.js
-.yarn/
-.yarnrc.yml
-yarn.lock
-package-lock.json.backup
 
-# Build outputs and caches
-.next/
+# Testing
+/coverage
+
+# Next.js
+/.next/
 /out/
-.nuxt/
-dist/
-build/
-/coverage/
 
-# Development caches and logs
-.cache/
-.parcel-cache/
-.eslintcache
-.stylelintcache
-.nyc_output/
-.rpt2_cache/
-.rts2_cache_*
-.turbo/
+# Production
+/build
 
-# Runtime and temporary files
+# Misc
+.DS_Store
+*.pem
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Local env files
+.env*.local
+.env
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Runtime data
+pids
 *.pid
 *.seed
 *.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# next.js build output
+.next
+
+# nuxt.js build output
+.nuxt
+
+# vuepress build output
+.vuepress/dist
+
+# Serverless directories
+.serverless
+
+# FuseBox cache
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
+
+# TernJS port file
+.tern-port
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# Temporary folders
 tmp/
 temp/
 *.tmp
 *.temp
+
+# Editor directories and files
+!.vscode/extensions.json
+.history/*
+
+# Local Netlify folder
+.netlify
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build outputs
+dist/
+build/
+out/
+
+# Backup files
+*.backup
+*.bak
+
+# Lock files (if using pnpm)
+.pnpm-debug.log*
 
 # ========================================
 # SECURITY & SENSITIVE FILES (Exclude)

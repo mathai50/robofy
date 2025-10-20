@@ -10,7 +10,7 @@ import TeamSection from '@/components/ui/TeamSection';
 import { DarkModeToggle } from '@/components/ui/DarkModeToggle';
 import HowItWorksInfographic from '@/components/HowItWorksInfographic';
 import { teamMembers } from '@/data/team';
-import { useGestureNavigation, useSectionNavigation } from '@/app/demo/gym/hooks/useGestureNavigation';
+import { useSectionNavigation } from '@/app/demo/gym/hooks/useGestureNavigation';
 import {
   Zap,
   Brain,
@@ -482,21 +482,17 @@ const ParticleBackground = ({ prefersReducedMotion }: { prefersReducedMotion: bo
 // Interactive Service Card Component
 const InteractiveServiceCard = ({ service, index }: { service: any, index: number }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const { ref: gestureRef, isGestureActive } = useGestureNavigation({
-    onSwipeUp: () => setIsExpanded(true),
-    onSwipeDown: () => setIsExpanded(false)
-  });
 
   return (
     <motion.div
-      ref={gestureRef as React.RefObject<HTMLDivElement>}
       layout
       animate={{
         height: isExpanded ? 'auto' : 'fixed-height',
-        scale: isGestureActive ? 0.98 : 1
+        scale: 1
       }}
       whileHover={{ y: -8, scale: 1.02 }}
       className="group cursor-pointer"
+      onClick={() => setIsExpanded(!isExpanded)}
     >
       <Card className="h-full bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden min-h-[200px]">
         <CardContent className="p-6 md:p-8">
@@ -2109,15 +2105,7 @@ const ContactSection = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   useEffect(() => {
-    // Initialize Formbricks widget
-    import("@formbricks/js").then(({ default: formbricks }) => {
-      if (typeof window !== "undefined") {
-        formbricks.init({
-          environmentId: "cmglgoo21000ap601981s8a8d",
-          apiHost: "http://formworks-formbricks-ae9601-188-245-45-94.traefik.me"
-        });
-      }
-    });
+    // Formbricks widget removed - not using this service
   }, []);
 
   return (
@@ -2234,15 +2222,13 @@ const ContactSection = () => {
                   </div>
 
                   <div className="max-h-none">
-                    {/* Formbricks Form Widget Container */}
-                    <div id="formbricks-form-container" className="min-h-[400px] flex items-center justify-center">
+                    {/* Contact form removed - Formbricks not in use */}
+                    <div className="min-h-[400px] flex items-center justify-center">
                       <div className="text-center text-gray-600">
-                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-                        <p>Loading contact form...</p>
-                        <p className="text-sm mt-2">Powered by Formbricks</p>
+                        <p>Contact form temporarily unavailable</p>
+                        <p className="text-sm mt-2">Please use the demo scheduling button above</p>
                       </div>
                     </div>
-
                   </div>
                 </div>
               </motion.div>
@@ -2317,15 +2303,7 @@ export default function HomePage() {
   const prefersReducedMotion = useReducedMotion();
 
   // Section-based swipe navigation
-  const { ref: gestureRef, isGestureActive } = useGestureNavigation({
-    onSwipeUp: () => scrollToNextSection(),
-    onSwipeDown: () => scrollToPreviousSection(),
-    onSwipeLeft: () => goToNextSection(),
-    onSwipeRight: () => goToPreviousSection()
-  });
-
-  // Fix TypeScript ref type issue
-  const divRef = gestureRef as React.RefObject<HTMLDivElement>;
+  const divRef = useRef<HTMLDivElement>(null);
 
   const { currentSection, goToNext, goToPrevious } = useSectionNavigation(9); // 9 sections total
 
@@ -2383,19 +2361,9 @@ export default function HomePage() {
   return (
     <div
       ref={divRef}
-      className={`bg-black dark:bg-gray-900 transition-colors duration-300 ${isGestureActive ? 'cursor-grabbing' : 'cursor-default'}`}
+      className="bg-black dark:bg-gray-900 transition-colors duration-300 cursor-default"
       tabIndex={0}
     >
-      {/* Gesture Active Indicator */}
-      {isGestureActive && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-white/90 text-black px-3 py-1 rounded-full text-sm z-[70] pointer-events-none shadow-lg font-medium"
-        >
-          Gesture Active - Swipe to navigate
-        </motion.div>
-      )}
       <SwipeIndicator prefersReducedMotion={prefersReducedMotion} />
       <FloatingNavigation />
       <HeroSection prefersReducedMotion={prefersReducedMotion} />

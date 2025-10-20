@@ -117,7 +117,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.className} ${playfairDisplay.variable}`}>
+      <body className={`${inter.className} ${playfairDisplay.variable}`} suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
         </ThemeProvider>
