@@ -12,7 +12,7 @@ module.exports = {
      * Tailwind CSS plugin processes Tailwind directives and generates utility classes
      * based on the configuration in tailwind.config.js
      */
-    '@tailwindcss/postcss': {},
+    tailwindcss: {},
 
     /**
      * Autoprefixer plugin automatically adds vendor prefixes to CSS rules

@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Deploy to Hetzner Dokploy
 
 on:
   push:
@@ -7,12 +7,35 @@ on:
     branches: [ "main" ]
 
 jobs:
-
-  build:
-
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build Docker image for testing
+      run: |
+        docker build . --file Dockerfile --tag robofy-test:$(date +%s)
+        echo "✅ Docker build successful"
+
+    - name: Test Docker image
+      run: |
+        docker run --rm -d -p 3000:3000 --name robofy-test robofy-test:$(date +%s)
+        sleep 10
+        curl -f http://localhost:3000 || exit 1
+        docker stop robofy-test || true
+        echo "✅ Docker image test successful"
+
+    - name: Deploy to Dokploy on Hetzner (if on main branch)
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: |
+        echo "🚀 Deploying to Dokploy on Hetzner..."
+        echo "✅ Ready for deployment - Dokploy will handle the deployment process"
+        echo "🔧 Make sure to:"
+        echo "   1. Configure .env.production in Dokploy secrets"
+        echo "   2. Set up domain (robofy.uk) in Dokploy"
+        echo "   3. Configure SSL certificate with Let's Encrypt"
