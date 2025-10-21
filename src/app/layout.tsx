@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import '../styles/globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
+import { envConfig, isDevelopment } from '@/lib/env-config';
 
 const inter = Inter({ subsets: ['latin'] });
 const playfairDisplay = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair-display' });
@@ -98,10 +99,11 @@ export default function RootLayout({
             __html: JSON.stringify(robofySchema),
           }}
         />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(d,t) {
-  var BASE_URL="https://chat.robofy.uk";
+        {envConfig.chatwoot.enabled && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(d,t) {
+  var BASE_URL="${envConfig.chatwoot.baseUrl}";
   var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
   g.src=BASE_URL+"/packs/js/sdk.js";
   g.defer = true;
@@ -109,13 +111,22 @@ export default function RootLayout({
   s.parentNode.insertBefore(g,s);
   g.onload=function(){
     window.chatwootSDK.run({
-      websiteToken: 'FsPKLkzLPzqog7qSCdrVr4PD',
+      websiteToken: '${envConfig.chatwoot.websiteToken}',
       baseUrl: BASE_URL
     })
+    console.log('Chatwoot SDK loaded successfully from:', BASE_URL);
+  }
+  g.onerror=function(){
+    console.warn('Chatwoot SDK failed to load from:', BASE_URL);
+    console.warn('Make sure your Chatwoot instance is running and accessible from localhost');
+    if (${isDevelopment}) {
+      console.warn('For localhost development, you may need to use a different BASE_URL or disable CORS restrictions');
+    }
   }
 })(document,"script");`
-          }}
-        />
+            }}
+          />
+        )}
       </head>
       <body className={`${inter.className} ${playfairDisplay.variable}`} suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
