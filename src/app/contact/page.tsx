@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import Badge from '@/components/ui/Badge';
 import {
@@ -30,17 +30,6 @@ const staggerContainer = {
 };
 
 export default function ContactPage() {
-  useEffect(() => {
-    // Initialize Formbricks widget
-    import("@formbricks/js").then(({ default: formbricks }) => {
-      if (typeof window !== "undefined") {
-        formbricks.init({
-          environmentId: "cmglgoo21000ap601981s8a8d",
-          apiHost: "http://formworks-formbricks-ae9601-188-245-45-94.traefik.me"
-        });
-      }
-    });
-  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -95,14 +84,13 @@ export default function ContactPage() {
                   Send Us a Message
                 </h2>
 
-                {/* Formbricks Form Widget Container */}
-                <div id="formbricks-form-container" className="min-h-[400px] flex items-center justify-center">
-                  <div className="text-center text-gray-600 dark:text-gray-400">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-                    <p>Loading contact form...</p>
-                    <p className="text-sm mt-2">Powered by Formbricks</p>
-                  </div>
-                </div>
+                {/* Contact Form Placeholder - Replace with your preferred form solution */}
+                 <div className="min-h-[400px] flex items-center justify-center">
+                   <div className="text-center text-gray-600 dark:text-gray-400">
+                     <p className="text-lg mb-4">Contact form will be integrated here</p>
+                     <p className="text-sm">Choose your preferred form solution (HubSpot, Typeform, etc.)</p>
+                   </div>
+                 </div>
 
               </div>
             </motion.div>
